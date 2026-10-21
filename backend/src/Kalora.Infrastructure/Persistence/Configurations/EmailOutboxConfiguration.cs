@@ -13,6 +13,7 @@ internal sealed class EmailOutboxConfiguration : IEntityTypeConfiguration<EmailO
         builder.Property(e => e.Type).HasMaxLength(100);
         builder.Property(e => e.Language).HasMaxLength(10);
         builder.Property(e => e.Subject).HasMaxLength(300);
+        builder.Property(e => e.PayloadJson).HasMaxLength(4000);
         builder.Property(e => e.Status).HasConversion<string>().HasMaxLength(20);
         builder.Property(e => e.LastError).HasMaxLength(2000);
         builder.HasIndex(e => new { e.Status, e.NextAttemptAtUtc });

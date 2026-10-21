@@ -1,3 +1,4 @@
+using Kalora.Application.Identity;
 using Kalora.Domain.Staff;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,6 +12,8 @@ internal sealed class StaffMemberConfiguration : IEntityTypeConfiguration<StaffM
         builder.ConfigureSalonOwned();
         builder.Property(s => s.DisplayName).HasMaxLength(100);
         builder.Property(s => s.Color).HasMaxLength(7);
+        builder.HasOne<AppUser>().WithMany().HasForeignKey(s => s.UserId).OnDelete(DeleteBehavior.SetNull);
         builder.HasIndex(s => new { s.SalonId, s.SortOrder });
+        builder.HasIndex(s => s.UserId).IsUnique();
     }
 }

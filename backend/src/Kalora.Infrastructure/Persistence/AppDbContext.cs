@@ -1,4 +1,5 @@
 using Kalora.Application.Common;
+using Kalora.Application.Identity;
 using Kalora.Application.Tenancy;
 using Kalora.Domain.Appointments;
 using Kalora.Domain.Auditing;
@@ -9,12 +10,15 @@ using Kalora.Domain.Salons;
 using Kalora.Domain.Services;
 using Kalora.Domain.Staff;
 using System.Reflection;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Kalora.Infrastructure.Persistence;
 
 public sealed class AppDbContext(DbContextOptions<AppDbContext> options, ITenantContext tenantContext)
-    : DbContext(options), IAppDbContext
+    : IdentityUserContext<AppUser, Guid>(options), IAppDbContext, IDataProtectionKeyContext
 {
     private const string TenantFilter = "Tenant";
 
@@ -23,6 +27,8 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options, ITenant
 
     /// <summary>Read by the query filters; EF turns it into a per-context parameter, so the filter follows each request's tenant.</summary>
     private Guid? CurrentSalonId => tenantContext.SalonId;
+
+    public DbSet<DataProtectionKey> DataProtectionKeys => Set<DataProtectionKey>();
 
     public DbSet<Salon> Salons => Set<Salon>();
 
@@ -37,6 +43,8 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options, ITenant
     public DbSet<StaffWorkingHours> StaffWorkingHours => Set<StaffWorkingHours>();
 
     public DbSet<StaffAbsence> StaffAbsences => Set<StaffAbsence>();
+
+    public DbSet<StaffInvitation> StaffInvitations => Set<StaffInvitation>();
 
     public DbSet<ServiceCategory> ServiceCategories => Set<ServiceCategory>();
 
@@ -56,10 +64,14 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options, ITenant
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.HasPostgresExtension("btree_gist");
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         ApplyTenantIsolation(modelBuilder);
     }
+
+    public async Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default) =>
+        await Database.BeginTransactionAsync(cancellationToken);
 
     public IQueryable<Salon> AllSalons() => Salons.IgnoreQueryFilters([TenantFilter]);
 

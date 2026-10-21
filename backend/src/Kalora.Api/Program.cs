@@ -1,4 +1,7 @@
+using System.Text.Json.Serialization;
+using Kalora.Api.Auth;
 using Kalora.Api.Http;
+using Microsoft.AspNetCore.Mvc;
 using Kalora.Application;
 using Kalora.Infrastructure;
 using Scalar.AspNetCore;
@@ -11,9 +14,10 @@ builder.Services.AddSerilog((_, logger) => logger.ReadFrom.Configuration(builder
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
-builder.Services.AddAuthentication();
-builder.Services.AddAuthorization();
-builder.Services.AddControllers();
+builder.Services.AddKaloraAuth();
+builder.Services
+    .AddControllers(options => options.Filters.Add<AntiforgeryValidationFilter>())
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddHealthChecks();
@@ -40,6 +44,7 @@ app.UseAuthorization();
 app.UseMiddleware<TenantResolutionMiddleware>();
 
 app.MapControllers();
+app.MapAntiforgeryEndpoint();
 app.MapHealthChecks("/health");
 
 app.Run();

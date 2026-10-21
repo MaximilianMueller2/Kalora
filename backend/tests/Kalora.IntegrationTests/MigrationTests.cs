@@ -20,7 +20,7 @@ public class MigrationTests(PostgresFixture postgres)
     }
 
     [Fact]
-    public async Task Schema_contains_all_mvp_tables_in_snake_case()
+    public async Task Schema_contains_all_tables_in_snake_case()
     {
         var connectionString = await postgres.CreateMigratedDatabaseAsync();
 
@@ -32,6 +32,7 @@ public class MigrationTests(PostgresFixture postgres)
             "salons", "salon_opening_hours", "salon_closures", "salon_members", "staff_members",
             "staff_working_hours", "staff_absences", "service_categories", "services", "staff_services",
             "customers", "appointments", "time_blocks", "email_outbox", "audit_logs",
+            "staff_invitations", "users", "user_claims", "user_logins", "user_tokens", "data_protection_keys",
         ];
         Assert.Equal(expected.Order(), tables.Order());
     }

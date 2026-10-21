@@ -16,6 +16,9 @@ public class EmailOutbox : Entity, ISalonOwned
 
     public string Language { get; set; } = "de";
 
+    /// <summary>Data the template needs (links, names) as JSON; rendered into subject and bodies when the mail is sent.</summary>
+    public string? PayloadJson { get; set; }
+
     public string Subject { get; set; } = string.Empty;
 
     /// <summary>Cleared after the retention period (data minimization).</summary>

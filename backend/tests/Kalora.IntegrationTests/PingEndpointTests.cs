@@ -9,11 +9,16 @@ using Microsoft.Extensions.Options;
 
 namespace Kalora.IntegrationTests;
 
-public class PingEndpointTests(ApiFactory factory) : IClassFixture<ApiFactory>
+[Collection(DatabaseCollection.Name)]
+public class PingEndpointTests(PostgresFixture postgres)
 {
+    // MVC requests need the data protection keys (stored in the database), so these tests use a real one.
+    private async Task<AuthApiFactory> StartAsync() => new(await postgres.CreateMigratedDatabaseAsync());
+
     [Fact]
     public async Task Ping_returns_ok_and_utc_time()
     {
+        await using var factory = await StartAsync();
         var client = factory.CreateClient();
 
         var response = await client.GetAsync("/api/ping");
@@ -27,6 +32,7 @@ public class PingEndpointTests(ApiFactory factory) : IClassFixture<ApiFactory>
     [Fact]
     public async Task Health_is_healthy()
     {
+        await using var factory = await StartAsync();
         var client = factory.CreateClient();
 
         var response = await client.GetAsync("/health");
@@ -38,6 +44,7 @@ public class PingEndpointTests(ApiFactory factory) : IClassFixture<ApiFactory>
     [Fact]
     public async Task Unhandled_exception_becomes_problem_details_without_leaking_details()
     {
+        await using var factory = await StartAsync();
         var client = factory.WithWebHostBuilder(builder =>
             builder.ConfigureServices(services => services.AddScoped<IPingService, ThrowingPingService>()))
             .CreateClient();
@@ -54,6 +61,7 @@ public class PingEndpointTests(ApiFactory factory) : IClassFixture<ApiFactory>
     [Fact]
     public void Invalid_configuration_stops_the_host_on_startup()
     {
+        using var factory = new ApiFactory();
         var invalid = factory.WithWebHostBuilder(builder => builder.UseSetting("App:PublicBaseUrl", "not-a-url"));
 
         Assert.Throws<OptionsValidationException>(() => invalid.CreateClient());

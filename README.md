@@ -48,4 +48,4 @@ dotnet run --project src/Kalora.Api   # http://localhost:5080
 
 ## Status
 
-Backend-Grundgerüst, Datenbank und Mandantenfähigkeit stehen. Authentifizierung und Frontend folgen in den nächsten Schritten.
+Backend-Grundgerüst, Datenbank, Mandantenfähigkeit und Anmeldung stehen. Das Frontend folgt in den nächsten Schritten.

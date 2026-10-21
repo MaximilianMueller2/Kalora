@@ -1,3 +1,6 @@
+using FluentValidation;
+using Kalora.Application.Auth;
+using Kalora.Application.Common;
 using Kalora.Application.Configuration;
 using Kalora.Application.Ping;
 using Kalora.Application.Tenancy;
@@ -20,6 +23,20 @@ public static class DependencyInjection
         services.AddScoped<ITenantContext>(provider => provider.GetRequiredService<TenantContext>());
         services.AddScoped<ITenantContextInitializer>(provider => provider.GetRequiredService<TenantContext>());
         services.AddScoped<ISalonResolver, SalonResolver>();
+
+        services.AddSingleton<IValidator<RegisterRequest>, RegisterRequestValidator>();
+        services.AddSingleton<IValidator<LoginRequest>, LoginRequestValidator>();
+        services.AddSingleton<IValidator<ForgotPasswordRequest>, ForgotPasswordRequestValidator>();
+        services.AddSingleton<IValidator<ResetPasswordRequest>, ResetPasswordRequestValidator>();
+        services.AddSingleton<IValidator<CreateInvitationRequest>, CreateInvitationRequestValidator>();
+        services.AddSingleton<IValidator<AcceptInvitationRequest>, AcceptInvitationRequestValidator>();
+
+        services.AddScoped<IEmailOutbox, EmailOutboxWriter>();
+        services.AddScoped<MeResponseFactory>();
+        services.AddScoped<IRegistrationService, RegistrationService>();
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<ITwoFactorService, TwoFactorService>();
+        services.AddScoped<IInvitationService, InvitationService>();
 
         services.AddScoped<IPingService, PingService>();
         return services;

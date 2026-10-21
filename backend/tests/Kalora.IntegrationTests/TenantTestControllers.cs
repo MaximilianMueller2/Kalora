@@ -12,6 +12,7 @@ public sealed record CreateStaffRequest(string DisplayName, Guid? SalonId);
 
 /// <summary>Stand-in for real CRUD endpoints (they do not exist yet): same access pattern, IDs taken from the URL.</summary>
 [ApiController]
+[IgnoreAntiforgeryToken]
 [Route("api/test/staff")]
 public sealed class TestStaffController(IAppDbContext db) : ControllerBase
 {

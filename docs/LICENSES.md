@@ -9,6 +9,10 @@ Erlaubt: MIT, Apache-2.0, BSD-2/3, ISC, PostgreSQL, SIL OFL (Schriften). Regeln 
 | Microsoft.EntityFrameworkCore.Design | 10.0.13 | MIT | Migrationen (nur Build-Zeit, `PrivateAssets=all`) |
 | Npgsql.EntityFrameworkCore.PostgreSQL | 10.0.3 | PostgreSQL | EF-Core-Provider für PostgreSQL |
 | EFCore.NamingConventions | 10.0.1 | Apache-2.0 | snake_case-Namen für Tabellen und Spalten |
+| Microsoft.AspNetCore.Identity.EntityFrameworkCore | 10.0.13 | MIT | Identity-Speicher (Nutzer, Tokens) in EF Core |
+| Microsoft.AspNetCore.DataProtection.EntityFrameworkCore | 10.0.13 | MIT | Data-Protection-Schlüssel in der Datenbank |
+| Microsoft.Extensions.Identity.Stores | 10.0.13 | MIT | `AppUser` und `UserManager` in Application |
+| FluentValidation | 12.2.0 | Apache-2.0 | Validierung der Anfragen in Application |
 | Microsoft.AspNetCore.OpenApi | 10.0.13 | MIT | OpenAPI-Dokument (nur Development) |
 | Scalar.AspNetCore | 2.18.2 | MIT | API-Doku-UI (nur Development) |
 | Serilog.AspNetCore | 10.0.0 | Apache-2.0 | Strukturiertes Logging |

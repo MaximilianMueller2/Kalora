@@ -1,3 +1,4 @@
+using Kalora.Application.Identity;
 using Kalora.Domain.Salons;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,6 +12,9 @@ internal sealed class SalonMemberConfiguration : IEntityTypeConfiguration<SalonM
         builder.ConfigureSalonOwned();
         builder.Property(m => m.Role).HasConversion<string>().HasMaxLength(20);
         builder.HasIndex(m => new { m.SalonId, m.UserId }).IsUnique();
-        builder.HasIndex(m => m.UserId);
+        builder.HasOne<AppUser>().WithMany().HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.Restrict);
+
+        // A user belongs to exactly one salon (see ADR 0002).
+        builder.HasIndex(m => m.UserId).IsUnique();
     }
 }

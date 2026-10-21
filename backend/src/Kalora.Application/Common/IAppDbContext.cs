@@ -1,3 +1,4 @@
+using Kalora.Application.Identity;
 using Kalora.Domain.Appointments;
 using Kalora.Domain.Auditing;
 using Kalora.Domain.Common;
@@ -7,12 +8,15 @@ using Kalora.Domain.Salons;
 using Kalora.Domain.Services;
 using Kalora.Domain.Staff;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Kalora.Application.Common;
 
 /// <summary>The only way services reach the database; implemented by Infrastructure.</summary>
 public interface IAppDbContext
 {
+    DbSet<AppUser> Users { get; }
+
     DbSet<Salon> Salons { get; }
 
     DbSet<SalonOpeningHours> SalonOpeningHours { get; }
@@ -26,6 +30,8 @@ public interface IAppDbContext
     DbSet<StaffWorkingHours> StaffWorkingHours { get; }
 
     DbSet<StaffAbsence> StaffAbsences { get; }
+
+    DbSet<StaffInvitation> StaffInvitations { get; }
 
     DbSet<ServiceCategory> ServiceCategories { get; }
 
@@ -51,6 +57,8 @@ public interface IAppDbContext
 
     /// <summary>Bypasses tenant isolation for <typeparamref name="T"/>. Same restrictions as <see cref="AllSalons"/>.</summary>
     IQueryable<T> AllTenants<T>() where T : class, ISalonOwned;
+
+    Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
