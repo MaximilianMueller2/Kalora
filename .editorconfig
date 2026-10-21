@@ -13,3 +13,7 @@ indent_size = 4
 
 [*.md]
 trim_trailing_whitespace = false
+
+# `dotnet ef` writes migrations with a BOM; keep generated files as the tool emits them.
+[backend/**/Migrations/*.cs]
+charset = utf-8-bom

@@ -19,6 +19,11 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    await app.Services.MigrateDatabaseAsync();
+}
+
 app.UseExceptionHandler();
 app.UseSerilogRequestLogging();
 
