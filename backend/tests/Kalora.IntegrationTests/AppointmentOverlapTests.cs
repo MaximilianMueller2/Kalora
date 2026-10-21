@@ -83,7 +83,7 @@ public class AppointmentOverlapTests(PostgresFixture postgres)
         var world = await SeedAsync();
         var appointmentId = await world.AddAppointmentAsync(world.StaffA, Nine, 60);
 
-        await using (var db = TestDb.CreateContext(world.ConnectionString))
+        await using (var db = TestDb.CreateContext(world.ConnectionString, salonId: world.SalonId))
         {
             var appointment = await db.Appointments.SingleAsync(a => a.Id == appointmentId);
             appointment.Status = AppointmentStatus.Cancelled;
@@ -100,7 +100,7 @@ public class AppointmentOverlapTests(PostgresFixture postgres)
         var cancelledId = await world.AddAppointmentAsync(world.StaffA, Nine, 60, status: AppointmentStatus.Cancelled);
         await world.AddAppointmentAsync(world.StaffA, Nine, 60);
 
-        await using var db = TestDb.CreateContext(world.ConnectionString);
+        await using var db = TestDb.CreateContext(world.ConnectionString, salonId: world.SalonId);
         var cancelled = await db.Appointments.SingleAsync(a => a.Id == cancelledId);
         cancelled.Status = AppointmentStatus.Confirmed;
 
@@ -161,7 +161,7 @@ public class AppointmentOverlapTests(PostgresFixture postgres)
             Guid staffId, DateTimeOffset start, int minutes, int bufferBefore = 0, int bufferAfter = 0,
             AppointmentStatus status = AppointmentStatus.Confirmed)
         {
-            await using var db = TestDb.CreateContext(ConnectionString);
+            await using var db = TestDb.CreateContext(ConnectionString, salonId: SalonId);
             var appointment = Build(staffId, start, minutes, bufferBefore, bufferAfter, status);
             db.Appointments.Add(appointment);
             await db.SaveChangesAsync();
@@ -171,7 +171,7 @@ public class AppointmentOverlapTests(PostgresFixture postgres)
         public async Task AssertRejectedAsync(
             Guid staffId, DateTimeOffset start, int minutes, AppointmentStatus status = AppointmentStatus.Confirmed)
         {
-            await using var db = TestDb.CreateContext(ConnectionString);
+            await using var db = TestDb.CreateContext(ConnectionString, salonId: SalonId);
             db.Appointments.Add(Build(staffId, start, minutes, 0, 0, status));
             await AssertExclusionViolationAsync(() => db.SaveChangesAsync());
         }

@@ -11,6 +11,8 @@ builder.Services.AddSerilog((_, logger) => logger.ReadFrom.Configuration(builder
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -32,6 +34,10 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseMiddleware<TenantResolutionMiddleware>();
 
 app.MapControllers();
 app.MapHealthChecks("/health");

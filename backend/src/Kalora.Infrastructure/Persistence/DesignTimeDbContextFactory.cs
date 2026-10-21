@@ -1,3 +1,4 @@
+using Kalora.Application.Tenancy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -15,6 +16,6 @@ internal sealed class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<A
             .UseNpgsql(connectionString)
             .UseSnakeCaseNamingConvention()
             .Options;
-        return new AppDbContext(options);
+        return new AppDbContext(options, new TenantContext());
     }
 }

@@ -19,7 +19,22 @@ Browser: Komponente → Feature-Service → ApiClient → Caddy (`/api`) → Ser
 
 ## Mandantenfähigkeit
 
-Alle Salons teilen sich eine Datenbank; jede salonbezogene Tabelle trägt `SalonId`, ein globaler Query-Filter begrenzt den Zugriff. Details folgen in `adr/0001-multi-tenancy.md`.
+Alle Salons teilen sich eine Datenbank; jede salonbezogene Tabelle trägt `SalonId`. Begründung und verworfene Alternativen: [ADR 0001](adr/0001-multi-tenancy.md).
+
+```mermaid
+flowchart LR
+    R[Request] --> M[TenantResolutionMiddleware]
+    M -- "/api/public/salons/{slug}" --> S[SalonResolver: Slug → SalonId]
+    M -- "angemeldet" --> C[Claim salon_id]
+    S --> T[ITenantContext]
+    C --> T
+    T --> F[Query-Filter 'Tenant' + SaveChanges-Guard + Concurrency-Token]
+    F --> DB[(PostgreSQL)]
+```
+
+- **Lesen:** globaler Query-Filter auf `Salon` und allen `ISalonOwned`-Entitäten; ohne Mandant keine Daten.
+- **Schreiben:** `TenantSaveGuard` setzt/prüft `SalonId`, `SalonId` ist zusätzlich Concurrency-Token (gefälschte Entitäten treffen keine Zeile).
+- **Umgehung:** nur `AllSalons()` / `AllTenants<T>()`, per Architekturtest auf eine feste Dateiliste beschränkt.
 
 ## Backend-Gerüst
 
@@ -46,7 +61,7 @@ PostgreSQL 18, EF Core Code-First, Migrationen in `Kalora.Infrastructure/Persist
 | `appointments`, `time_blocks` | Termine (mit Snapshot von Name/Preis/Dauer), Blocker |
 | `email_outbox`, `audit_logs` | Mail-Warteschlange, Nachvollziehbarkeit |
 
-- **Basisklasse `Entity`:** `Id` als GUID v7, `CreatedAtUtc`, `UpdatedAtUtc`. `ISalonOwned` markiert Entitäten mit `SalonId` (Query-Filter folgt in Prompt 03).
+- **Basisklasse `Entity`:** `Id` als GUID v7, `CreatedAtUtc`, `UpdatedAtUtc`. `ISalonOwned` markiert Entitäten mit `SalonId`.
 - **Zeitstempel:** `AuditTimestampInterceptor` setzt sie bei jedem Speichern über `TimeProvider`.
 - **Löschverhalten:** Kindtabellen eines Mitarbeitenden bzw. einer Leistung (Dienstplan, Abwesenheiten, Fähigkeiten, Blocker) werden mitgelöscht; alles andere ist `Restrict`. Mitarbeitende und Leistungen werden deaktiviert statt gelöscht, sobald Termine existieren.
 - **Doppelbuchungsschutz:** `appointments.blocked_range` ist eine aus `blocked_start_utc`/`blocked_end_utc` (Termin plus Puffer) erzeugte `tstzrange`-Spalte (`[)`, Back-to-back erlaubt). Der Exclusion-Constraint `ex_appointments_no_overlap` (`btree_gist`) verbietet pro `staff_id` überlappende Termine mit Status `Requested` oder `Confirmed`. Bei Verletzung meldet PostgreSQL SQLSTATE `23P01`; der Buchungsservice übersetzt das später in `booking.slot_unavailable`.

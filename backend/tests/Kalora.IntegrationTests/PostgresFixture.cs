@@ -1,3 +1,4 @@
+using Kalora.Application.Tenancy;
 using Kalora.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -46,13 +47,20 @@ public sealed class DatabaseCollection : ICollectionFixture<PostgresFixture>
 
 internal static class TestDb
 {
-    public static AppDbContext CreateContext(string connectionString, TimeProvider? timeProvider = null)
+    /// <summary>Creates a context acting for <paramref name="salonId"/>; without it the context has no tenant (system / pre-login).</summary>
+    public static AppDbContext CreateContext(string connectionString, TimeProvider? timeProvider = null, Guid? salonId = null)
     {
+        var tenant = new TenantContext();
+        if (salonId is { } id)
+        {
+            tenant.Initialize(id);
+        }
+
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseNpgsql(connectionString)
             .UseSnakeCaseNamingConvention()
             .AddInterceptors(new AuditTimestampInterceptor(timeProvider ?? TimeProvider.System))
             .Options;
-        return new AppDbContext(options);
+        return new AppDbContext(options, tenant);
     }
 }

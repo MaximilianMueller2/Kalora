@@ -13,7 +13,7 @@ using NpgsqlTypes;
 namespace Kalora.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261021143212_InitialCreate")]
+    [Migration("20261021155025_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -128,6 +128,7 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnName("price_is_from");
 
                     b.Property<Guid>("SalonId")
+                        .IsConcurrencyToken()
                         .HasColumnType("uuid")
                         .HasColumnName("salon_id");
 
@@ -215,6 +216,7 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnName("label");
 
                     b.Property<Guid>("SalonId")
+                        .IsConcurrencyToken()
                         .HasColumnType("uuid")
                         .HasColumnName("salon_id");
 
@@ -281,6 +283,7 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnName("entity_type");
 
                     b.Property<Guid>("SalonId")
+                        .IsConcurrencyToken()
                         .HasColumnType("uuid")
                         .HasColumnName("salon_id");
 
@@ -349,6 +352,7 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnName("preferred_language");
 
                     b.Property<Guid>("SalonId")
+                        .IsConcurrencyToken()
                         .HasColumnType("uuid")
                         .HasColumnName("salon_id");
 
@@ -404,6 +408,7 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnName("next_attempt_at_utc");
 
                     b.Property<Guid>("SalonId")
+                        .IsConcurrencyToken()
                         .HasColumnType("uuid")
                         .HasColumnName("salon_id");
 
@@ -589,6 +594,7 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnName("reason");
 
                     b.Property<Guid>("SalonId")
+                        .IsConcurrencyToken()
                         .HasColumnType("uuid")
                         .HasColumnName("salon_id");
 
@@ -623,6 +629,7 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnName("role");
 
                     b.Property<Guid>("SalonId")
+                        .IsConcurrencyToken()
                         .HasColumnType("uuid")
                         .HasColumnName("salon_id");
 
@@ -662,6 +669,7 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnName("end");
 
                     b.Property<Guid>("SalonId")
+                        .IsConcurrencyToken()
                         .HasColumnType("uuid")
                         .HasColumnName("salon_id");
 
@@ -750,6 +758,7 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnName("price_is_from");
 
                     b.Property<Guid>("SalonId")
+                        .IsConcurrencyToken()
                         .HasColumnType("uuid")
                         .HasColumnName("salon_id");
 
@@ -797,6 +806,7 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnName("name");
 
                     b.Property<Guid>("SalonId")
+                        .IsConcurrencyToken()
                         .HasColumnType("uuid")
                         .HasColumnName("salon_id");
 
@@ -832,6 +842,7 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnName("end_utc");
 
                     b.Property<Guid>("SalonId")
+                        .IsConcurrencyToken()
                         .HasColumnType("uuid")
                         .HasColumnName("salon_id");
 
@@ -903,6 +914,7 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnName("is_bookable_online");
 
                     b.Property<Guid>("SalonId")
+                        .IsConcurrencyToken()
                         .HasColumnType("uuid")
                         .HasColumnName("salon_id");
 
@@ -942,6 +954,7 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnName("duration_override_minutes");
 
                     b.Property<Guid>("SalonId")
+                        .IsConcurrencyToken()
                         .HasColumnType("uuid")
                         .HasColumnName("salon_id");
 
@@ -991,6 +1004,7 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnName("end");
 
                     b.Property<Guid>("SalonId")
+                        .IsConcurrencyToken()
                         .HasColumnType("uuid")
                         .HasColumnName("salon_id");
 

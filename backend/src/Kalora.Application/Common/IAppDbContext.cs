@@ -1,5 +1,6 @@
 using Kalora.Domain.Appointments;
 using Kalora.Domain.Auditing;
+using Kalora.Domain.Common;
 using Kalora.Domain.Customers;
 using Kalora.Domain.Messaging;
 using Kalora.Domain.Salons;
@@ -41,6 +42,15 @@ public interface IAppDbContext
     DbSet<EmailOutbox> EmailOutbox { get; }
 
     DbSet<AuditLog> AuditLogs { get; }
+
+    /// <summary>
+    /// Bypasses tenant isolation: the salons of ALL tenants. Reserved for platform-admin services, slug resolution,
+    /// registration and background jobs. An architecture test restricts which files may use it.
+    /// </summary>
+    IQueryable<Salon> AllSalons();
+
+    /// <summary>Bypasses tenant isolation for <typeparamref name="T"/>. Same restrictions as <see cref="AllSalons"/>.</summary>
+    IQueryable<T> AllTenants<T>() where T : class, ISalonOwned;
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

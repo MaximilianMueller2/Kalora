@@ -14,21 +14,21 @@ public class TimestampTests(PostgresFixture postgres)
         var clock = new FakeTimeProvider(new DateTimeOffset(2026, 11, 3, 8, 0, 0, TimeSpan.Zero));
         var salon = new Salon { Name = "Clocked", Slug = $"clocked-{Guid.NewGuid():N}" };
 
-        await using (var db = TestDb.CreateContext(connectionString, clock))
+        await using (var db = TestDb.CreateContext(connectionString, clock, salon.Id))
         {
             db.Salons.Add(salon);
             await db.SaveChangesAsync();
         }
 
         clock.Advance(TimeSpan.FromHours(2));
-        await using (var db = TestDb.CreateContext(connectionString, clock))
+        await using (var db = TestDb.CreateContext(connectionString, clock, salon.Id))
         {
             var loaded = await db.Salons.SingleAsync(s => s.Id == salon.Id);
             loaded.Name = "Renamed";
             await db.SaveChangesAsync();
         }
 
-        await using var verify = TestDb.CreateContext(connectionString, clock);
+        await using var verify = TestDb.CreateContext(connectionString, clock, salon.Id);
         var stored = await verify.Salons.AsNoTracking().SingleAsync(s => s.Id == salon.Id);
         Assert.Equal(new DateTimeOffset(2026, 11, 3, 8, 0, 0, TimeSpan.Zero), stored.CreatedAtUtc);
         Assert.Equal(new DateTimeOffset(2026, 11, 3, 10, 0, 0, TimeSpan.Zero), stored.UpdatedAtUtc);
