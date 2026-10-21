@@ -21,6 +21,18 @@ CLAUDE.md   verbindliche Projektregeln
 
 Die verbindlichen Regeln stehen in [CLAUDE.md](CLAUDE.md), die Architektur in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), erlaubte Abhängigkeiten in [docs/LICENSES.md](docs/LICENSES.md).
 
+## Backend lokal starten
+
+```bash
+cd backend
+dotnet build
+dotnet test
+dotnet run --project src/Kalora.Api   # http://localhost:5080
+```
+
+- Health-Check: `GET /health`, Beispiel-Endpunkt: `GET /api/ping`
+- API-Doku (nur Development): `/scalar/v1`
+
 ## Status
 
-Repository-Gerüst. Backend und Frontend folgen in den nächsten Schritten.
+Backend-Grundgerüst steht. Datenbank, Authentifizierung und Frontend folgen in den nächsten Schritten.

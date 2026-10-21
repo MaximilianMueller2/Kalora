@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Kalora.Api/Kalora.Api.csproj" />
+    <Project Path="src/Kalora.Application/Kalora.Application.csproj" />
+    <Project Path="src/Kalora.Domain/Kalora.Domain.csproj" />
+    <Project Path="src/Kalora.Infrastructure/Kalora.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Kalora.IntegrationTests/Kalora.IntegrationTests.csproj" />
+    <Project Path="tests/Kalora.UnitTests/Kalora.UnitTests.csproj" />
+  </Folder>
+</Solution>
