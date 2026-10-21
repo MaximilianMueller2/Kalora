@@ -1,0 +1,36 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+coverage/
+npm-debug.log*
+playwright-report/
+test-results/
+
+# .NET
+bin/
+obj/
+*.user
+*.suo
+TestResults/
+*.nupkg
+.vs/
+
+# IDEs
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local data
+*.log
+backups/
