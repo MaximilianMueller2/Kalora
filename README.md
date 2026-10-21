@@ -46,6 +46,22 @@ dotnet run --project src/Kalora.Api   # http://localhost:5080
 - Health-Check: `GET /health`, Beispiel-Endpunkt: `GET /api/ping`
 - API-Doku (nur Development): `/scalar/v1`
 
+## Frontend lokal starten
+
+Voraussetzung: Node.js ≥ 22.22.3 (Angular 22). Das Backend läuft auf Port 5080; `ng serve` leitet `/api` dorthin weiter (`frontend/proxy.conf.json`).
+
+```bash
+cd frontend
+npm install
+npm start               # http://localhost:4200
+npm test                # Unit-Tests (Vitest)
+npm run lint            # ESLint
+npm run i18n:check      # fehlende Übersetzungen de/en/tr
+npm run build
+```
+
+Hinweis: Das Backend setzt `Secure`-Cookies. Chrome und Firefox akzeptieren sie auch auf `http://localhost`, Safari nicht – dort lokal besser Chrome oder Firefox nutzen.
+
 ## Status
 
-Backend-Grundgerüst, Datenbank, Mandantenfähigkeit und Anmeldung stehen. Das Frontend folgt in den nächsten Schritten.
+Backend-Grundgerüst, Datenbank, Mandantenfähigkeit und Anmeldung stehen, ebenso das Frontend-Grundgerüst (Layout, Sprachen, HTTP-Schicht). Anmelde-Seiten und Fachbereiche folgen in den nächsten Schritten.

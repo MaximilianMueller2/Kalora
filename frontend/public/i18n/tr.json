@@ -1,0 +1,53 @@
+{
+  "common": {
+    "close": "Kapat",
+    "language": "Dil seç",
+    "skipToContent": "İçeriğe geç",
+    "poweredBy": "Kalora ile online randevu"
+  },
+  "nav": {
+    "label": "Ana gezinme",
+    "dashboard": "Gösterge paneli",
+    "calendar": "Takvim",
+    "requests": "Talepler",
+    "services": "Hizmetler",
+    "team": "Ekip",
+    "settings": "Ayarlar"
+  },
+  "theme": {
+    "system": "Görünüm: cihaza göre",
+    "light": "Görünüm: açık",
+    "dark": "Görünüm: koyu"
+  },
+  "notFound": {
+    "title": "Sayfa bulunamadı",
+    "text": "Bu sayfa yok ya da taşınmış.",
+    "home": "Ana sayfaya git"
+  },
+  "errors": {
+    "unknown": "Bir şeyler ters gitti. Lütfen tekrar dene.",
+    "network": {
+      "unreachable": "Sunucuya bağlanılamıyor. Lütfen internet bağlantını kontrol et."
+    },
+    "http": {
+      "400": "Girilen bilgiler geçersiz.",
+      "403": "Bunun için yetkin yok.",
+      "404": "Bulunamadı.",
+      "409": "Bu arada değişti. Lütfen yenile.",
+      "429": "Çok fazla istek. Lütfen biraz bekle.",
+      "500": "Sunucuda bir hata oluştu. Lütfen daha sonra tekrar dene."
+    },
+    "validation": {
+      "invalid": "Lütfen girdiğin bilgileri kontrol et."
+    },
+    "security": {
+      "antiforgery_failed": "Oturum süresi doldu. Lütfen tekrar dene."
+    },
+    "server": {
+      "unexpected": "Sunucuda bir hata oluştu. Lütfen daha sonra tekrar dene."
+    },
+    "salon": {
+      "not_found": "Böyle bir salon yok."
+    }
+  }
+}

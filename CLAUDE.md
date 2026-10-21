@@ -22,7 +22,8 @@ Diese Regeln gelten für alle Schritte, ohne dass sie wiederholt werden müssen.
 
 ## Lizenzen
 
-- Erlaubt nur: MIT, Apache-2.0, BSD-2/3, ISC, PostgreSQL, SIL OFL (Schriften).
+- Erlaubt nur: MIT, Apache-2.0, BSD-2/3, ISC, PostgreSQL, SIL OFL (Schriften) sowie gleichwertig freizügige 0BSD, MIT-0, CC0-1.0, BlueOak-1.0.0 und Python-2.0 (u. a. `tslib`, ohne das Angular nicht läuft).
+- Nur für Entwicklungswerkzeuge und Datenpakete, die nicht ausgeliefert werden: MPL-2.0 (Dateien werden nicht verändert) und CC-BY-4.0 (`caniuse-lite`).
 - Verboten: kommerzielle oder dual lizenzierte Pakete (u. a. MediatR ≥ 13, AutoMapper ≥ 15, FluentAssertions ≥ 8, MassTransit ≥ 9, QuestPDF, Hangfire, FullCalendar Premium) sowie GPL, AGPL, LGPL, RPL, SSPL.
 - Vor jedem neuen Paket die Lizenz prüfen und in `docs/LICENSES.md` eintragen.
 

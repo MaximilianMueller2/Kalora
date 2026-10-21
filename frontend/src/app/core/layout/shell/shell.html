@@ -1,0 +1,54 @@
+<a class="skip-link" href="#main">{{ 'common.skipToContent' | transloco }}</a>
+
+<div class="shell" [class.desktop]="isDesktop()">
+  @if (isDesktop()) {
+    <aside class="rail">
+      <a class="brand" routerLink="/app">Kalora</a>
+      <nav [attr.aria-label]="'nav.label' | transloco">
+        @for (item of items; track item.path) {
+          <a
+            class="nav-link"
+            [routerLink]="['/app', item.path]"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+          >
+            <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
+            <span>{{ item.labelKey | transloco }}</span>
+          </a>
+        }
+      </nav>
+      <div class="tools">
+        <app-language-switcher />
+        <app-theme-toggle />
+      </div>
+    </aside>
+  } @else {
+    <header class="topbar">
+      <a class="brand" routerLink="/app">Kalora</a>
+      <div class="tools">
+        <app-language-switcher />
+        <app-theme-toggle />
+      </div>
+    </header>
+  }
+
+  <main id="main" tabindex="-1">
+    <router-outlet />
+  </main>
+
+  @if (!isDesktop()) {
+    <nav class="bottom-nav" [attr.aria-label]="'nav.label' | transloco">
+      @for (item of items; track item.path) {
+        <a
+          class="bottom-link"
+          [routerLink]="['/app', item.path]"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+        >
+          <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
+          <span>{{ item.labelKey | transloco }}</span>
+        </a>
+      }
+    </nav>
+  }
+</div>

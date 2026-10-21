@@ -1,0 +1,53 @@
+{
+  "common": {
+    "close": "Schließen",
+    "language": "Sprache wählen",
+    "skipToContent": "Zum Inhalt springen",
+    "poweredBy": "Online-Buchung mit Kalora"
+  },
+  "nav": {
+    "label": "Hauptnavigation",
+    "dashboard": "Dashboard",
+    "calendar": "Kalender",
+    "requests": "Anfragen",
+    "services": "Leistungen",
+    "team": "Team",
+    "settings": "Einstellungen"
+  },
+  "theme": {
+    "system": "Darstellung: wie Gerät",
+    "light": "Darstellung: hell",
+    "dark": "Darstellung: dunkel"
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "text": "Diese Seite gibt es nicht oder sie wurde verschoben.",
+    "home": "Zur Startseite"
+  },
+  "errors": {
+    "unknown": "Etwas ist schiefgelaufen. Bitte versuche es noch einmal.",
+    "network": {
+      "unreachable": "Keine Verbindung zum Server. Bitte prüfe deine Internetverbindung."
+    },
+    "http": {
+      "400": "Die Eingabe ist ungültig.",
+      "403": "Dafür fehlt dir die Berechtigung.",
+      "404": "Das wurde nicht gefunden.",
+      "409": "Das hat sich zwischenzeitlich geändert. Bitte lade neu.",
+      "429": "Zu viele Anfragen. Bitte warte einen Moment.",
+      "500": "Auf dem Server ist ein Fehler aufgetreten. Bitte versuche es später noch einmal."
+    },
+    "validation": {
+      "invalid": "Bitte prüfe deine Eingaben."
+    },
+    "security": {
+      "antiforgery_failed": "Die Sitzung ist abgelaufen. Bitte versuche es noch einmal."
+    },
+    "server": {
+      "unexpected": "Auf dem Server ist ein Fehler aufgetreten. Bitte versuche es später noch einmal."
+    },
+    "salon": {
+      "not_found": "Diesen Salon gibt es nicht."
+    }
+  }
+}

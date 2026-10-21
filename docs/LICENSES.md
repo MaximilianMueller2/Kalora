@@ -35,3 +35,24 @@ Transitive Pakete stammen ausschließlich von Microsoft (MIT), Npgsql (PostgreSQ
 | dotnet-ef (globales Tool) | 10.0.13 | MIT | Migrationen erzeugen |
 | postgres (Docker) | 18 | PostgreSQL | Datenbank |
 | axllent/mailpit (Docker) | v1.31 | MIT | Mail-Fänger, nur Entwicklung |
+
+## Frontend (npm)
+
+Direkte Abhängigkeiten aus `frontend/package.json`. Transitive Pakete prüft `npx license-checker-rseidelsohn --summary` (Stand: 321× MIT, 27× Apache-2.0, 20× ISC, 14× BSD-2-Clause, 6× BSD-3-Clause, 1× OFL-1.1, dazu die unten genannten Sonderfälle). Die CI-Prüfung folgt in Prompt 24.
+
+| Paket | Version | Lizenz | Zweck |
+|-------|---------|--------|-------|
+| @angular/core, common, compiler, forms, platform-browser, router | 22.2.3 | MIT | Framework |
+| @angular/material, @angular/cdk | 22.2.4 | MIT | UI-Komponenten (Material 3), Layout-Helfer |
+| @jsverse/transloco | 8.4.0 | MIT | Übersetzungen zur Laufzeit (de, en, tr) |
+| rxjs | 7.8.2 | Apache-2.0 | Reaktive Streams (HttpClient, Router) |
+| tslib | 2.8.1 | 0BSD | TypeScript-Laufzeithelfer (von Angular vorausgesetzt) |
+| @fontsource-variable/inter | 5.3.0 | OFL-1.1 | Schrift Inter, lokal ausgeliefert |
+| material-icons | 1.13.14 | Apache-2.0 | Icon-Schrift (Outlined), lokal ausgeliefert (155 kB statt 3,9 MB bei Material Symbols) |
+| @angular/build, @angular/cli, @angular/compiler-cli | 22.2.3 | MIT | Build (Dev) |
+| typescript | 6.0.3 | Apache-2.0 | Compiler (Dev) |
+| vitest, jsdom | 5.0.5, 30.1.3 | MIT | Unit-Tests (Dev) |
+| eslint, @eslint/js, typescript-eslint, angular-eslint | 10.13.0, 10.0.1, 8.71.0, 22.6.0 | MIT | Linting (Dev) |
+| prettier | 3.9.10 | MIT | Formatierung (Dev) |
+
+Transitive Sonderfälle: `lightningcss` (MPL-2.0, Build-Werkzeug, nicht ausgeliefert), `caniuse-lite` (CC-BY-4.0, Daten für den Build), `@csstools/*` (MIT-0), `argparse` (Python-2.0), `lru-cache` und `minimatch` (BlueOak-1.0.0), `mdn-data` (CC0-1.0), `@bufbuild/protobuf` (Apache-2.0 AND BSD-3-Clause). Ausgeliefert wird davon nur `tslib`.

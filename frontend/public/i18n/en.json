@@ -1,0 +1,53 @@
+{
+  "common": {
+    "close": "Close",
+    "language": "Choose language",
+    "skipToContent": "Skip to content",
+    "poweredBy": "Online booking with Kalora"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "dashboard": "Dashboard",
+    "calendar": "Calendar",
+    "requests": "Requests",
+    "services": "Services",
+    "team": "Team",
+    "settings": "Settings"
+  },
+  "theme": {
+    "system": "Appearance: match device",
+    "light": "Appearance: light",
+    "dark": "Appearance: dark"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "This page does not exist or has been moved.",
+    "home": "Go to start page"
+  },
+  "errors": {
+    "unknown": "Something went wrong. Please try again.",
+    "network": {
+      "unreachable": "No connection to the server. Please check your internet connection."
+    },
+    "http": {
+      "400": "The input is invalid.",
+      "403": "You do not have permission for this.",
+      "404": "That could not be found.",
+      "409": "This has changed in the meantime. Please reload.",
+      "429": "Too many requests. Please wait a moment.",
+      "500": "A server error occurred. Please try again later."
+    },
+    "validation": {
+      "invalid": "Please check your input."
+    },
+    "security": {
+      "antiforgery_failed": "The session has expired. Please try again."
+    },
+    "server": {
+      "unexpected": "A server error occurred. Please try again later."
+    },
+    "salon": {
+      "not_found": "This salon does not exist."
+    }
+  }
+}

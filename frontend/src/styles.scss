@@ -1,0 +1,67 @@
+@use '@angular/material' as mat;
+
+// Calm neutral surfaces with one accent color. Light and dark follow the CSS `color-scheme` of the page,
+// which the ThemeService sets (system, light or dark). Fonts and icons are served from this app, never from a CDN.
+html {
+  color-scheme: light dark;
+
+  @include mat.theme(
+    (
+      color: (
+        theme-type: color-scheme,
+        primary: mat.$violet-palette,
+      ),
+      typography: (
+        plain-family: (
+          'Inter Variable',
+          system-ui,
+          sans-serif,
+        ),
+        brand-family: (
+          'Inter Variable',
+          system-ui,
+          sans-serif,
+        ),
+      ),
+      density: 0,
+    )
+  );
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-large);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--mat-sys-primary);
+}
+
+// Keyboard focus must always be visible.
+:focus-visible {
+  outline: 3px solid var(--mat-sys-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
