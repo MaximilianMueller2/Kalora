@@ -1,0 +1,81 @@
+{
+  "login": {
+    "title": "Sign in",
+    "lead": "Good to see you again.",
+    "twoFactorLead": "Confirm your sign-in with the code from your authenticator app.",
+    "email": "Email",
+    "password": "Password",
+    "remember": "Stay signed in",
+    "submit": "Sign in",
+    "forgot": "Forgot password?",
+    "register": "New here? Create an account",
+    "twoFactorCode": "6-digit code",
+    "recoveryCode": "Recovery code",
+    "useRecovery": "Use a recovery code",
+    "useCode": "Use the code from the app",
+    "sessionExpired": "Your session has expired. Please sign in again.",
+    "passwordResetDone": "Your password has been changed. You can sign in now."
+  },
+  "register": {
+    "title": "Create account",
+    "lead": "Your salon can take online bookings within minutes.",
+    "salonName": "Salon name",
+    "industry": "Industry",
+    "industries": {
+      "Hair": "Hair salon",
+      "Barber": "Barbershop",
+      "Nails": "Nail studio",
+      "Lashes": "Lash studio",
+      "Beauty": "Beauty"
+    },
+    "name": "Your name",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "At least {{count}} characters",
+    "termsPrefix": "I accept the",
+    "termsLink": "terms",
+    "termsAnd": "and the",
+    "privacyLink": "privacy policy",
+    "submit": "Create account",
+    "trialNote": "Try free for 30 days. No payment details needed.",
+    "haveAccount": "Already registered?",
+    "login": "Sign in"
+  },
+  "forgot": {
+    "title": "Forgot password",
+    "lead": "Enter your email address. We will send you a link to reset it.",
+    "email": "Email",
+    "submit": "Send link",
+    "sent": "If an account exists for this email address, we have sent you a link to reset your password.",
+    "back": "Back to sign in"
+  },
+  "reset": {
+    "title": "Set a new password",
+    "lead": "Choose a new password for your account.",
+    "newPassword": "New password",
+    "confirmPassword": "Repeat password",
+    "submit": "Save password",
+    "incompleteLink": "This link is incomplete. Please request a new one.",
+    "requestNew": "Request a new link"
+  },
+  "confirm": {
+    "title": "Confirm email",
+    "working": "Confirming your email address …",
+    "success": "Thank you! Your email address is confirmed.",
+    "failure": "The link is invalid or has expired.",
+    "continue": "Continue"
+  },
+  "invitation": {
+    "title": "Accept invitation",
+    "loading": "Loading invitation …",
+    "lead": "You have been invited to {{salon}} ({{role}}). Set a password to create your account.",
+    "account": "Your account: {{email}}",
+    "roles": {
+      "Manager": "manager",
+      "Staff": "staff member",
+      "Owner": "owner"
+    },
+    "password": "Password",
+    "submit": "Create account"
+  }
+}

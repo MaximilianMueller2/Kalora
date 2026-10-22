@@ -1,0 +1,5 @@
+{
+  "title": "Hoş geldin, {{name}}!",
+  "placeholder": "“{{salon}}” salonun oluşturuldu. Kurulum (çalışma saatleri, hizmetler, ekip) bir sonraki adımda.",
+  "toDashboard": "Gösterge paneline git"
+}

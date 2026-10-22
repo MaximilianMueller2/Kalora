@@ -1,8 +1,14 @@
-import { HttpContextToken, HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import {
+  HttpContextToken,
+  HttpErrorResponse,
+  HttpInterceptorFn,
+  HttpXsrfTokenExtractor,
+} from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, switchMap, throwError } from 'rxjs';
 import { isApiUrl } from './api-client';
 import { AntiforgeryService } from './antiforgery.service';
+import { XSRF_HEADER_NAME } from './xsrf';
 
 const ANTIFORGERY_RETRIED = new HttpContextToken<boolean>(() => false);
 const ANTIFORGERY_FAILED = 'security.antiforgery_failed';
@@ -13,6 +19,7 @@ const ANTIFORGERY_FAILED = 'security.antiforgery_failed';
  */
 export const antiforgeryRetryInterceptor: HttpInterceptorFn = (req, next) => {
   const antiforgery = inject(AntiforgeryService);
+  const tokens = inject(HttpXsrfTokenExtractor);
 
   return next(req).pipe(
     catchError((error: unknown) => {
@@ -27,11 +34,19 @@ export const antiforgeryRetryInterceptor: HttpInterceptorFn = (req, next) => {
         return throwError(() => error);
       }
 
-      return antiforgery
-        .refresh()
-        .pipe(
-          switchMap(() => next(req.clone({ context: req.context.set(ANTIFORGERY_RETRIED, true) }))),
-        );
+      // Angular's own XSRF interceptor sits further out and has already run for this request, before the cookie
+      // existed. So the fresh token is put into the repeated request here.
+      return antiforgery.refresh().pipe(
+        switchMap(() => {
+          const token = tokens.getToken();
+          return next(
+            req.clone({
+              headers: token ? req.headers.set(XSRF_HEADER_NAME, token) : req.headers,
+              context: req.context.set(ANTIFORGERY_RETRIED, true),
+            }),
+          );
+        }),
+      );
     }),
   );
 };

@@ -1,0 +1,81 @@
+{
+  "login": {
+    "title": "Anmelden",
+    "lead": "Schön, dass du wieder da bist.",
+    "twoFactorLead": "Bestätige deine Anmeldung mit dem Code aus deiner Authenticator-App.",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "remember": "Angemeldet bleiben",
+    "submit": "Anmelden",
+    "forgot": "Passwort vergessen?",
+    "register": "Neu hier? Konto erstellen",
+    "twoFactorCode": "6-stelliger Code",
+    "recoveryCode": "Wiederherstellungscode",
+    "useRecovery": "Wiederherstellungscode verwenden",
+    "useCode": "Code aus der App verwenden",
+    "sessionExpired": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
+    "passwordResetDone": "Dein Passwort wurde geändert. Du kannst dich jetzt anmelden."
+  },
+  "register": {
+    "title": "Konto erstellen",
+    "lead": "In wenigen Minuten ist dein Salon online buchbar.",
+    "salonName": "Name des Salons",
+    "industry": "Branche",
+    "industries": {
+      "Hair": "Friseur",
+      "Barber": "Barbershop",
+      "Nails": "Nagelstudio",
+      "Lashes": "Wimpernstudio",
+      "Beauty": "Kosmetik"
+    },
+    "name": "Dein Name",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "passwordHint": "Mindestens {{count}} Zeichen",
+    "termsPrefix": "Ich akzeptiere die",
+    "termsLink": "AGB",
+    "termsAnd": "und die",
+    "privacyLink": "Datenschutzerklärung",
+    "submit": "Konto erstellen",
+    "trialNote": "30 Tage kostenlos testen. Keine Zahlungsdaten nötig.",
+    "haveAccount": "Schon registriert?",
+    "login": "Anmelden"
+  },
+  "forgot": {
+    "title": "Passwort vergessen",
+    "lead": "Gib deine E-Mail-Adresse ein. Wir schicken dir einen Link zum Zurücksetzen.",
+    "email": "E-Mail",
+    "submit": "Link senden",
+    "sent": "Wenn zu dieser E-Mail-Adresse ein Konto existiert, haben wir dir einen Link zum Zurücksetzen geschickt.",
+    "back": "Zurück zur Anmeldung"
+  },
+  "reset": {
+    "title": "Neues Passwort festlegen",
+    "lead": "Wähle ein neues Passwort für dein Konto.",
+    "newPassword": "Neues Passwort",
+    "confirmPassword": "Passwort wiederholen",
+    "submit": "Passwort speichern",
+    "incompleteLink": "Dieser Link ist unvollständig. Bitte fordere einen neuen an.",
+    "requestNew": "Neuen Link anfordern"
+  },
+  "confirm": {
+    "title": "E-Mail bestätigen",
+    "working": "Deine E-Mail-Adresse wird bestätigt …",
+    "success": "Danke! Deine E-Mail-Adresse ist bestätigt.",
+    "failure": "Der Link ist ungültig oder abgelaufen.",
+    "continue": "Weiter"
+  },
+  "invitation": {
+    "title": "Einladung annehmen",
+    "loading": "Einladung wird geladen …",
+    "lead": "Du wurdest zu {{salon}} eingeladen ({{role}}). Lege ein Passwort fest, um dein Konto zu erstellen.",
+    "account": "Dein Konto: {{email}}",
+    "roles": {
+      "Manager": "Manager:in",
+      "Staff": "Mitarbeiter:in",
+      "Owner": "Inhaber:in"
+    },
+    "password": "Passwort",
+    "submit": "Konto erstellen"
+  }
+}

@@ -3,18 +3,23 @@ import { routes } from './app.routes';
 
 describe('routes', () => {
   const paths = routes.map((route) => route.path);
+  const area = routes.find((route) => route.path === 'app')?.children ?? [];
+  const pages = area.filter((route) => route.loadComponent);
 
   it('keeps static routes before the :slug route and the wildcard last', () => {
     expect(paths.indexOf('app')).toBeLessThan(paths.indexOf(':slug'));
+    expect(paths.indexOf('auth')).toBeLessThan(paths.indexOf(':slug'));
     expect(paths.indexOf(':slug')).toBeLessThan(paths.indexOf('**'));
     expect(paths.at(-1)).toBe('**');
   });
 
-  it('defines all six salon areas, each with a translated title and its own text scope', () => {
-    const area = routes.find((route) => route.path === 'app')?.children ?? [];
-    const pages = area.filter((route) => route.loadComponent);
+  it('protects the whole salon area with the auth guard', () => {
+    expect(routes.find((route) => route.path === 'app')?.canActivate).toHaveLength(1);
+  });
 
+  it('defines onboarding and the six salon areas, each with a translated title and its own text scope', () => {
     expect(pages.map((route) => route.path)).toEqual([
+      'onboarding',
       'dashboard',
       'calendar',
       'requests',
@@ -23,16 +28,34 @@ describe('routes', () => {
       'settings',
     ]);
     for (const page of pages) {
-      expect(page.title).toBe(`nav.${page.path}`);
+      expect(page.title).toBe(page.path === 'onboarding' ? 'title.onboarding' : `nav.${page.path}`);
       expect(page.providers).toHaveLength(1);
     }
   });
 
+  it('restricts services, team and settings to owners and managers', () => {
+    const guarded = pages.filter((route) => route.canActivate).map((route) => route.path);
+
+    expect(guarded).toEqual(['services', 'team', 'settings']);
+  });
+
+  it('keeps login and registration for visitors and leaves reset, confirmation and invitation open', () => {
+    const auth = routes.find((route) => route.path === 'auth')?.children ?? [];
+    const byPath = (path: string) => auth.find((route) => route.path === path);
+
+    for (const path of ['login', 'register', 'forgot-password']) {
+      expect(byPath(path)?.canActivate, path).toHaveLength(1);
+    }
+    for (const path of ['reset-password', 'confirm-email', 'invitation/:token']) {
+      expect(byPath(path)?.canActivate, path).toBeUndefined();
+    }
+  });
+
   it('loads every page lazily', () => {
-    const lazy = routes
+    const eager = routes
       .flatMap((route) => [route, ...(route.children ?? [])])
       .filter((route) => route.component);
 
-    expect(lazy).toEqual([]);
+    expect(eager).toEqual([]);
   });
 });

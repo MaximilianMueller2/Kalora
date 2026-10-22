@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Injectable, inject, signal } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 import { firstValueFrom } from 'rxjs';
-import { DEFAULT_LANGUAGE, Language, resolveLanguage } from './languages';
+import { DEFAULT_LANGUAGE, Language, isLanguage, resolveLanguage } from './languages';
 
 const STORAGE_KEY = 'kalora.language';
 
@@ -22,6 +22,13 @@ export class LanguageService {
       browser: this.document.defaultView?.navigator.languages ?? [],
     });
     await this.apply(language);
+  }
+
+  /** After sign-in: the profile language applies unless this device has an explicit choice. */
+  async applyProfileLanguage(profile: string): Promise<void> {
+    if (this.readStored() === null && isLanguage(profile) && profile !== this.active()) {
+      await this.apply(profile);
+    }
   }
 
   /** Switches the language and remembers the choice on this device. */

@@ -79,7 +79,9 @@ internal static class AuthenticationSetup
             options.HeaderName = AntiforgeryHeader;
             options.Cookie.Name = "kalora.af";
             options.Cookie.HttpOnly = true;
-            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            // "Always" makes the antiforgery service throw on plain HTTP (local development). Behind the reverse proxy the
+            // request counts as HTTPS through the forwarded headers, so the cookie is Secure in production.
+            options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
             options.Cookie.SameSite = SameSiteMode.Lax;
         });
 

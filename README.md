@@ -48,7 +48,7 @@ dotnet run --project src/Kalora.Api   # http://localhost:5080
 
 ## Frontend lokal starten
 
-Voraussetzung: Node.js ≥ 22.22.3 (Angular 22). Das Backend läuft auf Port 5080; `ng serve` leitet `/api` dorthin weiter (`frontend/proxy.conf.json`).
+Voraussetzung: Node.js ≥ 22.22.3 (Angular 22). Das Backend (siehe oben) läuft auf Port 5080; `ng serve` leitet `/api` dorthin weiter (`frontend/proxy.conf.json`). Für den ersten Start also zuerst Datenbank und API starten, dann das Frontend.
 
 ```bash
 cd frontend
@@ -60,8 +60,10 @@ npm run i18n:check      # fehlende Übersetzungen de/en/tr
 npm run build
 ```
 
+Ausprobieren: Auf http://localhost:4200 ein Konto registrieren. Die Bestätigungs-, Passwort-Reset- und Einladungs-Mails landen vorerst nur in der Tabelle `email_outbox` (der Versand folgt später); die Links stehen dort im Feld `payload_json` und führen auf `/auth/confirm-email`, `/auth/reset-password` bzw. `/auth/invitation/<token>`.
+
 Hinweis: Das Backend setzt `Secure`-Cookies. Chrome und Firefox akzeptieren sie auch auf `http://localhost`, Safari nicht – dort lokal besser Chrome oder Firefox nutzen.
 
 ## Status
 
-Backend-Grundgerüst, Datenbank, Mandantenfähigkeit und Anmeldung stehen, ebenso das Frontend-Grundgerüst (Layout, Sprachen, HTTP-Schicht). Anmelde-Seiten und Fachbereiche folgen in den nächsten Schritten.
+Backend-Grundgerüst, Datenbank, Mandantenfähigkeit und Anmeldung stehen, ebenso das Frontend-Grundgerüst (Layout, Sprachen, HTTP-Schicht) und die Konto-Seiten (Anmelden, Registrieren, Passwort, Einladung). Die Fachbereiche folgen in den nächsten Schritten.

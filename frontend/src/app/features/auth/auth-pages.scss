@@ -1,0 +1,77 @@
+// Shared by all pages inside the auth card.
+:host {
+  display: block;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font: var(--mat-sys-headline-small);
+}
+
+.lead {
+  margin: 0 0 24px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+form {
+  display: grid;
+  gap: 4px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.alert {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  border-radius: var(--mat-sys-corner-medium);
+  font: var(--mat-sys-body-medium);
+
+  &.error {
+    background: var(--mat-sys-error-container);
+    color: var(--mat-sys-on-error-container);
+  }
+
+  &.info {
+    background: var(--mat-sys-secondary-container);
+    color: var(--mat-sys-on-secondary-container);
+  }
+}
+
+.submit {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 8px;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-top: 24px;
+  font: var(--mat-sys-body-medium);
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+.hint {
+  margin: 0 0 8px;
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-body-small);
+}
+
+.terms {
+  margin-top: 4px;
+}
+
+.field-error {
+  margin: -4px 0 8px 16px;
+  color: var(--mat-sys-error);
+  font: var(--mat-sys-body-small);
+}

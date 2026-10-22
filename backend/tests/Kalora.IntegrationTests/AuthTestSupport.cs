@@ -89,9 +89,9 @@ internal sealed class AuthTestHost : IAsyncDisposable
         return new AuthTestHost(new AuthApiFactory(connectionString), connectionString);
     }
 
-    public ApiSession NewSession() => new(_factory.CreateClient(new WebApplicationFactoryClientOptions
+    public ApiSession NewSession(Uri? baseAddress = null) => new(_factory.CreateClient(new WebApplicationFactoryClientOptions
     {
-        BaseAddress = new Uri("https://localhost"),
+        BaseAddress = baseAddress ?? new Uri("https://localhost"),
     }));
 
     public static RegisterRequest Registration(string email, string salonName = "Haarwerk Müller", string language = "de") =>

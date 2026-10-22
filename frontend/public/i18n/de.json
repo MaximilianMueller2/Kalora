@@ -12,7 +12,8 @@
     "requests": "Anfragen",
     "services": "Leistungen",
     "team": "Team",
-    "settings": "Einstellungen"
+    "settings": "Einstellungen",
+    "logout": "Abmelden"
   },
   "theme": {
     "system": "Darstellung: wie Gerät",
@@ -38,7 +39,11 @@
       "500": "Auf dem Server ist ein Fehler aufgetreten. Bitte versuche es später noch einmal."
     },
     "validation": {
-      "invalid": "Bitte prüfe deine Eingaben."
+      "invalid": "Bitte prüfe deine Eingaben.",
+      "required": "Bitte fülle alle Pflichtfelder aus.",
+      "email_invalid": "Bitte gib eine gültige E-Mail-Adresse ein.",
+      "too_long": "Eine Eingabe ist zu lang.",
+      "language_unsupported": "Diese Sprache wird nicht unterstützt."
     },
     "security": {
       "antiforgery_failed": "Die Sitzung ist abgelaufen. Bitte versuche es noch einmal."
@@ -48,6 +53,39 @@
     },
     "salon": {
       "not_found": "Diesen Salon gibt es nicht."
+    },
+    "auth": {
+      "invalid_credentials": "E-Mail oder Passwort stimmt nicht.",
+      "locked_out": "Zu viele Fehlversuche. Das Konto ist für 15 Minuten gesperrt.",
+      "invalid_two_factor_code": "Der Code ist ungültig. Bitte versuche es noch einmal.",
+      "two_factor_required": "Bitte gib deinen Zwei-Faktor-Code ein.",
+      "email_taken": "Zu dieser E-Mail-Adresse gibt es schon ein Konto.",
+      "invalid_token": "Der Link ist ungültig oder abgelaufen.",
+      "password_too_short": "Das Passwort ist zu kurz (mindestens 10 Zeichen).",
+      "password_invalid": "Dieses Passwort ist nicht zulässig.",
+      "terms_not_accepted": "Bitte stimme den AGB und der Datenschutzerklärung zu.",
+      "unauthorized": "Bitte melde dich an."
+    },
+    "invitation": {
+      "invalid": "Diese Einladung ist ungültig oder wurde schon verwendet.",
+      "expired": "Diese Einladung ist abgelaufen. Bitte den Salon um eine neue.",
+      "staff_already_linked": "Für diese Person gibt es schon ein Konto."
     }
+  },
+  "title": {
+    "login": "Anmelden",
+    "register": "Konto erstellen",
+    "forgotPassword": "Passwort vergessen",
+    "resetPassword": "Neues Passwort",
+    "confirmEmail": "E-Mail bestätigen",
+    "invitation": "Einladung annehmen",
+    "onboarding": "Willkommen"
+  },
+  "validation": {
+    "required": "Dieses Feld ist erforderlich.",
+    "email": "Bitte gib eine gültige E-Mail-Adresse ein.",
+    "minLength": "Mindestens {{minLength}} Zeichen.",
+    "passwordMismatch": "Die Passwörter stimmen nicht überein.",
+    "termsRequired": "Bitte stimme den AGB und der Datenschutzerklärung zu."
   }
 }

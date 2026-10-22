@@ -9,6 +9,7 @@ import { ApiError } from './api-error';
 import { credentialsInterceptor } from './credentials.interceptor';
 import { ErrorNotifier } from './error-notifier';
 import { errorInterceptor } from './error.interceptor';
+import { XSRF_COOKIE_NAME, XSRF_HEADER_NAME } from './xsrf';
 
 describe('HTTP stack', () => {
   let api: ApiClient;
@@ -22,7 +23,7 @@ describe('HTTP stack', () => {
         provideTestI18n(),
         provideHttpClient(
           withInterceptors([credentialsInterceptor, errorInterceptor, antiforgeryRetryInterceptor]),
-          withXsrfConfiguration({ cookieName: 'XSRF-TOKEN', headerName: 'X-XSRF-TOKEN' }),
+          withXsrfConfiguration({ cookieName: XSRF_COOKIE_NAME, headerName: XSRF_HEADER_NAME }),
         ),
         provideHttpClientTesting(),
         { provide: ErrorNotifier, useValue: notifier },
@@ -116,16 +117,24 @@ describe('HTTP stack', () => {
   describe('antiforgery', () => {
     const rejection = { code: 'security.antiforgery_failed' };
 
-    it('fetches a new token and repeats a rejected write once', () => {
+    afterEach(() => {
+      document.cookie = `${XSRF_COOKIE_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+    });
+
+    it('fetches a new token and repeats a rejected write once, with the fresh token in the header', () => {
       let result: unknown;
       api.post('/auth/login', { email: 'a@b.de' }).subscribe((value) => (result = value));
 
-      http
-        .expectOne('/api/auth/login')
-        .flush(rejection, { status: 400, statusText: 'Bad Request' });
+      const first = http.expectOne('/api/auth/login');
+      expect(first.request.headers.has(XSRF_HEADER_NAME)).toBe(false);
+      first.flush(rejection, { status: 400, statusText: 'Bad Request' });
+      // The server's answer to the token request sets the cookie. Angular's XSRF interceptor already ran for the
+      // first attempt, so only the retry interceptor can put the new value into the repeated request.
+      document.cookie = `${XSRF_COOKIE_NAME}=fresh-token; path=/`;
       http.expectOne('/api/antiforgery').flush(null, { status: 204, statusText: 'No Content' });
       const retry = http.expectOne('/api/auth/login');
       expect(retry.request.body).toEqual({ email: 'a@b.de' });
+      expect(retry.request.headers.get(XSRF_HEADER_NAME)).toBe('fresh-token');
       retry.flush({ ok: true });
 
       expect(result).toEqual({ ok: true });

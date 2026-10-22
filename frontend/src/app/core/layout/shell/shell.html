@@ -5,7 +5,7 @@
     <aside class="rail">
       <a class="brand" routerLink="/app">Kalora</a>
       <nav [attr.aria-label]="'nav.label' | transloco">
-        @for (item of items; track item.path) {
+        @for (item of items(); track item.path) {
           <a
             class="nav-link"
             [routerLink]="['/app', item.path]"
@@ -17,9 +17,21 @@
           </a>
         }
       </nav>
-      <div class="tools">
-        <app-language-switcher />
-        <app-theme-toggle />
+      <div class="account">
+        @if (user(); as me) {
+          <div class="who">
+            <strong>{{ me.displayName }}</strong>
+            <span>{{ me.salon?.name }}</span>
+          </div>
+        }
+        <button mat-button class="logout" type="button" (click)="logout()">
+          <mat-icon aria-hidden="true">logout</mat-icon>
+          {{ 'nav.logout' | transloco }}
+        </button>
+        <div class="tools">
+          <app-language-switcher />
+          <app-theme-toggle />
+        </div>
       </div>
     </aside>
   } @else {
@@ -28,6 +40,15 @@
       <div class="tools">
         <app-language-switcher />
         <app-theme-toggle />
+        <button
+          mat-icon-button
+          class="icon-button"
+          type="button"
+          [attr.aria-label]="'nav.logout' | transloco"
+          (click)="logout()"
+        >
+          <mat-icon aria-hidden="true">logout</mat-icon>
+        </button>
       </div>
     </header>
   }
@@ -38,7 +59,7 @@
 
   @if (!isDesktop()) {
     <nav class="bottom-nav" [attr.aria-label]="'nav.label' | transloco">
-      @for (item of items; track item.path) {
+      @for (item of items(); track item.path) {
         <a
           class="bottom-link"
           [routerLink]="['/app', item.path]"

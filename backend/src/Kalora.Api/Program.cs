@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Kalora.Api.Auth;
 using Kalora.Api.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Kalora.Application;
 using Kalora.Infrastructure;
@@ -13,6 +14,15 @@ builder.Services.AddSerilog((_, logger) => logger.ReadFrom.Configuration(builder
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+// TLS ends at the reverse proxy (Caddy), which tells the API the original scheme. The API container is only reachable
+// through the proxy (see deploy/), so its forwarded headers can be trusted.
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownIPNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 
 builder.Services.AddKaloraAuth();
 builder.Services
@@ -30,6 +40,7 @@ if (app.Environment.IsDevelopment())
     await app.Services.MigrateDatabaseAsync();
 }
 
+app.UseForwardedHeaders();
 app.UseExceptionHandler();
 app.UseSerilogRequestLogging();
 

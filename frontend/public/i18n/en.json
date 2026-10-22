@@ -12,7 +12,8 @@
     "requests": "Requests",
     "services": "Services",
     "team": "Team",
-    "settings": "Settings"
+    "settings": "Settings",
+    "logout": "Sign out"
   },
   "theme": {
     "system": "Appearance: match device",
@@ -38,7 +39,11 @@
       "500": "A server error occurred. Please try again later."
     },
     "validation": {
-      "invalid": "Please check your input."
+      "invalid": "Please check your input.",
+      "required": "Please fill in all required fields.",
+      "email_invalid": "Please enter a valid email address.",
+      "too_long": "An entry is too long.",
+      "language_unsupported": "This language is not supported."
     },
     "security": {
       "antiforgery_failed": "The session has expired. Please try again."
@@ -48,6 +53,39 @@
     },
     "salon": {
       "not_found": "This salon does not exist."
+    },
+    "auth": {
+      "invalid_credentials": "Email or password is incorrect.",
+      "locked_out": "Too many failed attempts. The account is locked for 15 minutes.",
+      "invalid_two_factor_code": "The code is invalid. Please try again.",
+      "two_factor_required": "Please enter your two-factor code.",
+      "email_taken": "An account with this email address already exists.",
+      "invalid_token": "The link is invalid or has expired.",
+      "password_too_short": "The password is too short (at least 10 characters).",
+      "password_invalid": "This password is not allowed.",
+      "terms_not_accepted": "Please agree to the terms and the privacy policy.",
+      "unauthorized": "Please sign in."
+    },
+    "invitation": {
+      "invalid": "This invitation is invalid or has already been used.",
+      "expired": "This invitation has expired. Please ask the salon for a new one.",
+      "staff_already_linked": "This person already has an account."
     }
+  },
+  "title": {
+    "login": "Sign in",
+    "register": "Create account",
+    "forgotPassword": "Forgot password",
+    "resetPassword": "New password",
+    "confirmEmail": "Confirm email",
+    "invitation": "Accept invitation",
+    "onboarding": "Welcome"
+  },
+  "validation": {
+    "required": "This field is required.",
+    "email": "Please enter a valid email address.",
+    "minLength": "At least {{minLength}} characters.",
+    "passwordMismatch": "The passwords do not match.",
+    "termsRequired": "Please agree to the terms and the privacy policy."
   }
 }

@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@jsverse/transloco';
 import { ApiError } from './api-error';
+import { ErrorMessageService } from './error-message.service';
 
 const SNACKBAR_DURATION_MS = 6000;
 
@@ -9,6 +10,7 @@ const SNACKBAR_DURATION_MS = 6000;
 export class ErrorNotifier {
   private readonly snackBar = inject(MatSnackBar);
   private readonly transloco = inject(TranslocoService);
+  private readonly messages = inject(ErrorMessageService);
 
   show(error: ApiError): void {
     this.snackBar.open(this.messageFor(error), this.transloco.translate('common.close'), {
@@ -16,16 +18,7 @@ export class ErrorNotifier {
     });
   }
 
-  /** `errors.<code>` if the code is translated, else a generic text for its HTTP class. */
   messageFor(error: ApiError): string {
-    const specific = `errors.${error.code}`;
-    const translated = this.transloco.translate(specific);
-    if (translated !== specific) {
-      return translated;
-    }
-
-    return this.transloco.translate(
-      error.isNetworkError ? 'errors.network.unreachable' : 'errors.unknown',
-    );
+    return this.messages.messageFor(error);
   }
 }

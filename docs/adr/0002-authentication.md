@@ -27,6 +27,7 @@ Salon-Personal (Inhaber:in, Manager:in, Mitarbeitende) meldet sich im Salon-Bere
 - Tokens für Reset- und Bestätigungslinks stehen bis zum Versand (und bis zur Bereinigung) in `payload_json` der Outbox. Prompt 13/19 sollen die Nutzdaten nach erfolgreichem Versand leeren.
 - Konten ohne Salon (Plattform-Admins) können noch keine Mails über die Outbox erhalten, weil sie salonbezogen ist.
 - Die Data-Protection-Schlüssel liegen unverschlüsselt in der Datenbank; Backups sind entsprechend zu schützen (Prompt 22/25).
+- Das Antiforgery-Cookie ist `SameAsRequest`, damit lokale Entwicklung über HTTP funktioniert (`Always` lässt den Antiforgery-Dienst dort mit einer Ausnahme scheitern). Hinter dem Reverse Proxy wird die Anfrage über die Forwarded-Header als HTTPS erkannt; die API darf deshalb produktiv nur über den Proxy erreichbar sein.
 - Rate-Limiting auf Login und Registrierung folgt in Prompt 22; bis dahin schützt die Kontosperre einzelne Konten, nicht vor breitem Durchprobieren.
 
 ## Verworfene Alternativen

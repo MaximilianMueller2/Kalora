@@ -1,0 +1,5 @@
+{
+  "title": "Willkommen, {{name}}!",
+  "placeholder": "Dein Salon „{{salon}}“ ist angelegt. Die Einrichtung (Öffnungszeiten, Leistungen, Team) folgt im nächsten Schritt.",
+  "toDashboard": "Zum Dashboard"
+}

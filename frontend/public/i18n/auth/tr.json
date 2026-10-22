@@ -1,0 +1,81 @@
+{
+  "login": {
+    "title": "Giriş yap",
+    "lead": "Tekrar hoş geldin.",
+    "twoFactorLead": "Girişini kimlik doğrulama uygulamandaki kodla onayla.",
+    "email": "E-posta",
+    "password": "Şifre",
+    "remember": "Oturumum açık kalsın",
+    "submit": "Giriş yap",
+    "forgot": "Şifreni mi unuttun?",
+    "register": "Yeni misin? Hesap oluştur",
+    "twoFactorCode": "6 haneli kod",
+    "recoveryCode": "Kurtarma kodu",
+    "useRecovery": "Kurtarma kodu kullan",
+    "useCode": "Uygulamadaki kodu kullan",
+    "sessionExpired": "Oturumun sona erdi. Lütfen tekrar giriş yap.",
+    "passwordResetDone": "Şifren değiştirildi. Şimdi giriş yapabilirsin."
+  },
+  "register": {
+    "title": "Hesap oluştur",
+    "lead": "Salonun birkaç dakika içinde online randevuya açılır.",
+    "salonName": "Salon adı",
+    "industry": "Sektör",
+    "industries": {
+      "Hair": "Kuaför",
+      "Barber": "Berber",
+      "Nails": "Tırnak stüdyosu",
+      "Lashes": "Kirpik stüdyosu",
+      "Beauty": "Güzellik"
+    },
+    "name": "Adın",
+    "email": "E-posta",
+    "password": "Şifre",
+    "passwordHint": "En az {{count}} karakter",
+    "termsPrefix": "Kabul ediyorum:",
+    "termsLink": "Kullanım koşulları",
+    "termsAnd": "ve",
+    "privacyLink": "Gizlilik politikası",
+    "submit": "Hesap oluştur",
+    "trialNote": "30 gün ücretsiz dene. Ödeme bilgisi gerekmez.",
+    "haveAccount": "Zaten kayıtlı mısın?",
+    "login": "Giriş yap"
+  },
+  "forgot": {
+    "title": "Şifremi unuttum",
+    "lead": "E-posta adresini gir. Sana sıfırlama bağlantısı gönderelim.",
+    "email": "E-posta",
+    "submit": "Bağlantı gönder",
+    "sent": "Bu e-posta adresine ait bir hesap varsa, sana şifre sıfırlama bağlantısı gönderdik.",
+    "back": "Girişe dön"
+  },
+  "reset": {
+    "title": "Yeni şifre belirle",
+    "lead": "Hesabın için yeni bir şifre seç.",
+    "newPassword": "Yeni şifre",
+    "confirmPassword": "Şifreyi tekrarla",
+    "submit": "Şifreyi kaydet",
+    "incompleteLink": "Bu bağlantı eksik. Lütfen yenisini iste.",
+    "requestNew": "Yeni bağlantı iste"
+  },
+  "confirm": {
+    "title": "E-postayı doğrula",
+    "working": "E-posta adresin doğrulanıyor …",
+    "success": "Teşekkürler! E-posta adresin doğrulandı.",
+    "failure": "Bağlantı geçersiz veya süresi dolmuş.",
+    "continue": "Devam"
+  },
+  "invitation": {
+    "title": "Daveti kabul et",
+    "loading": "Davet yükleniyor …",
+    "lead": "{{salon}} salonuna davet edildin ({{role}}). Hesabını oluşturmak için bir şifre belirle.",
+    "account": "Hesabın: {{email}}",
+    "roles": {
+      "Manager": "yönetici",
+      "Staff": "çalışan",
+      "Owner": "sahip"
+    },
+    "password": "Şifre",
+    "submit": "Hesap oluştur"
+  }
+}

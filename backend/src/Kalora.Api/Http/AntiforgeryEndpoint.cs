@@ -16,7 +16,7 @@ internal static class AntiforgeryEndpoint
             context.Response.Cookies.Append(AuthenticationSetup.AntiforgeryRequestCookie, tokens.RequestToken!, new CookieOptions
             {
                 HttpOnly = false,
-                Secure = true,
+                Secure = context.Request.IsHttps,
                 SameSite = SameSiteMode.Lax,
                 Path = "/",
             });

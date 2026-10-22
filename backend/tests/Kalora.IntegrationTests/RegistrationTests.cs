@@ -123,6 +123,23 @@ public class RegistrationTests(PostgresFixture postgres)
     }
 
     [Fact]
+    public async Task The_antiforgery_endpoint_works_over_plain_http_and_behind_a_tls_proxy()
+    {
+        await using var host = await AuthTestHost.StartAsync(postgres);
+        var plainHttp = host.NewSession(new Uri("http://localhost"));
+        var behindProxy = host.NewSession(new Uri("http://localhost"));
+        behindProxy.Client.DefaultRequestHeaders.Add("X-Forwarded-Proto", "https");
+
+        var local = await plainHttp.GetAsync("/api/antiforgery");
+        var proxied = await behindProxy.GetAsync("/api/antiforgery");
+
+        Assert.Equal(HttpStatusCode.NoContent, local.StatusCode);
+        Assert.Equal(HttpStatusCode.NoContent, proxied.StatusCode);
+        Assert.DoesNotContain("secure", string.Join(';', local.Headers.GetValues("Set-Cookie")), StringComparison.OrdinalIgnoreCase);
+        Assert.All(proxied.Headers.GetValues("Set-Cookie"), cookie => Assert.Contains("secure", cookie, StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
     public async Task A_user_can_belong_to_only_one_salon()
     {
         await using var host = await AuthTestHost.StartAsync(postgres);

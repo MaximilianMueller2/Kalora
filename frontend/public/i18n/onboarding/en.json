@@ -1,0 +1,5 @@
+{
+  "title": "Welcome, {{name}}!",
+  "placeholder": "Your salon “{{salon}}” has been created. Setup (opening hours, services, team) follows in the next step.",
+  "toDashboard": "Go to dashboard"
+}
