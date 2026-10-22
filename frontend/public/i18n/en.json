@@ -3,7 +3,8 @@
     "close": "Close",
     "language": "Choose language",
     "skipToContent": "Skip to content",
-    "poweredBy": "Online booking with Kalora"
+    "poweredBy": "Online booking with Kalora",
+    "loading": "Loading …"
   },
   "nav": {
     "label": "Main navigation",
@@ -70,6 +71,30 @@
       "invalid": "This invitation is invalid or has already been used.",
       "expired": "This invitation has expired. Please ask the salon for a new one.",
       "staff_already_linked": "This person already has an account."
+    },
+    "settings": {
+      "slug_invalid": "The link may only contain lowercase letters, digits and single hyphens (3 to 40 characters).",
+      "slug_reserved": "This link is reserved. Please choose another one.",
+      "slug_taken": "This link is already used by another salon.",
+      "slug_owner_only": "Only the owner can change the link.",
+      "timezone_invalid": "This time zone is invalid.",
+      "phone_invalid": "Please enter a valid phone number.",
+      "url_invalid": "Please enter a full address starting with https://.",
+      "slot_interval_invalid": "This time grid is not allowed.",
+      "value_out_of_range": "A value is outside the allowed range."
+    },
+    "opening_hours": {
+      "block_invalid": "The end must be after the start.",
+      "overlap": "The time spans of a day overlap.",
+      "too_many_blocks": "At most 4 time spans per day.",
+      "duplicate_day": "A weekday appears twice."
+    },
+    "closure": {
+      "date_in_past": "The date is in the past.",
+      "range_invalid": "The end cannot be before the start.",
+      "range_too_long": "You can enter at most 62 days at once.",
+      "already_exists": "This day is already marked as closed.",
+      "not_found": "This closed day no longer exists."
     }
   },
   "title": {
@@ -86,6 +111,26 @@
     "email": "Please enter a valid email address.",
     "minLength": "At least {{minLength}} characters.",
     "passwordMismatch": "The passwords do not match.",
-    "termsRequired": "Please agree to the terms and the privacy policy."
+    "termsRequired": "Please agree to the terms and the privacy policy.",
+    "slugInvalid": "Lowercase letters, digits and hyphens only, 3 to 40 characters.",
+    "phoneInvalid": "Please enter a valid phone number.",
+    "urlInvalid": "Please enter a full address starting with https://.",
+    "maxLength": "Too long (at most {{maxLength}} characters).",
+    "range": "Please enter a whole number within the allowed range.",
+    "endBeforeStart": "The end cannot be before the start."
+  },
+  "schedule": {
+    "open": "Open",
+    "closed": "Closed",
+    "addBlock": "Add time span",
+    "removeBlock": "Remove time span",
+    "copyPrevious": "Same as {{day}}",
+    "start": "From",
+    "end": "To",
+    "problems": {
+      "block_invalid": "The end must be after the start.",
+      "overlap": "The time spans overlap.",
+      "too_many_blocks": "At most 4 time spans per day."
+    }
   }
 }

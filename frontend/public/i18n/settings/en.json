@@ -1,4 +1,67 @@
 {
   "title": "Settings",
-  "placeholder": "Here you set up the salon profile, opening hours and booking rules."
+  "saved": "Saved",
+  "removed": "Removed",
+  "save": "Save",
+  "tabs": {
+    "salon": "Salon",
+    "hours": "Opening hours",
+    "booking": "Booking rules",
+    "closures": "Closed days"
+  },
+  "salon": {
+    "title": "Your salon",
+    "lead": "Your customers see this information on the booking page.",
+    "name": "Salon name",
+    "industry": "Industry",
+    "slug": "Booking link",
+    "slugWarning": "If you change the link, printed QR codes and shared links stop working.",
+    "slugOwnerOnly": "Only the owner can change the link.",
+    "suggest": "Suggest from name",
+    "street": "Street and number",
+    "postalCode": "Postal code",
+    "city": "City",
+    "phone": "Phone",
+    "timeZone": "Time zone",
+    "language": "Default language of e-mails",
+    "imprint": "Legal notice",
+    "imprintHint": "Shown on your booking page.",
+    "privacyUrl": "Link to your privacy policy",
+    "privacyHint": "Optional, e.g. https://your-salon.com/privacy"
+  },
+  "hours": {
+    "title": "Opening hours",
+    "lead": "When is your salon open? You can enter several time spans per day, e.g. with a lunch break."
+  },
+  "booking": {
+    "title": "Booking rules",
+    "lead": "How customers can book with you.",
+    "slotInterval": "Time grid",
+    "slotIntervalHint": "Start times are offered at this interval.",
+    "minutes": "{{count}} minutes",
+    "autoConfirm": "Confirm requests automatically",
+    "autoConfirmHint": "Without the tick you confirm every request yourself.",
+    "minLead": "Minimum notice (minutes)",
+    "minLeadHint": "How close to the appointment a booking is still allowed. Allowed: {{min}} to {{max}}.",
+    "horizon": "Booking horizon (days)",
+    "horizonHint": "How far ahead customers can book. Allowed: {{min}} to {{max}}.",
+    "cancellation": "Cancellation deadline (hours)",
+    "cancellationHint": "Customers can cancel themselves up to this many hours before the appointment. Allowed: {{min}} to {{max}}.",
+    "requestExpiry": "Time to answer requests (hours)",
+    "requestExpiryHint": "An unanswered request expires after this time. Allowed: {{min}} to {{max}}.",
+    "retention": "Keep customer data for (months)",
+    "retentionHint": "Customers without appointments are anonymized afterwards. Allowed: {{min}} to {{max}}."
+  },
+  "closures": {
+    "title": "Closed days",
+    "lead": "Public holidays and company holidays: nobody can book on these days.",
+    "date": "Date",
+    "endDate": "Until (optional)",
+    "endDateHint": "For several days in a row.",
+    "reason": "Reason (optional)",
+    "add": "Add closed day",
+    "upcoming": "Upcoming closed days",
+    "empty": "No closed days entered.",
+    "remove": "Remove closed day on {{date}}"
+  }
 }

@@ -3,6 +3,7 @@ using Kalora.Application.Auth;
 using Kalora.Application.Common;
 using Kalora.Application.Configuration;
 using Kalora.Application.Ping;
+using Kalora.Application.Salons;
 using Kalora.Application.Tenancy;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -33,6 +34,13 @@ public static class DependencyInjection
 
         services.AddScoped<IEmailOutbox, EmailOutboxWriter>();
         services.AddScoped<MeResponseFactory>();
+        services.AddSingleton<IValidator<SalonProfile>, SalonProfileValidator>();
+        services.AddSingleton<IValidator<BookingRules>, BookingRulesValidator>();
+        services.AddSingleton<IValidator<OpeningHoursPlan>, OpeningHoursPlanValidator>();
+        services.AddSingleton<IValidator<CreateClosureRequest>, CreateClosureRequestValidator>();
+        services.AddScoped<ISlugAllocator, SlugAllocator>();
+        services.AddScoped<ISalonSettingsService, SalonSettingsService>();
+        services.AddScoped<IOpeningHoursService, OpeningHoursService>();
         services.AddScoped<IRegistrationService, RegistrationService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ITwoFactorService, TwoFactorService>();

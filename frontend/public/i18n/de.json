@@ -3,7 +3,8 @@
     "close": "Schließen",
     "language": "Sprache wählen",
     "skipToContent": "Zum Inhalt springen",
-    "poweredBy": "Online-Buchung mit Kalora"
+    "poweredBy": "Online-Buchung mit Kalora",
+    "loading": "Wird geladen …"
   },
   "nav": {
     "label": "Hauptnavigation",
@@ -70,6 +71,30 @@
       "invalid": "Diese Einladung ist ungültig oder wurde schon verwendet.",
       "expired": "Diese Einladung ist abgelaufen. Bitte den Salon um eine neue.",
       "staff_already_linked": "Für diese Person gibt es schon ein Konto."
+    },
+    "settings": {
+      "slug_invalid": "Der Link darf nur Kleinbuchstaben, Ziffern und einzelne Bindestriche enthalten (3 bis 40 Zeichen).",
+      "slug_reserved": "Dieser Link ist reserviert. Bitte wähle einen anderen.",
+      "slug_taken": "Dieser Link wird schon von einem anderen Salon verwendet.",
+      "slug_owner_only": "Den Link kann nur die Inhaberin oder der Inhaber ändern.",
+      "timezone_invalid": "Diese Zeitzone ist ungültig.",
+      "phone_invalid": "Bitte gib eine gültige Telefonnummer ein.",
+      "url_invalid": "Bitte gib eine vollständige Adresse mit https:// ein.",
+      "slot_interval_invalid": "Dieses Zeitraster ist nicht erlaubt.",
+      "value_out_of_range": "Ein Wert liegt außerhalb des erlaubten Bereichs."
+    },
+    "opening_hours": {
+      "block_invalid": "Das Ende muss nach dem Beginn liegen.",
+      "overlap": "Die Zeiträume eines Tages überschneiden sich.",
+      "too_many_blocks": "Höchstens 4 Zeiträume pro Tag.",
+      "duplicate_day": "Ein Wochentag kommt doppelt vor."
+    },
+    "closure": {
+      "date_in_past": "Das Datum liegt in der Vergangenheit.",
+      "range_invalid": "Das Ende darf nicht vor dem Beginn liegen.",
+      "range_too_long": "Du kannst höchstens 62 Tage auf einmal eintragen.",
+      "already_exists": "Dieser Tag ist schon als geschlossen eingetragen.",
+      "not_found": "Diesen Schließtag gibt es nicht mehr."
     }
   },
   "title": {
@@ -86,6 +111,26 @@
     "email": "Bitte gib eine gültige E-Mail-Adresse ein.",
     "minLength": "Mindestens {{minLength}} Zeichen.",
     "passwordMismatch": "Die Passwörter stimmen nicht überein.",
-    "termsRequired": "Bitte stimme den AGB und der Datenschutzerklärung zu."
+    "termsRequired": "Bitte stimme den AGB und der Datenschutzerklärung zu.",
+    "slugInvalid": "Nur Kleinbuchstaben, Ziffern und Bindestriche, 3 bis 40 Zeichen.",
+    "phoneInvalid": "Bitte gib eine gültige Telefonnummer ein.",
+    "urlInvalid": "Bitte gib eine vollständige Adresse mit https:// ein.",
+    "maxLength": "Zu lang (höchstens {{maxLength}} Zeichen).",
+    "range": "Bitte gib eine ganze Zahl im erlaubten Bereich ein.",
+    "endBeforeStart": "Das Ende darf nicht vor dem Beginn liegen."
+  },
+  "schedule": {
+    "open": "Geöffnet",
+    "closed": "Geschlossen",
+    "addBlock": "Zeitraum hinzufügen",
+    "removeBlock": "Zeitraum entfernen",
+    "copyPrevious": "Wie {{day}}",
+    "start": "Von",
+    "end": "Bis",
+    "problems": {
+      "block_invalid": "Das Ende muss nach dem Beginn liegen.",
+      "overlap": "Die Zeiträume überschneiden sich.",
+      "too_many_blocks": "Höchstens 4 Zeiträume pro Tag."
+    }
   }
 }

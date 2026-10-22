@@ -43,6 +43,26 @@ describe('LocaleFormatService', () => {
     expect(format.formatDate('2026-11-03T12:00:00Z', 'date', 'UTC')).toBe('11/03/2026');
   });
 
+  it('names weekdays in the active language', async () => {
+    await language.use('de');
+    expect([format.weekdayName('Monday'), format.weekdayName('Sunday')]).toEqual([
+      'Montag',
+      'Sonntag',
+    ]);
+    await language.use('en');
+    expect(format.weekdayName('Wednesday')).toBe('Wednesday');
+    await language.use('tr');
+    expect(format.weekdayName('Monday')).toBe('Pazartesi');
+    expect(format.weekdayName('Monday', 'short').length).toBeLessThan(
+      format.weekdayName('Monday').length,
+    );
+  });
+
+  it('formats date-only values as the same calendar day, whatever the time zone of the device', async () => {
+    await language.use('de');
+    expect(format.formatDate('2026-12-24', 'fullDate', 'UTC')).toContain('24. Dezember 2026');
+  });
+
   it('pipes follow a language change and tolerate missing values', async () => {
     const money = TestBed.runInInjectionContext(() => new MoneyPipe());
     const date = TestBed.runInInjectionContext(() => new LocalDatePipe());

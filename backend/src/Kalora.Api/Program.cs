@@ -27,7 +27,11 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 builder.Services.AddKaloraAuth();
 builder.Services
     .AddControllers(options => options.Filters.Add<AntiforgeryValidationFilter>())
-    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
+    });
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddHealthChecks();

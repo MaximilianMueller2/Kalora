@@ -34,7 +34,15 @@ public class Salon : Entity
 
     public bool AutoConfirm { get; set; }
 
+    /// <summary>How long a customer's request may stay unanswered before it expires.</summary>
+    public int RequestExpiryHours { get; set; } = 24;
+
     public int RetentionMonths { get; set; } = 24;
+
+    /// <summary>Legal notice of the salon, shown on its booking page.</summary>
+    public string? ImprintText { get; set; }
+
+    public string? PrivacyPolicyUrl { get; set; }
 
     public PlanCode PlanCode { get; set; } = PlanCode.Solo;
 

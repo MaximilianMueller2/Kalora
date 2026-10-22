@@ -50,6 +50,7 @@ export function fakeAuth(user: Me | null = null) {
     login: vi.fn(),
     register: vi.fn(),
     logout: vi.fn().mockResolvedValue(undefined),
+    reload: vi.fn().mockResolvedValue(undefined),
     confirmEmail: vi.fn(),
     forgotPassword: vi.fn(),
     resetPassword: vi.fn(),

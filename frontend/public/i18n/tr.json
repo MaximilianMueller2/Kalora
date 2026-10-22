@@ -3,7 +3,8 @@
     "close": "Kapat",
     "language": "Dil seç",
     "skipToContent": "İçeriğe geç",
-    "poweredBy": "Kalora ile online randevu"
+    "poweredBy": "Kalora ile online randevu",
+    "loading": "Yükleniyor …"
   },
   "nav": {
     "label": "Ana gezinme",
@@ -70,6 +71,30 @@
       "invalid": "Bu davet geçersiz veya daha önce kullanılmış.",
       "expired": "Bu davetin süresi dolmuş. Lütfen salondan yenisini iste.",
       "staff_already_linked": "Bu kişinin zaten bir hesabı var."
+    },
+    "settings": {
+      "slug_invalid": "Bağlantı yalnızca küçük harf, rakam ve tekli tire içerebilir (3 ile 40 karakter).",
+      "slug_reserved": "Bu bağlantı ayrılmış. Lütfen başka bir tane seç.",
+      "slug_taken": "Bu bağlantıyı başka bir salon kullanıyor.",
+      "slug_owner_only": "Bağlantıyı yalnızca salon sahibi değiştirebilir.",
+      "timezone_invalid": "Bu saat dilimi geçersiz.",
+      "phone_invalid": "Lütfen geçerli bir telefon numarası gir.",
+      "url_invalid": "Lütfen https:// ile başlayan tam bir adres gir.",
+      "slot_interval_invalid": "Bu zaman aralığı kullanılamaz.",
+      "value_out_of_range": "Bir değer izin verilen aralığın dışında."
+    },
+    "opening_hours": {
+      "block_invalid": "Bitiş, başlangıçtan sonra olmalı.",
+      "overlap": "Bir günün zaman aralıkları çakışıyor.",
+      "too_many_blocks": "Günde en fazla 4 zaman aralığı.",
+      "duplicate_day": "Bir hafta günü iki kez geçiyor."
+    },
+    "closure": {
+      "date_in_past": "Tarih geçmişte.",
+      "range_invalid": "Bitiş, başlangıçtan önce olamaz.",
+      "range_too_long": "Tek seferde en fazla 62 gün girebilirsin.",
+      "already_exists": "Bu gün zaten kapalı olarak girilmiş.",
+      "not_found": "Bu kapalı gün artık yok."
     }
   },
   "title": {
@@ -86,6 +111,26 @@
     "email": "Lütfen geçerli bir e-posta adresi gir.",
     "minLength": "En az {{minLength}} karakter.",
     "passwordMismatch": "Şifreler eşleşmiyor.",
-    "termsRequired": "Lütfen kullanım koşullarını ve gizlilik politikasını kabul et."
+    "termsRequired": "Lütfen kullanım koşullarını ve gizlilik politikasını kabul et.",
+    "slugInvalid": "Yalnızca küçük harf, rakam ve tire; 3 ile 40 karakter.",
+    "phoneInvalid": "Lütfen geçerli bir telefon numarası gir.",
+    "urlInvalid": "Lütfen https:// ile başlayan tam bir adres gir.",
+    "maxLength": "Çok uzun (en fazla {{maxLength}} karakter).",
+    "range": "Lütfen izin verilen aralıkta bir tam sayı gir.",
+    "endBeforeStart": "Bitiş, başlangıçtan önce olamaz."
+  },
+  "schedule": {
+    "open": "Açık",
+    "closed": "Kapalı",
+    "addBlock": "Zaman aralığı ekle",
+    "removeBlock": "Zaman aralığını kaldır",
+    "copyPrevious": "{{day}} gibi",
+    "start": "Başlangıç",
+    "end": "Bitiş",
+    "problems": {
+      "block_invalid": "Bitiş, başlangıçtan sonra olmalı.",
+      "overlap": "Zaman aralıkları çakışıyor.",
+      "too_many_blocks": "Günde en fazla 4 zaman aralığı."
+    }
   }
 }

@@ -19,7 +19,10 @@ namespace Kalora.IntegrationTests;
 
 internal static class TestJson
 {
-    public static readonly JsonSerializerOptions Options = new(JsonSerializerDefaults.Web) { Converters = { new JsonStringEnumConverter() } };
+    public static readonly JsonSerializerOptions Options = new(JsonSerializerDefaults.Web)
+    {
+        Converters = { new JsonStringEnumConverter(), new Kalora.Api.Http.TimeOnlyJsonConverter() },
+    };
 }
 
 /// <summary>The real API with real cookie authentication and a controllable clock, over HTTPS (the cookies are Secure).</summary>
@@ -45,6 +48,20 @@ internal sealed class ApiSession(HttpClient client)
     public HttpClient Client => client;
 
     public Task<HttpResponseMessage> GetAsync(string url) => client.GetAsync(url);
+
+    public async Task<HttpResponseMessage> PutAsync(string url, object body)
+    {
+        await RefreshAntiforgeryAsync();
+        return await client.PutAsJsonAsync(url, body);
+    }
+
+    public async Task<HttpResponseMessage> DeleteAsync(string url)
+    {
+        await RefreshAntiforgeryAsync();
+        return await client.DeleteAsync(url);
+    }
+
+    public async Task<T> GetJsonAsync<T>(string url) => (await client.GetFromJsonAsync<T>(url, TestJson.Options))!;
 
     public async Task<HttpResponseMessage> PostAsync(string url, object? body = null)
     {
@@ -104,6 +121,20 @@ internal sealed class AuthTestHost : IAsyncDisposable
         var response = await session.PostAsync("/api/auth/register", Registration(email, salonName));
         response.EnsureSuccessStatusCode();
         return (session, (await response.Content.ReadFromJsonAsync<MeResponse>(TestJson.Options))!);
+    }
+
+    /// <summary>Adds a staff member, invites them with the given role and returns their signed-in session.</summary>
+    public async Task<ApiSession> InviteAndAcceptAsync(ApiSession owner, Guid salonId, string displayName, string email, SalonRole role)
+    {
+        var staff = await AddStaffAsync(salonId, displayName);
+        (await owner.PostAsync("/api/invitations", new CreateInvitationRequest(staff.Id, email, role))).EnsureSuccessStatusCode();
+        var mail = Assert.Single(await OutboxAsync(EmailTypes.StaffInvitation, email));
+        var url = JsonDocument.Parse(mail.PayloadJson!).RootElement.GetProperty("InvitationUrl").GetString()!;
+        var token = Uri.UnescapeDataString(new Uri(url).Segments[^1]);
+
+        var session = NewSession();
+        (await session.PostAsync($"/api/public/invitations/{token}/accept", new AcceptInvitationRequest(Password, "de"))).EnsureSuccessStatusCode();
+        return session;
     }
 
     public async Task<StaffMember> AddStaffAsync(Guid salonId, string displayName)

@@ -1,4 +1,67 @@
 {
   "title": "Ayarlar",
-  "placeholder": "Burada salon profilini, çalışma saatlerini ve rezervasyon kurallarını ayarlarsın."
+  "saved": "Kaydedildi",
+  "removed": "Kaldırıldı",
+  "save": "Kaydet",
+  "tabs": {
+    "salon": "Salon",
+    "hours": "Çalışma saatleri",
+    "booking": "Rezervasyon kuralları",
+    "closures": "Kapalı günler"
+  },
+  "salon": {
+    "title": "Salonun",
+    "lead": "Müşterilerin bu bilgileri rezervasyon sayfasında görür.",
+    "name": "Salon adı",
+    "industry": "Sektör",
+    "slug": "Rezervasyon bağlantısı",
+    "slugWarning": "Bağlantıyı değiştirirsen basılı QR kodlar ve paylaşılan bağlantılar çalışmaz.",
+    "slugOwnerOnly": "Bağlantıyı yalnızca salon sahibi değiştirebilir.",
+    "suggest": "Addan öner",
+    "street": "Cadde ve numara",
+    "postalCode": "Posta kodu",
+    "city": "Şehir",
+    "phone": "Telefon",
+    "timeZone": "Saat dilimi",
+    "language": "E-postaların varsayılan dili",
+    "imprint": "Yasal bilgiler",
+    "imprintHint": "Rezervasyon sayfanda gösterilir.",
+    "privacyUrl": "Gizlilik politikası bağlantısı",
+    "privacyHint": "İsteğe bağlı, örn. https://salonun.com/gizlilik"
+  },
+  "hours": {
+    "title": "Çalışma saatleri",
+    "lead": "Salonun ne zaman açık? Günde birden fazla zaman aralığı girebilirsin, örn. öğle arasıyla."
+  },
+  "booking": {
+    "title": "Rezervasyon kuralları",
+    "lead": "Müşteriler senden nasıl randevu alabilir.",
+    "slotInterval": "Zaman aralığı",
+    "slotIntervalHint": "Başlangıç saatleri bu aralıkla sunulur.",
+    "minutes": "{{count}} dakika",
+    "autoConfirm": "Talepleri otomatik onayla",
+    "autoConfirmHint": "İşaret yoksa her talebi kendin onaylarsın.",
+    "minLead": "En az süre (dakika)",
+    "minLeadHint": "Randevuya en fazla ne kadar yakın zamanda rezervasyon yapılabilir. İzin verilen: {{min}} ile {{max}}.",
+    "horizon": "Rezervasyon ufku (gün)",
+    "horizonHint": "Ne kadar önceden rezervasyon yapılabilir. İzin verilen: {{min}} ile {{max}}.",
+    "cancellation": "İptal süresi (saat)",
+    "cancellationHint": "Müşteriler randevudan bu kadar saat öncesine kadar kendileri iptal edebilir. İzin verilen: {{min}} ile {{max}}.",
+    "requestExpiry": "Talepleri yanıtlama süresi (saat)",
+    "requestExpiryHint": "Yanıtlanmayan talep bu süreden sonra geçersiz olur. İzin verilen: {{min}} ile {{max}}.",
+    "retention": "Müşteri verilerini sakla (ay)",
+    "retentionHint": "Randevusu olmayan müşteriler bundan sonra anonimleştirilir. İzin verilen: {{min}} ile {{max}}."
+  },
+  "closures": {
+    "title": "Kapalı günler",
+    "lead": "Resmi tatiller ve toplu izin: Bu günlerde randevu alınamaz.",
+    "date": "Tarih",
+    "endDate": "Bitiş (isteğe bağlı)",
+    "endDateHint": "Art arda birkaç gün için.",
+    "reason": "Neden (isteğe bağlı)",
+    "add": "Kapalı gün ekle",
+    "upcoming": "Yaklaşan kapalı günler",
+    "empty": "Kapalı gün girilmemiş.",
+    "remove": "{{date}} tarihli kapalı günü kaldır"
+  }
 }

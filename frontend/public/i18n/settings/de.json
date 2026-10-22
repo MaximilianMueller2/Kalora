@@ -1,4 +1,67 @@
 {
   "title": "Einstellungen",
-  "placeholder": "Hier stellst du Salonprofil, Öffnungszeiten und Buchungsregeln ein."
+  "saved": "Gespeichert",
+  "removed": "Entfernt",
+  "save": "Speichern",
+  "tabs": {
+    "salon": "Salon",
+    "hours": "Öffnungszeiten",
+    "booking": "Buchungsregeln",
+    "closures": "Schließtage"
+  },
+  "salon": {
+    "title": "Dein Salon",
+    "lead": "Diese Angaben sehen deine Kundinnen und Kunden auf der Buchungsseite.",
+    "name": "Name des Salons",
+    "industry": "Branche",
+    "slug": "Buchungslink",
+    "slugWarning": "Wenn du den Link änderst, funktionieren gedruckte QR-Codes und geteilte Links nicht mehr.",
+    "slugOwnerOnly": "Nur die Inhaberin oder der Inhaber kann den Link ändern.",
+    "suggest": "Vorschlag aus dem Namen",
+    "street": "Straße und Hausnummer",
+    "postalCode": "PLZ",
+    "city": "Ort",
+    "phone": "Telefon",
+    "timeZone": "Zeitzone",
+    "language": "Standardsprache der E-Mails",
+    "imprint": "Impressum",
+    "imprintHint": "Erscheint auf deiner Buchungsseite.",
+    "privacyUrl": "Link zu deiner Datenschutzerklärung",
+    "privacyHint": "Optional, z. B. https://dein-salon.de/datenschutz"
+  },
+  "hours": {
+    "title": "Öffnungszeiten",
+    "lead": "Wann ist dein Salon geöffnet? Pro Tag kannst du mehrere Zeiträume eintragen, z. B. mit Mittagspause."
+  },
+  "booking": {
+    "title": "Buchungsregeln",
+    "lead": "So können Kundinnen und Kunden bei dir buchen.",
+    "slotInterval": "Zeitraster",
+    "slotIntervalHint": "In diesem Abstand werden Startzeiten angeboten.",
+    "minutes": "{{count}} Minuten",
+    "autoConfirm": "Anfragen automatisch bestätigen",
+    "autoConfirmHint": "Ohne Haken bestätigst du jede Anfrage selbst.",
+    "minLead": "Mindestvorlauf (Minuten)",
+    "minLeadHint": "So kurzfristig vor dem Termin darf noch gebucht werden. Erlaubt: {{min}} bis {{max}}.",
+    "horizon": "Buchungshorizont (Tage)",
+    "horizonHint": "So weit im Voraus kann gebucht werden. Erlaubt: {{min}} bis {{max}}.",
+    "cancellation": "Stornofrist (Stunden)",
+    "cancellationHint": "Bis so viele Stunden vor dem Termin können Kunden selbst absagen. Erlaubt: {{min}} bis {{max}}.",
+    "requestExpiry": "Frist für Anfragen (Stunden)",
+    "requestExpiryHint": "Nach dieser Zeit läuft eine unbeantwortete Anfrage ab. Erlaubt: {{min}} bis {{max}}.",
+    "retention": "Aufbewahrung der Kundendaten (Monate)",
+    "retentionHint": "Kunden ohne Termin werden danach anonymisiert. Erlaubt: {{min}} bis {{max}}."
+  },
+  "closures": {
+    "title": "Schließtage",
+    "lead": "Feiertage und Betriebsurlaub: An diesen Tagen kann nicht gebucht werden.",
+    "date": "Datum",
+    "endDate": "Bis (optional)",
+    "endDateHint": "Für mehrere Tage am Stück.",
+    "reason": "Grund (optional)",
+    "add": "Schließtag eintragen",
+    "upcoming": "Bevorstehende Schließtage",
+    "empty": "Keine Schließtage eingetragen.",
+    "remove": "Schließtag am {{date}} entfernen"
+  }
 }

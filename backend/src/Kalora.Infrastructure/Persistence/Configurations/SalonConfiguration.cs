@@ -18,6 +18,8 @@ internal sealed class SalonConfiguration : IEntityTypeConfiguration<Salon>
         builder.Property(s => s.Phone).HasMaxLength(50);
         builder.Property(s => s.TimeZone).HasMaxLength(64);
         builder.Property(s => s.DefaultLanguage).HasMaxLength(10);
+        builder.Property(s => s.ImprintText).HasMaxLength(4000);
+        builder.Property(s => s.PrivacyPolicyUrl).HasMaxLength(500);
         builder.Property(s => s.PlanCode).HasConversion<string>().HasMaxLength(20);
         builder.Property(s => s.Status).HasConversion<string>().HasMaxLength(20);
         builder.HasIndex(s => s.Slug).IsUnique();

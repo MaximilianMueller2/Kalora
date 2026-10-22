@@ -10,6 +10,7 @@ export const TEST_TRANSLATIONS: TestTranslations = {
   de: {
     common: {
       close: 'Schließen',
+      loading: 'Wird geladen …',
       language: 'Sprache wählen',
       skipToContent: 'Zum Inhalt springen',
       poweredBy: 'Online-Buchung mit Kalora',
@@ -24,6 +25,19 @@ export const TEST_TRANSLATIONS: TestTranslations = {
       settings: 'Einstellungen',
       logout: 'Abmelden',
     },
+    schedule: {
+      open: 'Geöffnet',
+      closed: 'Geschlossen',
+      addBlock: 'Zeitraum hinzufügen',
+      removeBlock: 'Zeitraum entfernen',
+      copyPrevious: 'Wie {{day}}',
+      start: 'Von',
+      end: 'Bis',
+      problems: {
+        block_invalid: 'Das Ende muss nach dem Beginn liegen.',
+        overlap: 'Die Zeiträume überschneiden sich.',
+      },
+    },
     theme: {
       system: 'Darstellung: wie Gerät',
       light: 'Darstellung: hell',
@@ -35,6 +49,11 @@ export const TEST_TRANSLATIONS: TestTranslations = {
       minLength: 'Mindestens {{minLength}} Zeichen.',
       passwordMismatch: 'Die Passwörter stimmen nicht überein.',
       termsRequired: 'Bitte stimme zu.',
+      range: 'Bitte gib eine ganze Zahl im erlaubten Bereich ein.',
+      slugInvalid: 'Ungültiger Link.',
+      phoneInvalid: 'Ungültige Telefonnummer.',
+      urlInvalid: 'Ungültige Adresse.',
+      endBeforeStart: 'Ende vor Beginn.',
     },
     errors: {
       unknown: 'Unbekannter Fehler',
@@ -45,6 +64,8 @@ export const TEST_TRANSLATIONS: TestTranslations = {
         email_taken: 'Konto existiert schon.',
       },
       invitation: { invalid: 'Einladung ungültig.' },
+      settings: { slug_taken: 'Link schon vergeben.' },
+      closure: { date_in_past: 'Datum liegt in der Vergangenheit.' },
     },
   },
   en: { nav: { dashboard: 'Dashboard' } },

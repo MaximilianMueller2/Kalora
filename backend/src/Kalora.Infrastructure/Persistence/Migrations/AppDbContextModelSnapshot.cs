@@ -593,6 +593,11 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnType("character varying(10)")
                         .HasColumnName("default_language");
 
+                    b.Property<string>("ImprintText")
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)")
+                        .HasColumnName("imprint_text");
+
                     b.Property<string>("Industry")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -626,6 +631,15 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)")
                         .HasColumnName("postal_code");
+
+                    b.Property<string>("PrivacyPolicyUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("privacy_policy_url");
+
+                    b.Property<int>("RequestExpiryHours")
+                        .HasColumnType("integer")
+                        .HasColumnName("request_expiry_hours");
 
                     b.Property<int>("RetentionMonths")
                         .HasColumnType("integer")

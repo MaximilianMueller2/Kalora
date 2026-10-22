@@ -9,7 +9,10 @@ namespace Kalora.IntegrationTests;
 /// <summary>One real PostgreSQL 18 container shared by all database tests; each caller gets its own database.</summary>
 public sealed class PostgresFixture : IAsyncLifetime
 {
-    private readonly PostgreSqlContainer _container = new PostgreSqlBuilder("postgres:18").Build();
+    private readonly PostgreSqlContainer _container = new PostgreSqlBuilder("postgres:18")
+        // Every test gets its own database and with it its own connection pool; the default of 100 connections runs out.
+        .WithCommand("-c", "max_connections=1000")
+        .Build();
 
     public Task InitializeAsync() => _container.StartAsync();
 
@@ -26,7 +29,7 @@ public sealed class PostgresFixture : IAsyncLifetime
             await command.ExecuteNonQueryAsync();
         }
 
-        return new NpgsqlConnectionStringBuilder(_container.GetConnectionString()) { Database = name }.ConnectionString;
+        return new NpgsqlConnectionStringBuilder(_container.GetConnectionString()) { Database = name, MaxPoolSize = 5, ConnectionIdleLifetime = 10, ConnectionPruningInterval = 5 }.ConnectionString;
     }
 
     /// <summary>Creates a migrated database and returns its connection string.</summary>

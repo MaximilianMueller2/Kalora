@@ -53,6 +53,20 @@ Begründung: [ADR 0002](adr/0002-authentication.md). Cookie-Sitzung (ASP.NET Cor
 
 Policies: `SalonMember` (Owner, Manager, Staff), `SalonManager` (Owner, Manager), `SalonOwner`, `PlatformAdmin`. Fehlercodes u. a.: `auth.invalid_credentials`, `auth.locked_out`, `auth.two_factor_required`, `auth.email_taken`, `auth.invalid_token`, `invitation.invalid`, `invitation.expired`, `security.antiforgery_failed`.
 
+## Salon-Einstellungen
+
+Alle Endpunkte unter `/api/settings` für Owner und Manager (Policy `SalonManager`), jeder Salon sieht und ändert nur seine eigenen Daten (Mandantenfilter).
+
+| Endpunkt | Zweck |
+|----------|-------|
+| `GET/PUT /api/settings/profile` | Name, Slug, Branche, Adresse, Telefon, Zeitzone, Standardsprache, Impressum, Link zur Datenschutzerklärung. Den Slug ändert nur der Owner (`settings.slug_owner_only`), er muss eindeutig, URL-tauglich (3–40 Zeichen) und nicht reserviert sein |
+| `GET /api/settings/slug-suggestion?name=` | freier Slug aus dem Namen (`name`, `name-2`, …) |
+| `GET/PUT /api/settings/booking-rules` | Zeitraster (5/10/15/30 min), Mindestvorlauf, Buchungshorizont, Stornofrist, Auto-Bestätigung, Frist für unbeantwortete Anfragen (`request_expiry_hours`), Löschfrist |
+| `GET/PUT /api/settings/opening-hours` | Wochenplan, Montag zuerst, mehrere Zeiträume pro Tag (höchstens 4, Zeiträume dürfen sich berühren, nicht überlappen); `PUT` ersetzt die ganze Woche, nicht genannte Tage sind geschlossen |
+| `GET/POST /api/settings/closures`, `DELETE …/{id}` | Schließtage: ein Tag oder ein Bereich (bis 62 Tage, schon geschlossene Tage werden übersprungen); „heute“ ist der Kalendertag in der Zeitzone des Salons, die Liste zeigt nur heutige und kommende |
+
+Uhrzeiten reisen als `"HH:mm"` (`TimeOnlyJsonConverter`), Wochentage und Enums als Text. Prüfungen mit FluentValidation liefern stabile Codes (`settings.*`, `opening_hours.*`, `closure.*`). Der Slug-Dienst (`ISlugAllocator`) prüft die Eindeutigkeit über alle Salons und ist eine der wenigen Stellen mit Mandantenfilter-Umgehung. Die Zeitzonen-ID muss eine gültige IANA-ID sein; das Laufzeit-Image braucht dafür `tzdata` (Prompt 25).
+
 ## Frontend-Gerüst
 
 Angular 22 (Standalone, zoneless, Signals, OnPush) mit Angular Material 3. Quelltext in `frontend/src/app`:
@@ -61,9 +75,11 @@ Angular 22 (Standalone, zoneless, Signals, OnPush) mit Angular Material 3. Quell
 - `core/i18n` – Transloco (de, en, tr). Startsprache: gespeicherte Wahl → Profil → Browser → de. Texte unter `public/i18n/<sprache>.json` (gemeinsam) und `public/i18n/<feature>/<sprache>.json` (je Feature, per `provideTranslocoScope` mit dem Feature geladen). `LocaleFormatService` und die Pipes `localDate` / `money` formatieren Datum, Zeit (in der Zeitzone des Salons) und Geld nach Sprache.
 - `core/layout` – `Shell` für den Salon-Bereich (Seitenleiste ab 900 px, sonst untere Navigation; Einträge je nach Rolle, Abmelden), `AuthLayout` (zentrierte Karte für Konto-Seiten) und `PublicLayout` für Kundenseiten; Seitentitel folgen der Sprache.
 - `core/theme` – hell, dunkel oder wie das Gerät (CSS `color-scheme`).
-- `shared/` – wiederverwendbare Bausteine (Sprach- und Theme-Umschalter, Pipes). `features/<name>/` – Seite, Service und Modelle eines Bereichs, jeweils lazy geladen.
+- `shared/` – wiederverwendbare Bausteine: Sprach- und Theme-Umschalter, Pipes und der `WeekScheduleEditor` (Wochenplan mit mehreren Zeiträumen pro Tag, „wie Vortag“; zweiseitig gebunden per `[(schedule)]`, die Regeln stehen als reine Funktionen in `week-schedule.model.ts` und entsprechen den Backend-Regeln; wird für Öffnungszeiten und später für Dienstpläne genutzt). `features/<name>/` – Seite, Service und Modelle eines Bereichs, jeweils lazy geladen.
 
 - `features/auth` – `AuthService` (spiegelt `GET /api/me` in Signals: `currentUser`, `isLoggedIn`, `roles`; die Sitzung selbst ist das HttpOnly-Cookie), Guards `authGuard`, `guestGuard`, `roleGuard(...)`, `safeReturnUrl` (nur Pfade innerhalb der App als Rücksprungziel) und die Seiten Anmelden (mit zweitem Faktor und Wiederherstellungscode), Registrieren, Passwort vergessen/zurücksetzen, E-Mail bestätigen, Einladung annehmen. Formulare sind Signal Forms (`form()`, `[formField]`, `[formRoot]`); Fehler vom Server erscheinen inline als übersetzter Fehlercode.
+
+- `features/settings` – vier Tabs als eigene Routen unter `/app/settings/{salon,hours,booking,closures}` (Salon, Öffnungszeiten, Buchungsregeln, Schließtage), nur für Owner und Manager. `SettingsService` kapselt die API; Zahlenfelder werden als Text bearbeitet und beim Speichern umgewandelt.
 
 Routen: `/auth/*` (Konto-Seiten; Anmelden, Registrieren und „Passwort vergessen“ nur für Nicht-Angemeldete), `/app/*` (nur angemeldet: `onboarding`, `dashboard`, `calendar`, `requests` für alle Rollen; `services`, `team`, `settings` nur für Owner und Manager), `/:slug` (öffentliche Buchungsseite), sonst 404. Die Links in den E-Mails zeigen auf `/auth/confirm-email`, `/auth/reset-password` und `/auth/invitation/:token`. Reservierte Slugs (`app`, `admin`, `auth`, `api`, `m`, …) verhindert das Backend (`SlugGenerator`).
 

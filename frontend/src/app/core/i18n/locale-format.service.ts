@@ -1,7 +1,8 @@
 import { Injectable, inject } from '@angular/core';
+import { WEEKDAYS, Weekday } from '../../shared/week-schedule/week-schedule.model';
 import { LanguageService } from './language.service';
 
-export type DateStyle = 'date' | 'time' | 'dateTime' | 'weekdayDate';
+export type DateStyle = 'date' | 'time' | 'dateTime' | 'weekdayDate' | 'fullDate';
 
 const DATE_OPTIONS: Record<DateStyle, Intl.DateTimeFormatOptions> = {
   date: { day: '2-digit', month: '2-digit', year: 'numeric' },
@@ -14,6 +15,7 @@ const DATE_OPTIONS: Record<DateStyle, Intl.DateTimeFormatOptions> = {
     minute: '2-digit',
   },
   weekdayDate: { weekday: 'long', day: 'numeric', month: 'long' },
+  fullDate: { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' },
 };
 
 /** Dates, times, numbers and money in the active language's conventions (Intl, no locale data bundles needed). */
@@ -27,6 +29,16 @@ export class LocaleFormatService {
       ...DATE_OPTIONS[style],
       timeZone,
     }).format(new Date(value));
+  }
+
+  /** Name of a weekday in the active language ("Montag", "Monday", "Pazartesi"). */
+  weekdayName(weekday: Weekday, style: 'long' | 'short' = 'long'): string {
+    // 1 Jan 2024 is a Monday, so the index in the Monday-first list is the day offset.
+    const reference = new Date(Date.UTC(2024, 0, 1 + WEEKDAYS.indexOf(weekday)));
+    return new Intl.DateTimeFormat(this.language.current(), {
+      weekday: style,
+      timeZone: 'UTC',
+    }).format(reference);
   }
 
   formatNumber(value: number, options?: Intl.NumberFormatOptions): string {

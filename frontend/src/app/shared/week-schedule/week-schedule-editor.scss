@@ -1,0 +1,79 @@
+:host {
+  display: block;
+}
+
+.day {
+  // A fieldset never shrinks below its content by default, which pushed the page wider than a phone.
+  min-width: 0;
+  margin: 0 0 12px;
+  padding: 8px 16px 12px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: var(--mat-sys-corner-medium);
+}
+
+legend {
+  padding: 0 8px;
+  font: var(--mat-sys-title-small);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 16px;
+}
+
+.copy {
+  min-height: 44px;
+}
+
+.block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+
+  label {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 0 8px;
+    border: 1px solid var(--mat-sys-outline);
+    border-radius: var(--mat-sys-corner-small);
+    background: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-body-medium);
+  }
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+}
+
+.add {
+  min-height: 44px;
+  margin-top: 4px;
+}
+
+.problem {
+  margin: 8px 0 0;
+  color: var(--mat-sys-error);
+  font: var(--mat-sys-body-small);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

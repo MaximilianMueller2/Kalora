@@ -62,12 +62,37 @@ export const routes: Routes = [
         'team',
         MANAGEMENT,
       ),
-      areaRoute(
-        'settings',
-        () => import('./features/settings/settings-page').then((m) => m.SettingsPage),
-        'settings',
-        MANAGEMENT,
-      ),
+      {
+        path: 'settings',
+        title: 'nav.settings',
+        canActivate: MANAGEMENT,
+        loadComponent: () =>
+          import('./features/settings/settings-page').then((m) => m.SettingsPage),
+        providers: [provideTranslocoScope('settings')],
+        children: [
+          { path: '', pathMatch: 'full', redirectTo: 'salon' },
+          {
+            path: 'salon',
+            loadComponent: () =>
+              import('./features/settings/tabs/salon-tab').then((m) => m.SalonTab),
+          },
+          {
+            path: 'hours',
+            loadComponent: () =>
+              import('./features/settings/tabs/hours-tab').then((m) => m.HoursTab),
+          },
+          {
+            path: 'booking',
+            loadComponent: () =>
+              import('./features/settings/tabs/rules-tab').then((m) => m.RulesTab),
+          },
+          {
+            path: 'closures',
+            loadComponent: () =>
+              import('./features/settings/tabs/closures-tab').then((m) => m.ClosuresTab),
+          },
+        ],
+      },
     ],
   },
   {

@@ -37,6 +37,11 @@ export class AuthService {
     return (this.loading ??= this.loadCurrentUser());
   }
 
+  /** Fetches the profile again, e.g. after the salon name changed. */
+  async reload(): Promise<void> {
+    this.user.set(await firstValueFrom(this.api.get<Me>('/me', { silent: true })));
+  }
+
   hasAnyRole(allowed: readonly Role[]): boolean {
     const mine = this.roles();
     return allowed.some((role) => mine.includes(role));

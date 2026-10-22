@@ -9,8 +9,8 @@ public class ArchitectureTests
         "Kalora.Application/Auth/AuthService.cs", // password reset: finds the salon of a user who is not signed in
         "Kalora.Application/Auth/InvitationService.cs", // the invitation token identifies the salon
         "Kalora.Application/Auth/MeResponseFactory.cs", // profile of a user right after login, before a tenant exists
-        "Kalora.Application/Auth/RegistrationService.cs", // slugs are unique across all salons
         "Kalora.Application/Common/IAppDbContext.cs",
+        "Kalora.Application/Salons/SlugAllocator.cs", // slugs are unique across all salons
         "Kalora.Application/Tenancy/SalonResolver.cs",
         "Kalora.Infrastructure/Identity/KaloraClaimsPrincipalFactory.cs", // reads the membership while the cookie is created
         "Kalora.Infrastructure/Persistence/AppDbContext.cs",
