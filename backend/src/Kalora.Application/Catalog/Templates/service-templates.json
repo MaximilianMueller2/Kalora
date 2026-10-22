@@ -1,0 +1,594 @@
+{
+  "Hair": [
+    {
+      "name": {
+        "de": "Damen",
+        "en": "Women",
+        "tr": "Kadın"
+      },
+      "services": [
+        {
+          "name": {
+            "de": "Haarschnitt Damen",
+            "en": "Women's haircut",
+            "tr": "Kadın saç kesimi"
+          },
+          "priceCents": 4500,
+          "priceIsFrom": true,
+          "durationMinutes": 60,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 5
+        },
+        {
+          "name": {
+            "de": "Waschen, Schneiden, Föhnen",
+            "en": "Wash, cut and blow-dry",
+            "tr": "Yıkama, kesim ve fön"
+          },
+          "priceCents": 5500,
+          "priceIsFrom": true,
+          "durationMinutes": 75,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 5
+        },
+        {
+          "name": {
+            "de": "Färben",
+            "en": "Colouring",
+            "tr": "Boya"
+          },
+          "priceCents": 6500,
+          "priceIsFrom": true,
+          "durationMinutes": 120,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Strähnen",
+            "en": "Highlights",
+            "tr": "Röfle"
+          },
+          "priceCents": 8500,
+          "priceIsFrom": true,
+          "durationMinutes": 150,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        }
+      ]
+    },
+    {
+      "name": {
+        "de": "Herren und Kinder",
+        "en": "Men and children",
+        "tr": "Erkek ve çocuk"
+      },
+      "services": [
+        {
+          "name": {
+            "de": "Haarschnitt Herren",
+            "en": "Men's haircut",
+            "tr": "Erkek saç kesimi"
+          },
+          "priceCents": 2800,
+          "priceIsFrom": false,
+          "durationMinutes": 30,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 5
+        },
+        {
+          "name": {
+            "de": "Haarschnitt Kinder (bis 12 Jahre)",
+            "en": "Children's haircut (up to 12)",
+            "tr": "Çocuk saç kesimi (12 yaşa kadar)"
+          },
+          "priceCents": 1800,
+          "priceIsFrom": false,
+          "durationMinutes": 20,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 5
+        }
+      ]
+    },
+    {
+      "name": {
+        "de": "Styling",
+        "en": "Styling",
+        "tr": "Şekillendirme"
+      },
+      "services": [
+        {
+          "name": {
+            "de": "Föhnen",
+            "en": "Blow-dry",
+            "tr": "Fön"
+          },
+          "priceCents": 2500,
+          "priceIsFrom": true,
+          "durationMinutes": 30,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Hochsteckfrisur",
+            "en": "Updo",
+            "tr": "Topuz"
+          },
+          "priceCents": 6500,
+          "priceIsFrom": true,
+          "durationMinutes": 60,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        }
+      ]
+    }
+  ],
+  "Barber": [
+    {
+      "name": {
+        "de": "Haare",
+        "en": "Hair",
+        "tr": "Saç"
+      },
+      "services": [
+        {
+          "name": {
+            "de": "Haarschnitt",
+            "en": "Haircut",
+            "tr": "Saç kesimi"
+          },
+          "priceCents": 2800,
+          "priceIsFrom": false,
+          "durationMinutes": 30,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 5
+        },
+        {
+          "name": {
+            "de": "Maschinenschnitt",
+            "en": "Clipper cut",
+            "tr": "Makine tıraşı"
+          },
+          "priceCents": 1800,
+          "priceIsFrom": false,
+          "durationMinutes": 20,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 5
+        },
+        {
+          "name": {
+            "de": "Haarschnitt und Bart",
+            "en": "Haircut and beard",
+            "tr": "Saç ve sakal"
+          },
+          "priceCents": 4200,
+          "priceIsFrom": false,
+          "durationMinutes": 50,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 5
+        }
+      ]
+    },
+    {
+      "name": {
+        "de": "Bart",
+        "en": "Beard",
+        "tr": "Sakal"
+      },
+      "services": [
+        {
+          "name": {
+            "de": "Bart trimmen",
+            "en": "Beard trim",
+            "tr": "Sakal düzeltme"
+          },
+          "priceCents": 1800,
+          "priceIsFrom": false,
+          "durationMinutes": 20,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Rasur mit heißem Tuch",
+            "en": "Hot towel shave",
+            "tr": "Sıcak havluyla tıraş"
+          },
+          "priceCents": 2800,
+          "priceIsFrom": false,
+          "durationMinutes": 30,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Konturen",
+            "en": "Line-up",
+            "tr": "Kontur"
+          },
+          "priceCents": 1200,
+          "priceIsFrom": false,
+          "durationMinutes": 15,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        }
+      ]
+    },
+    {
+      "name": {
+        "de": "Pflege",
+        "en": "Care",
+        "tr": "Bakım"
+      },
+      "services": [
+        {
+          "name": {
+            "de": "Augenbrauen zupfen",
+            "en": "Eyebrow trimming",
+            "tr": "Kaş alma"
+          },
+          "priceCents": 800,
+          "priceIsFrom": false,
+          "durationMinutes": 10,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Kopfmassage",
+            "en": "Head massage",
+            "tr": "Baş masajı"
+          },
+          "priceCents": 1500,
+          "priceIsFrom": false,
+          "durationMinutes": 15,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        }
+      ]
+    }
+  ],
+  "Nails": [
+    {
+      "name": {
+        "de": "Maniküre",
+        "en": "Manicure",
+        "tr": "Manikür"
+      },
+      "services": [
+        {
+          "name": {
+            "de": "Maniküre klassisch",
+            "en": "Classic manicure",
+            "tr": "Klasik manikür"
+          },
+          "priceCents": 2800,
+          "priceIsFrom": false,
+          "durationMinutes": 40,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Maniküre mit Gel-Lack",
+            "en": "Manicure with gel polish",
+            "tr": "Jel ojeli manikür"
+          },
+          "priceCents": 3800,
+          "priceIsFrom": false,
+          "durationMinutes": 60,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        }
+      ]
+    },
+    {
+      "name": {
+        "de": "Pediküre",
+        "en": "Pedicure",
+        "tr": "Pedikür"
+      },
+      "services": [
+        {
+          "name": {
+            "de": "Pediküre",
+            "en": "Pedicure",
+            "tr": "Pedikür"
+          },
+          "priceCents": 3800,
+          "priceIsFrom": false,
+          "durationMinutes": 60,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Pediküre mit Gel-Lack",
+            "en": "Pedicure with gel polish",
+            "tr": "Jel ojeli pedikür"
+          },
+          "priceCents": 4800,
+          "priceIsFrom": false,
+          "durationMinutes": 75,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        }
+      ]
+    },
+    {
+      "name": {
+        "de": "Nagelmodellage",
+        "en": "Nail extensions",
+        "tr": "Tırnak modelleme"
+      },
+      "services": [
+        {
+          "name": {
+            "de": "Neumodellage Gel",
+            "en": "New set gel",
+            "tr": "Yeni set jel"
+          },
+          "priceCents": 6000,
+          "priceIsFrom": true,
+          "durationMinutes": 90,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Auffüllen Gel",
+            "en": "Gel refill",
+            "tr": "Jel dolgu"
+          },
+          "priceCents": 4500,
+          "priceIsFrom": true,
+          "durationMinutes": 75,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Entfernen",
+            "en": "Removal",
+            "tr": "Çıkarma"
+          },
+          "priceCents": 1500,
+          "priceIsFrom": false,
+          "durationMinutes": 30,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        }
+      ]
+    }
+  ],
+  "Lashes": [
+    {
+      "name": {
+        "de": "Wimpernverlängerung",
+        "en": "Lash extensions",
+        "tr": "Kirpik uzatma"
+      },
+      "services": [
+        {
+          "name": {
+            "de": "Classic Neuset",
+            "en": "Classic new set",
+            "tr": "Klasik yeni set"
+          },
+          "priceCents": 9000,
+          "priceIsFrom": true,
+          "durationMinutes": 120,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Volumen Neuset",
+            "en": "Volume new set",
+            "tr": "Hacim yeni set"
+          },
+          "priceCents": 11000,
+          "priceIsFrom": true,
+          "durationMinutes": 150,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Auffüllen (2 bis 3 Wochen)",
+            "en": "Refill (2 to 3 weeks)",
+            "tr": "Dolgu (2-3 hafta)"
+          },
+          "priceCents": 5500,
+          "priceIsFrom": true,
+          "durationMinutes": 75,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        }
+      ]
+    },
+    {
+      "name": {
+        "de": "Wimpern und Brauen",
+        "en": "Lashes and brows",
+        "tr": "Kirpik ve kaş"
+      },
+      "services": [
+        {
+          "name": {
+            "de": "Wimpernlifting",
+            "en": "Lash lift",
+            "tr": "Kirpik lifting"
+          },
+          "priceCents": 5500,
+          "priceIsFrom": false,
+          "durationMinutes": 60,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Wimpern färben",
+            "en": "Lash tint",
+            "tr": "Kirpik boyama"
+          },
+          "priceCents": 1800,
+          "priceIsFrom": false,
+          "durationMinutes": 20,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Entfernen",
+            "en": "Removal",
+            "tr": "Çıkarma"
+          },
+          "priceCents": 2500,
+          "priceIsFrom": false,
+          "durationMinutes": 30,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        }
+      ]
+    }
+  ],
+  "Beauty": [
+    {
+      "name": {
+        "de": "Gesicht",
+        "en": "Face",
+        "tr": "Yüz"
+      },
+      "services": [
+        {
+          "name": {
+            "de": "Gesichtsbehandlung klassisch",
+            "en": "Classic facial",
+            "tr": "Klasik yüz bakımı"
+          },
+          "priceCents": 6500,
+          "priceIsFrom": false,
+          "durationMinutes": 75,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Tiefenreinigung",
+            "en": "Deep cleansing",
+            "tr": "Derin temizlik"
+          },
+          "priceCents": 5500,
+          "priceIsFrom": false,
+          "durationMinutes": 60,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Anti-Aging-Behandlung",
+            "en": "Anti-aging treatment",
+            "tr": "Yaşlanma karşıtı bakım"
+          },
+          "priceCents": 8500,
+          "priceIsFrom": true,
+          "durationMinutes": 75,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        }
+      ]
+    },
+    {
+      "name": {
+        "de": "Augen und Brauen",
+        "en": "Eyes and brows",
+        "tr": "Göz ve kaş"
+      },
+      "services": [
+        {
+          "name": {
+            "de": "Augenbrauen zupfen",
+            "en": "Eyebrow shaping",
+            "tr": "Kaş şekillendirme"
+          },
+          "priceCents": 1500,
+          "priceIsFrom": false,
+          "durationMinutes": 15,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Augenbrauen färben",
+            "en": "Eyebrow tint",
+            "tr": "Kaş boyama"
+          },
+          "priceCents": 1500,
+          "priceIsFrom": false,
+          "durationMinutes": 20,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Wimpern färben",
+            "en": "Lash tint",
+            "tr": "Kirpik boyama"
+          },
+          "priceCents": 1800,
+          "priceIsFrom": false,
+          "durationMinutes": 20,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        }
+      ]
+    },
+    {
+      "name": {
+        "de": "Haarentfernung",
+        "en": "Hair removal",
+        "tr": "Tüy alma"
+      },
+      "services": [
+        {
+          "name": {
+            "de": "Wachsen Oberlippe",
+            "en": "Waxing upper lip",
+            "tr": "Üst dudak ağdası"
+          },
+          "priceCents": 800,
+          "priceIsFrom": false,
+          "durationMinutes": 10,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Wachsen Beine komplett",
+            "en": "Waxing full legs",
+            "tr": "Tüm bacak ağdası"
+          },
+          "priceCents": 3800,
+          "priceIsFrom": false,
+          "durationMinutes": 45,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        },
+        {
+          "name": {
+            "de": "Wachsen Bikinizone",
+            "en": "Waxing bikini line",
+            "tr": "Bikini bölgesi ağdası"
+          },
+          "priceCents": 2500,
+          "priceIsFrom": false,
+          "durationMinutes": 30,
+          "bufferBeforeMinutes": 0,
+          "bufferAfterMinutes": 0
+        }
+      ]
+    }
+  ]
+}

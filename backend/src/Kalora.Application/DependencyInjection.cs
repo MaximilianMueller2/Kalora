@@ -1,5 +1,6 @@
 using FluentValidation;
 using Kalora.Application.Auth;
+using Kalora.Application.Catalog;
 using Kalora.Application.Common;
 using Kalora.Application.Configuration;
 using Kalora.Application.Ping;
@@ -38,6 +39,10 @@ public static class DependencyInjection
         services.AddSingleton<IValidator<BookingRules>, BookingRulesValidator>();
         services.AddSingleton<IValidator<OpeningHoursPlan>, OpeningHoursPlanValidator>();
         services.AddSingleton<IValidator<CreateClosureRequest>, CreateClosureRequestValidator>();
+        services.AddSingleton<IValidator<SaveCategoryRequest>, SaveCategoryRequestValidator>();
+        services.AddSingleton<IValidator<SaveServiceRequest>, SaveServiceRequestValidator>();
+        services.AddSingleton<IValidator<ApplyTemplateRequest>, ApplyTemplateRequestValidator>();
+        services.AddScoped<IServiceCatalogService, ServiceCatalogService>();
         services.AddScoped<ISlugAllocator, SlugAllocator>();
         services.AddScoped<ISalonSettingsService, SalonSettingsService>();
         services.AddScoped<IOpeningHoursService, OpeningHoursService>();

@@ -1,4 +1,56 @@
 {
   "title": "Hizmetler",
-  "placeholder": "Burada hizmetlerini fiyat ve süreyle birlikte yönetirsin."
+  "saved": "Kaydedildi",
+  "removed": "Kaldırıldı",
+  "templateApplied": "Şablon uygulandı",
+  "cancel": "İptal",
+  "save": "Kaydet",
+  "drag": "Sıralamak için sürükle",
+  "moveUp": "Yukarı taşı",
+  "moveDown": "Aşağı taşı",
+  "empty": {
+    "title": "Henüz hizmet yok",
+    "text": "Müşterilerinizin çevrimiçi neyi ayırtabileceğini belirleyin. Şablonla saniyeler içinde başlayın, sonra her şeyi düzenleyin.",
+    "template": "Şablonu kullan",
+    "start": "Kendim oluşturayım"
+  },
+  "category": {
+    "add": "Kategori ekle",
+    "addTitle": "Yeni kategori",
+    "renameTitle": "Kategoriyi yeniden adlandır",
+    "name": "Kategori adı",
+    "rename": "Yeniden adlandır",
+    "delete": "Sil",
+    "deleteTitle": "Kategori silinsin mi?",
+    "deleteText": "Boş “{{name}}” kategorisi silinecek.",
+    "empty": "Bu kategoride henüz hizmet yok.",
+    "actions": "{{name}} kategorisi için işlemler"
+  },
+  "service": {
+    "add": "Hizmet ekle",
+    "addTitle": "Yeni hizmet",
+    "editTitle": "Hizmeti düzenle",
+    "edit": "Düzenle",
+    "name": "Hizmet adı",
+    "category": "Kategori",
+    "price": "Fiyat",
+    "priceIsFrom": "Fiyatı “başlangıç” olarak göster",
+    "priceFrom": "{{price}}’den başlayan",
+    "duration": "Süre",
+    "description": "Açıklama (isteğe bağlı)",
+    "bookableOnline": "Çevrimiçi ayırtılabilir",
+    "active": "Etkin",
+    "advanced": "Gelişmiş",
+    "bufferHint": "Tampon süreler takvimi doldurur ancak müşterilere gösterilmez.",
+    "bufferBefore": "Önce tampon",
+    "bufferAfter": "Sonra tampon",
+    "activate": "Etkinleştir",
+    "deactivate": "Devre dışı bırak",
+    "delete": "Sil",
+    "deleteTitle": "Hizmet silinsin mi?",
+    "deleteText": "“{{name}}” kalıcı olarak silinecek.",
+    "inactiveBadge": "etkin değil",
+    "internalBadge": "yalnızca iç kullanım",
+    "actions": "{{name}} hizmeti için işlemler"
+  }
 }

@@ -54,6 +54,7 @@ export const TEST_TRANSLATIONS: TestTranslations = {
       phoneInvalid: 'Ungültige Telefonnummer.',
       urlInvalid: 'Ungültige Adresse.',
       endBeforeStart: 'Ende vor Beginn.',
+      priceInvalid: 'Ungültiger Preis.',
     },
     errors: {
       unknown: 'Unbekannter Fehler',
@@ -66,6 +67,8 @@ export const TEST_TRANSLATIONS: TestTranslations = {
       invitation: { invalid: 'Einladung ungültig.' },
       settings: { slug_taken: 'Link schon vergeben.' },
       closure: { date_in_past: 'Datum liegt in der Vergangenheit.' },
+      category: { not_empty: 'Kategorie nicht leer.' },
+      service: { has_appointments: 'Es gibt Termine.' },
     },
   },
   en: { nav: { dashboard: 'Dashboard' } },

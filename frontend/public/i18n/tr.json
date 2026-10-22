@@ -95,6 +95,20 @@
       "range_too_long": "Tek seferde en fazla 62 gün girebilirsin.",
       "already_exists": "Bu gün zaten kapalı olarak girilmiş.",
       "not_found": "Bu kapalı gün artık yok."
+    },
+    "category": {
+      "not_found": "Bu kategori artık yok.",
+      "not_empty": "Kategoride hâlâ hizmetler var."
+    },
+    "service": {
+      "not_found": "Bu hizmet artık yok.",
+      "has_appointments": "Bu hizmet için randevular var. Yalnızca devre dışı bırakabilirsiniz.",
+      "price_invalid": "Fiyat geçersiz.",
+      "duration_invalid": "Süre geçersiz.",
+      "buffer_invalid": "Tampon süre geçersiz."
+    },
+    "catalog": {
+      "order_mismatch": "Sıralama güncel değil. Lütfen yenileyin."
     }
   },
   "title": {
@@ -117,7 +131,8 @@
     "urlInvalid": "Lütfen https:// ile başlayan tam bir adres gir.",
     "maxLength": "Çok uzun (en fazla {{maxLength}} karakter).",
     "range": "Lütfen izin verilen aralıkta bir tam sayı gir.",
-    "endBeforeStart": "Bitiş, başlangıçtan önce olamaz."
+    "endBeforeStart": "Bitiş, başlangıçtan önce olamaz.",
+    "priceInvalid": "Lütfen 25 veya 25,50 gibi bir fiyat girin (en fazla 10.000)."
   },
   "schedule": {
     "open": "Açık",

@@ -146,6 +146,31 @@ internal sealed class AuthTestHost : IAsyncDisposable
         return staff;
     }
 
+    /// <summary>Books a service for a new customer, so the service counts as "has appointments".</summary>
+    public async Task AddAppointmentAsync(Guid salonId, Guid serviceId)
+    {
+        var staff = new StaffMember { DisplayName = "Booked staff" };
+        var customer = new Kalora.Domain.Customers.Customer { Name = "Kim", Email = $"kim-{Guid.NewGuid():N}@example.com" };
+        await using var db = TestDb.CreateContext(ConnectionString, salonId: salonId);
+        db.AddRange(staff, customer);
+        await db.SaveChangesAsync();
+
+        var start = new DateTimeOffset(2026, 12, 1, 9, 0, 0, TimeSpan.Zero);
+        db.Appointments.Add(new Kalora.Domain.Appointments.Appointment
+        {
+            StaffId = staff.Id,
+            ServiceId = serviceId,
+            CustomerId = customer.Id,
+            StartUtc = start,
+            EndUtc = start.AddMinutes(30),
+            BlockedStartUtc = start,
+            BlockedEndUtc = start.AddMinutes(30),
+            ServiceName = "Cut",
+            DurationMinutes = 30,
+        });
+        await db.SaveChangesAsync();
+    }
+
     public async Task<List<EmailOutbox>> OutboxAsync(string type, string toEmail)
     {
         await using var db = TestDb.CreateContext(ConnectionString);

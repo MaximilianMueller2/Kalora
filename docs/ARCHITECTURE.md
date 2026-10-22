@@ -67,6 +67,26 @@ Alle Endpunkte unter `/api/settings` für Owner und Manager (Policy `SalonManage
 
 Uhrzeiten reisen als `"HH:mm"` (`TimeOnlyJsonConverter`), Wochentage und Enums als Text. Prüfungen mit FluentValidation liefern stabile Codes (`settings.*`, `opening_hours.*`, `closure.*`). Der Slug-Dienst (`ISlugAllocator`) prüft die Eindeutigkeit über alle Salons und ist eine der wenigen Stellen mit Mandantenfilter-Umgehung. Die Zeitzonen-ID muss eine gültige IANA-ID sein; das Laufzeit-Image braucht dafür `tzdata` (Prompt 25).
 
+## Leistungen
+
+Alle Endpunkte unter `/api/catalog`. Lesen dürfen alle Rollen des Salons (die Terminbuchung im Kalender braucht die Liste), ändern nur Owner und Manager (Policy `SalonManager`). Jede Änderung antwortet mit dem ganzen neuen Katalog (Kategorien samt Leistungen in Anzeigereihenfolge), das Frontend ersetzt damit seinen Stand und braucht keine Einzelabgleiche.
+
+| Endpunkt | Zweck |
+|----------|-------|
+| `GET /api/catalog` | Kategorien mit Leistungen; `hasAppointments` zeigt, ob die Leistung schon Termine hat |
+| `POST/PUT/DELETE /api/catalog/categories[/{id}]` | Kategorie anlegen, umbenennen, löschen (nur leer, sonst `category.not_empty`) |
+| `PUT /api/catalog/categories/order` | neue Reihenfolge aller Kategorien |
+| `POST/PUT/DELETE /api/catalog/services[/{id}]` | Leistung anlegen, ändern (auch in andere Kategorie verschieben, aktivieren/deaktivieren), löschen |
+| `PUT /api/catalog/categories/{id}/services/order` | neue Reihenfolge der Leistungen einer Kategorie |
+| `POST /api/catalog/templates/apply` | Branchenvorlage übernehmen (Branche des Salons, wenn nicht angegeben) |
+
+- **Preis und Dauer:** Preis in Cent (`0` bis `1.000.000`, `0` = kostenlos), Währung fest `EUR`, „ab“-Preis über `priceIsFrom`. Dauer 5 bis 720 min und Puffer davor/danach 0 bis 240 min jeweils in 5-Minuten-Schritten. Das Frontend rechnet Euro-Eingaben (`25`, `25,5`, `25.50`, `1.250,00`) in Cent um (`parsePriceToCents`); die Prüfung liegt zusätzlich im Validator.
+- **Löschen:** Eine Leistung mit Terminen lässt sich nicht löschen (`service.has_appointments`, Konflikt), nur deaktivieren: Termine behalten so ihre Leistung, und sie wird nicht mehr online angeboten. Eine Kategorie lässt sich nur löschen, wenn sie leer ist.
+- **Reihenfolge:** Die Anfrage enthält die vollständige Liste der IDs; fehlende, doppelte oder fremde IDs ergeben `catalog.order_mismatch`. So überschreibt eine veraltete Ansicht nie neuere Änderungen eines anderen Geräts stillschweigend.
+- **Mandanten:** Kategorie und Leistung werden immer über den Mandantenfilter geladen. Eine fremde Kategorie-ID ergibt `category.not_found` (404), auch beim Anlegen und Verschieben.
+- **Vorlagen:** `Catalog/Templates/service-templates.json` (eingebettete Ressource, Schicht Application) enthält je Branche Kategorien und Leistungen mit Namen in `de`, `en` und `tr` und Richtpreisen zum Anpassen. Beim Übernehmen werden die Namen in der Standardsprache des Salons geschrieben (Rückfall `de`) und **hinten angehängt**, so entstehen bei zweimaligem Übernehmen Dopplungen, aber nie verlorene Daten. Ein Unit-Test prüft alle Vorlagen (Sprachen vollständig, Grenzen eingehalten).
+- **Frontend (`features/services`):** Seite mit Kategorien und Leistungen, Sortieren per Ziehen (CDK Drag & Drop, Ziehgriff) und gleichwertig per Menü „Nach oben/unten“ für Tastatur und Screenreader. Die neue Reihenfolge erscheint sofort und wird gespeichert; schlägt das fehl, kommt die alte Reihenfolge zurück. Dialoge für Leistung (Puffer unter „Erweitert“), Kategorie und Bestätigung. Dauer wird mit `Intl` in der Sprache der Oberfläche geschrieben (`LocaleFormatService.formatDuration`).
+
 ## Frontend-Gerüst
 
 Angular 22 (Standalone, zoneless, Signals, OnPush) mit Angular Material 3. Quelltext in `frontend/src/app`:

@@ -45,6 +45,24 @@ export class LocaleFormatService {
     return new Intl.NumberFormat(this.language.current(), options).format(value);
   }
 
+  /** Lengths of time in the language's unit names ("1 Std. 30 Min.", "1 hr 30 min", "1 sa 30 dk"). */
+  formatDuration(totalMinutes: number): string {
+    const unit = (value: number, name: 'hour' | 'minute') =>
+      new Intl.NumberFormat(this.language.current(), {
+        style: 'unit',
+        unit: name,
+        unitDisplay: 'short',
+      }).format(value);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return [
+      hours > 0 ? unit(hours, 'hour') : '',
+      minutes > 0 || hours === 0 ? unit(minutes, 'minute') : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
+  }
+
   /** Prices are stored as cents (integers) of a currency. */
   formatMoney(cents: number, currency = 'EUR'): string {
     return new Intl.NumberFormat(this.language.current(), { style: 'currency', currency }).format(

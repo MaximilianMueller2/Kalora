@@ -29,6 +29,17 @@ describe('LocaleFormatService', () => {
     expect(plain(format.formatMoney(1999))).toBe('€19,99');
   });
 
+  it('writes durations with the unit names of each language', async () => {
+    await language.use('de');
+    expect(plain(format.formatDuration(30))).toBe('30 Min.');
+    expect(plain(format.formatDuration(90))).toBe('1 Std. 30 Min.');
+    expect(plain(format.formatDuration(120))).toBe('2 Std.');
+    await language.use('en');
+    expect(plain(format.formatDuration(90))).toBe('1 hr 30 min');
+    await language.use('tr');
+    expect(plain(format.formatDuration(90))).toBe('1 sa. 30 dk.');
+  });
+
   it('shows UTC times in the salon’s local time zone, including daylight saving time', async () => {
     await language.use('de');
     // 3 Nov 2026 09:00 UTC is winter time (UTC+1); 3 Aug 2026 08:00 UTC is summer time (UTC+2).

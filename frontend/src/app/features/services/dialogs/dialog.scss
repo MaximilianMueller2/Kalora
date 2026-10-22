@@ -1,0 +1,33 @@
+// Shared by the dialogs of the services page.
+form {
+  display: grid;
+  gap: 4px;
+  padding-top: 8px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.alert {
+  margin: 0 0 12px;
+  padding: 12px 16px;
+  border-radius: var(--mat-sys-corner-medium);
+  background: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+  font: var(--mat-sys-body-medium);
+}
+
+.row {
+  display: grid;
+  gap: 0 16px;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 480px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+mat-dialog-actions button {
+  min-height: 44px;
+}

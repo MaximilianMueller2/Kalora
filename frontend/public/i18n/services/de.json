@@ -1,4 +1,56 @@
 {
   "title": "Leistungen",
-  "placeholder": "Hier pflegst du deine Leistungen mit Preis und Dauer."
+  "saved": "Gespeichert",
+  "removed": "Entfernt",
+  "templateApplied": "Vorlage übernommen",
+  "cancel": "Abbrechen",
+  "save": "Speichern",
+  "drag": "Zum Sortieren ziehen",
+  "moveUp": "Nach oben",
+  "moveDown": "Nach unten",
+  "empty": {
+    "title": "Noch keine Leistungen",
+    "text": "Lege fest, was deine Kundschaft online buchen kann. Mit einer Vorlage startest du in Sekunden und passt danach alles an.",
+    "template": "Vorlage übernehmen",
+    "start": "Selbst anlegen"
+  },
+  "category": {
+    "add": "Kategorie hinzufügen",
+    "addTitle": "Neue Kategorie",
+    "renameTitle": "Kategorie umbenennen",
+    "name": "Name der Kategorie",
+    "rename": "Umbenennen",
+    "delete": "Löschen",
+    "deleteTitle": "Kategorie löschen?",
+    "deleteText": "Die leere Kategorie „{{name}}“ wird gelöscht.",
+    "empty": "Noch keine Leistung in dieser Kategorie.",
+    "actions": "Aktionen für Kategorie {{name}}"
+  },
+  "service": {
+    "add": "Leistung hinzufügen",
+    "addTitle": "Neue Leistung",
+    "editTitle": "Leistung bearbeiten",
+    "edit": "Bearbeiten",
+    "name": "Name der Leistung",
+    "category": "Kategorie",
+    "price": "Preis",
+    "priceIsFrom": "Preis „ab“ anzeigen",
+    "priceFrom": "ab {{price}}",
+    "duration": "Dauer",
+    "description": "Beschreibung (optional)",
+    "bookableOnline": "Online buchbar",
+    "active": "Aktiv",
+    "advanced": "Erweitert",
+    "bufferHint": "Pufferzeiten blockieren den Kalender, werden Kundinnen und Kunden aber nicht angezeigt.",
+    "bufferBefore": "Puffer davor",
+    "bufferAfter": "Puffer danach",
+    "activate": "Aktivieren",
+    "deactivate": "Deaktivieren",
+    "delete": "Löschen",
+    "deleteTitle": "Leistung löschen?",
+    "deleteText": "„{{name}}“ wird endgültig gelöscht.",
+    "inactiveBadge": "inaktiv",
+    "internalBadge": "nur intern",
+    "actions": "Aktionen für Leistung {{name}}"
+  }
 }

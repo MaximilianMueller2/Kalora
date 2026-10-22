@@ -1,4 +1,56 @@
 {
   "title": "Services",
-  "placeholder": "Here you manage your services with price and duration."
+  "saved": "Saved",
+  "removed": "Removed",
+  "templateApplied": "Template applied",
+  "cancel": "Cancel",
+  "save": "Save",
+  "drag": "Drag to reorder",
+  "moveUp": "Move up",
+  "moveDown": "Move down",
+  "empty": {
+    "title": "No services yet",
+    "text": "Decide what your customers can book online. Start with a template in seconds and adjust everything afterwards.",
+    "template": "Use template",
+    "start": "Create my own"
+  },
+  "category": {
+    "add": "Add category",
+    "addTitle": "New category",
+    "renameTitle": "Rename category",
+    "name": "Category name",
+    "rename": "Rename",
+    "delete": "Delete",
+    "deleteTitle": "Delete category?",
+    "deleteText": "The empty category “{{name}}” will be deleted.",
+    "empty": "No services in this category yet.",
+    "actions": "Actions for category {{name}}"
+  },
+  "service": {
+    "add": "Add service",
+    "addTitle": "New service",
+    "editTitle": "Edit service",
+    "edit": "Edit",
+    "name": "Service name",
+    "category": "Category",
+    "price": "Price",
+    "priceIsFrom": "Show price as “from”",
+    "priceFrom": "from {{price}}",
+    "duration": "Duration",
+    "description": "Description (optional)",
+    "bookableOnline": "Bookable online",
+    "active": "Active",
+    "advanced": "Advanced",
+    "bufferHint": "Buffer times block the calendar but are not shown to customers.",
+    "bufferBefore": "Buffer before",
+    "bufferAfter": "Buffer after",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "delete": "Delete",
+    "deleteTitle": "Delete service?",
+    "deleteText": "“{{name}}” will be deleted permanently.",
+    "inactiveBadge": "inactive",
+    "internalBadge": "internal only",
+    "actions": "Actions for service {{name}}"
+  }
 }

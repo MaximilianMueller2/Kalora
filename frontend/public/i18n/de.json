@@ -95,6 +95,20 @@
       "range_too_long": "Du kannst höchstens 62 Tage auf einmal eintragen.",
       "already_exists": "Dieser Tag ist schon als geschlossen eingetragen.",
       "not_found": "Diesen Schließtag gibt es nicht mehr."
+    },
+    "category": {
+      "not_found": "Diese Kategorie gibt es nicht mehr.",
+      "not_empty": "Die Kategorie enthält noch Leistungen."
+    },
+    "service": {
+      "not_found": "Diese Leistung gibt es nicht mehr.",
+      "has_appointments": "Zu dieser Leistung gibt es Termine. Du kannst sie nur deaktivieren.",
+      "price_invalid": "Der Preis ist ungültig.",
+      "duration_invalid": "Die Dauer ist ungültig.",
+      "buffer_invalid": "Die Pufferzeit ist ungültig."
+    },
+    "catalog": {
+      "order_mismatch": "Die Reihenfolge ist nicht mehr aktuell. Bitte lade neu."
     }
   },
   "title": {
@@ -117,7 +131,8 @@
     "urlInvalid": "Bitte gib eine vollständige Adresse mit https:// ein.",
     "maxLength": "Zu lang (höchstens {{maxLength}} Zeichen).",
     "range": "Bitte gib eine ganze Zahl im erlaubten Bereich ein.",
-    "endBeforeStart": "Das Ende darf nicht vor dem Beginn liegen."
+    "endBeforeStart": "Das Ende darf nicht vor dem Beginn liegen.",
+    "priceInvalid": "Bitte gib einen Preis wie 25 oder 25,50 ein (höchstens 10.000)."
   },
   "schedule": {
     "open": "Geöffnet",
