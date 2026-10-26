@@ -56,12 +56,18 @@ export const routes: Routes = [
         'services',
         MANAGEMENT,
       ),
-      areaRoute(
-        'team',
-        () => import('./features/team/team-page').then((m) => m.TeamPage),
-        'team',
-        MANAGEMENT,
-      ),
+      {
+        path: 'team',
+        canActivate: MANAGEMENT,
+        loadChildren: () => import('./features/team/team.routes').then((m) => m.TEAM_ROUTES),
+      },
+      {
+        path: 'absences',
+        title: 'nav.absences',
+        loadComponent: () =>
+          import('./features/team/my-absences-page').then((m) => m.MyAbsencesPage),
+        providers: [provideTranslocoScope('team')],
+      },
       {
         path: 'settings',
         title: 'nav.settings',
@@ -69,29 +75,8 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/settings/settings-page').then((m) => m.SettingsPage),
         providers: [provideTranslocoScope('settings')],
-        children: [
-          { path: '', pathMatch: 'full', redirectTo: 'salon' },
-          {
-            path: 'salon',
-            loadComponent: () =>
-              import('./features/settings/tabs/salon-tab').then((m) => m.SalonTab),
-          },
-          {
-            path: 'hours',
-            loadComponent: () =>
-              import('./features/settings/tabs/hours-tab').then((m) => m.HoursTab),
-          },
-          {
-            path: 'booking',
-            loadComponent: () =>
-              import('./features/settings/tabs/rules-tab').then((m) => m.RulesTab),
-          },
-          {
-            path: 'closures',
-            loadComponent: () =>
-              import('./features/settings/tabs/closures-tab').then((m) => m.ClosuresTab),
-          },
-        ],
+        loadChildren: () =>
+          import('./features/settings/settings.routes').then((m) => m.SETTINGS_ROUTES),
       },
     ],
   },

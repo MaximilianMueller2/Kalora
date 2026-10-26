@@ -1,6 +1,7 @@
 using FluentValidation;
 using Kalora.Application.Auth;
 using Kalora.Application.Catalog;
+using Kalora.Application.Staff;
 using Kalora.Application.Common;
 using Kalora.Application.Configuration;
 using Kalora.Application.Ping;
@@ -42,6 +43,12 @@ public static class DependencyInjection
         services.AddSingleton<IValidator<SaveCategoryRequest>, SaveCategoryRequestValidator>();
         services.AddSingleton<IValidator<SaveServiceRequest>, SaveServiceRequestValidator>();
         services.AddSingleton<IValidator<ApplyTemplateRequest>, ApplyTemplateRequestValidator>();
+        services.AddSingleton<IValidator<CreateStaffRequest>, CreateStaffRequestValidator>();
+        services.AddSingleton<IValidator<SaveStaffRequest>, SaveStaffRequestValidator>();
+        services.AddSingleton<IValidator<StaffSkills>, StaffSkillsValidator>();
+        services.AddSingleton<IValidator<CreateAbsenceRequest>, CreateAbsenceRequestValidator>();
+        services.AddScoped<IStaffService, StaffManagementService>();
+        services.AddScoped<IStaffScheduleService, StaffScheduleService>();
         services.AddScoped<IServiceCatalogService, ServiceCatalogService>();
         services.AddScoped<ISlugAllocator, SlugAllocator>();
         services.AddScoped<ISalonSettingsService, SalonSettingsService>();

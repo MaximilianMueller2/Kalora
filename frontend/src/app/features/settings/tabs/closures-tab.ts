@@ -25,7 +25,7 @@ import { SettingsService } from '../settings.service';
     MatInputModule,
     TranslocoPipe,
   ],
-  styleUrl: '../settings-tabs.scss',
+  styleUrl: '../../../shared/forms/panel-form.scss',
   template: `
     <h2>{{ 'settings.closures.title' | transloco }}</h2>
     <p class="lead">{{ 'settings.closures.lead' | transloco }}</p>

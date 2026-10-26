@@ -10,6 +10,7 @@ export const TEST_TRANSLATIONS: TestTranslations = {
   de: {
     common: {
       close: 'Schließen',
+      cancel: 'Abbrechen',
       loading: 'Wird geladen …',
       language: 'Sprache wählen',
       skipToContent: 'Zum Inhalt springen',
@@ -55,6 +56,7 @@ export const TEST_TRANSLATIONS: TestTranslations = {
       urlInvalid: 'Ungültige Adresse.',
       endBeforeStart: 'Ende vor Beginn.',
       priceInvalid: 'Ungültiger Preis.',
+      rangeTooLong: 'Zeitraum zu lang.',
     },
     errors: {
       unknown: 'Unbekannter Fehler',
@@ -64,10 +66,12 @@ export const TEST_TRANSLATIONS: TestTranslations = {
         invalid_credentials: 'E-Mail oder Passwort stimmt nicht.',
         email_taken: 'Konto existiert schon.',
       },
-      invitation: { invalid: 'Einladung ungültig.' },
+      invitation: { invalid: 'Einladung ungültig.', email_taken: 'Mail vergeben.' },
       settings: { slug_taken: 'Link schon vergeben.' },
       closure: { date_in_past: 'Datum liegt in der Vergangenheit.' },
       category: { not_empty: 'Kategorie nicht leer.' },
+      staff: { already_linked: 'Schon verknüpft.', schedule_empty: 'Plan leer.' },
+      absence: { date_in_past: 'Abwesenheit in der Vergangenheit.' },
       service: { has_appointments: 'Es gibt Termine.' },
     },
   },

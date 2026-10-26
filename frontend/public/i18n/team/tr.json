@@ -1,4 +1,101 @@
 {
   "title": "Ekip",
-  "placeholder": "Burada çalışanları, hizmetlerini, çalışma saatlerini ve izinlerini yönetirsin."
+  "saved": "Kaydedildi",
+  "removed": "Kaldırıldı",
+  "save": "Kaydet",
+  "edit": "Düzenle",
+  "add": "Kişi ekle",
+  "back": "Ekibe dön",
+  "notFound": "Bu kişi yok (artık).",
+  "empty": {
+    "title": "Takvimde henüz kimse yok",
+    "text": "Randevu alan herkesin takvimde kendi sütunu olmalı. Tek çalışıyorsanız kendi kaydınız yeterli.",
+    "justMe": "Sadece ben",
+    "addPerson": "Kişi ekle"
+  },
+  "role": {
+    "Owner": "Sahip",
+    "Manager": "Yönetici",
+    "Staff": "Çalışan"
+  },
+  "status": {
+    "noLogin": "Girişi yok",
+    "invited": "Davet bekliyor",
+    "inactive": "pasif",
+    "notOnline": "çevrimiçi ayırtılamaz"
+  },
+  "tabs": {
+    "services": "Hizmetler",
+    "hours": "Çalışma saatleri",
+    "absences": "İzinler"
+  },
+  "dialog": {
+    "addTitle": "Kişi ekle",
+    "editTitle": "Kişiyi düzenle",
+    "name": "Görünen ad",
+    "color": "Takvim rengi",
+    "bookableOnline": "Çevrimiçi ayırtılabilir",
+    "autoConfirm": "Talepleri otomatik onayla",
+    "autoConfirmHint": "Yalnızca bu kişideki randevular için geçerli.",
+    "active": "Etkin",
+    "activeHint": "Pasif kişiler ne takvimde ne de çevrimiçi rezervasyonda görünür. Mevcut randevular korunur.",
+    "linkToMe": "Bu benim (girişim bu sütunu yönetir)",
+    "inviteTitle": "E-postayla davet et (isteğe bağlı)",
+    "inviteHint": "Kişi, kendi girişini oluşturması ve takvimini görmesi için bir bağlantı alır.",
+    "inviteEmail": "E-posta adresi",
+    "inviteRole": "Rol",
+    "save": "Kaydet"
+  },
+  "invite": {
+    "action": "Davet et",
+    "again": "Yeniden davet et",
+    "title": "{{name}} kişisini davet et",
+    "lead": "Kişinin şifre seçeceği bir bağlantı gönderiyoruz. 7 gün geçerlidir.",
+    "send": "Daveti gönder",
+    "sent": "Davet gönderildi"
+  },
+  "skills": {
+    "title": "Hizmetler",
+    "lead": "Bu kişi hangi hizmetleri sunuyor? Çevrimiçi yalnızca bunlar için ayırtılabilir.",
+    "noServices": "Henüz hizmet yok. Önce şuradan oluşturun:",
+    "all": "Tümünü seç",
+    "none": "Hiçbiri",
+    "duration": "Bu kişide süre",
+    "sameAsService": "Hizmetteki gibi ({{duration}})"
+  },
+  "hours": {
+    "title": "Çalışma saatleri",
+    "lead": "Bu kişi ne zaman çalışıyor? Salonun çalışma saatleri ayrıca geçerlidir.",
+    "none": "Henüz çalışma saati yok. Çalışma saati olmadan kişi ayırtılamaz.",
+    "currentPlan": "Güncel plan",
+    "fromDate": "{{date}} tarihinden",
+    "until": "{{date}} tarihine kadar",
+    "edit": "Düzenle",
+    "validFrom": "Geçerlilik başlangıcı",
+    "validFromHint": "Önceki plan bir gün önce biter.",
+    "emptyHint": "En az bir çalışma günü girin."
+  },
+  "absences": {
+    "title": "İzinler",
+    "lead": "Tatil, hastalık veya özel durum: bu sürede kişi ayırtılamaz.",
+    "type": "Tür",
+    "types": {
+      "Vacation": "Tatil",
+      "Sick": "Hasta",
+      "Private": "Özel"
+    },
+    "from": "Başlangıç",
+    "to": "Bitiş (dahil)",
+    "toHint": "Tek gün için boş bırakın.",
+    "add": "İzin ekle",
+    "upcoming": "Güncel ve yaklaşan",
+    "empty": "İzin girilmemiş.",
+    "remove": "{{range}} iznini kaldır",
+    "conflictCount": "Etkilenen randevu: {{count}}",
+    "conflictTitle": "Bu süredeki randevular: {{count}}",
+    "conflictText": "İzin kaydedildi. Lütfen bu müşterilerle iletişime geçin veya randevuları taşıyın.",
+    "requested": "talep",
+    "understood": "Anladım",
+    "noCalendar": "Henüz kendi takviminiz yok. Lütfen salondan sizi eklemesini isteyin."
+  }
 }

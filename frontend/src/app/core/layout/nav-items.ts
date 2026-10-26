@@ -17,5 +17,6 @@ export const NAV_ITEMS: readonly NavItem[] = [
   { path: 'requests', icon: 'inbox', labelKey: 'nav.requests' },
   { path: 'services', icon: 'content_cut', labelKey: 'nav.services', roles: MANAGEMENT },
   { path: 'team', icon: 'group', labelKey: 'nav.team', roles: MANAGEMENT },
+  { path: 'absences', icon: 'event_busy', labelKey: 'nav.absences', roles: ['Staff'] },
   { path: 'settings', icon: 'settings', labelKey: 'nav.settings', roles: MANAGEMENT },
 ];

@@ -1,4 +1,101 @@
 {
   "title": "Team",
-  "placeholder": "Hier verwaltest du Mitarbeitende, ihre Leistungen, Arbeitszeiten und Abwesenheiten."
+  "saved": "Gespeichert",
+  "removed": "Entfernt",
+  "save": "Speichern",
+  "edit": "Bearbeiten",
+  "add": "Person hinzufügen",
+  "back": "Zurück zum Team",
+  "notFound": "Diese Person gibt es nicht (mehr).",
+  "empty": {
+    "title": "Noch niemand im Kalender",
+    "text": "Wer Termine annimmt, braucht eine eigene Spalte im Kalender. Arbeitest du allein, reicht dein eigener Eintrag.",
+    "justMe": "Nur ich",
+    "addPerson": "Person hinzufügen"
+  },
+  "role": {
+    "Owner": "Inhaber:in",
+    "Manager": "Manager:in",
+    "Staff": "Mitarbeiter:in"
+  },
+  "status": {
+    "noLogin": "Ohne Login",
+    "invited": "Einladung ausstehend",
+    "inactive": "inaktiv",
+    "notOnline": "nicht online buchbar"
+  },
+  "tabs": {
+    "services": "Leistungen",
+    "hours": "Arbeitszeiten",
+    "absences": "Abwesenheiten"
+  },
+  "dialog": {
+    "addTitle": "Person hinzufügen",
+    "editTitle": "Person bearbeiten",
+    "name": "Anzeigename",
+    "color": "Farbe im Kalender",
+    "bookableOnline": "Online buchbar",
+    "autoConfirm": "Anfragen automatisch bestätigen",
+    "autoConfirmHint": "Gilt nur für Termine bei dieser Person.",
+    "active": "Aktiv",
+    "activeHint": "Inaktive Personen erscheinen weder im Kalender noch in der Online-Buchung. Bestehende Termine bleiben erhalten.",
+    "linkToMe": "Das bin ich (mein Login steuert diese Spalte)",
+    "inviteTitle": "Per E-Mail einladen (optional)",
+    "inviteHint": "Die Person erhält einen Link, um ein eigenes Login zu erstellen und ihren Kalender zu sehen.",
+    "inviteEmail": "E-Mail-Adresse",
+    "inviteRole": "Rolle",
+    "save": "Speichern"
+  },
+  "invite": {
+    "action": "Einladen",
+    "again": "Erneut einladen",
+    "title": "{{name}} einladen",
+    "lead": "Wir schicken einen Link, mit dem die Person ein Passwort wählt. Er ist 7 Tage gültig.",
+    "send": "Einladung senden",
+    "sent": "Einladung gesendet"
+  },
+  "skills": {
+    "title": "Leistungen",
+    "lead": "Welche Leistungen bietet diese Person an? Nur dafür kann sie online gebucht werden.",
+    "noServices": "Es gibt noch keine Leistungen. Lege sie zuerst an unter",
+    "all": "Alle auswählen",
+    "none": "Keine",
+    "duration": "Dauer bei dieser Person",
+    "sameAsService": "Wie bei der Leistung ({{duration}})"
+  },
+  "hours": {
+    "title": "Arbeitszeiten",
+    "lead": "Wann arbeitet diese Person? Die Öffnungszeiten des Salons gelten zusätzlich.",
+    "none": "Noch keine Arbeitszeiten eingetragen. Ohne Arbeitszeiten ist die Person nicht buchbar.",
+    "currentPlan": "Aktueller Plan",
+    "fromDate": "Ab {{date}}",
+    "until": "bis {{date}}",
+    "edit": "Bearbeiten",
+    "validFrom": "Gilt ab",
+    "validFromHint": "Der bisherige Plan endet am Vortag.",
+    "emptyHint": "Trage mindestens einen Arbeitstag ein."
+  },
+  "absences": {
+    "title": "Abwesenheiten",
+    "lead": "Urlaub, Krankheit oder Privates: In dieser Zeit ist die Person nicht buchbar.",
+    "type": "Art",
+    "types": {
+      "Vacation": "Urlaub",
+      "Sick": "Krank",
+      "Private": "Privat"
+    },
+    "from": "Von",
+    "to": "Bis (einschließlich)",
+    "toHint": "Leer lassen für einen einzelnen Tag.",
+    "add": "Abwesenheit eintragen",
+    "upcoming": "Aktuell und kommend",
+    "empty": "Keine Abwesenheiten eingetragen.",
+    "remove": "Abwesenheit {{range}} entfernen",
+    "conflictCount": "Betroffene Termine: {{count}}",
+    "conflictTitle": "Termine in dieser Zeit: {{count}}",
+    "conflictText": "Die Abwesenheit ist gespeichert. Bitte melde dich bei diesen Kundinnen und Kunden oder verschiebe die Termine.",
+    "requested": "Anfrage",
+    "understood": "Verstanden",
+    "noCalendar": "Du hast noch keinen eigenen Kalender. Bitte den Salon, dich anzulegen."
+  }
 }

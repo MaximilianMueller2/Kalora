@@ -14,7 +14,7 @@ public sealed record ForgotPasswordRequest(string Email);
 
 public sealed record ResetPasswordRequest(string Email, string Token, string NewPassword);
 
-public sealed record MeSalon(Guid Id, string Name, string Slug, SalonStatus Status, PlanCode PlanCode, DateTimeOffset? TrialEndsAtUtc);
+public sealed record MeSalon(Guid Id, string Name, string Slug, SalonStatus Status, PlanCode PlanCode, DateTimeOffset? TrialEndsAtUtc, string TimeZone);
 
 public sealed record MeResponse(
     Guid UserId,

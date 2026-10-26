@@ -94,7 +94,7 @@ function isHttpUrl(value: string): boolean {
     MatInputModule,
     TranslocoPipe,
   ],
-  styleUrl: '../settings-tabs.scss',
+  styleUrl: '../../../shared/forms/panel-form.scss',
   template: `
     <h2>{{ 'settings.salon.title' | transloco }}</h2>
     <p class="lead">{{ 'settings.salon.lead' | transloco }}</p>

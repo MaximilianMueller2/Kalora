@@ -79,7 +79,7 @@ export function isWholeNumberInRange(text: string, min: number, max: number): bo
     MatInputModule,
     TranslocoPipe,
   ],
-  styleUrl: '../settings-tabs.scss',
+  styleUrl: '../../../shared/forms/panel-form.scss',
   template: `
     <h2>{{ 'settings.booking.title' | transloco }}</h2>
     <p class="lead">{{ 'settings.booking.lead' | transloco }}</p>

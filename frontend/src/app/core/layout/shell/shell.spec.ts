@@ -66,6 +66,7 @@ describe('Shell', () => {
       '/app/dashboard',
       '/app/calendar',
       '/app/requests',
+      '/app/absences',
     ]);
   });
 

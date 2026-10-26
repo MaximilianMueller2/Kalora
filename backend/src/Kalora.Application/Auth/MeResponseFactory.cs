@@ -21,7 +21,7 @@ internal sealed class MeResponseFactory(IAppDbContext db)
         {
             salon = await db.AllSalons()
                 .Where(s => s.Id == membership.SalonId)
-                .Select(s => new MeSalon(s.Id, s.Name, s.Slug, s.Status, s.PlanCode, s.TrialEndsAtUtc))
+                .Select(s => new MeSalon(s.Id, s.Name, s.Slug, s.Status, s.PlanCode, s.TrialEndsAtUtc, s.TimeZone))
                 .FirstAsync(cancellationToken);
             staffId = await db.AllTenants<Domain.Staff.StaffMember>()
                 .Where(s => s.UserId == user.Id)

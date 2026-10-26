@@ -10,7 +10,7 @@ export interface ConfirmDialogData {
   confirmKey: string;
 }
 
-/** Closes with `true` when confirmed. */
+/** Asks before something is removed. Closes with `true` when confirmed. */
 @Component({
   selector: 'app-confirm-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,7 +22,7 @@ export interface ConfirmDialogData {
     </mat-dialog-content>
     <mat-dialog-actions align="end">
       <button mat-button type="button" [mat-dialog-close]="false">
-        {{ 'services.cancel' | transloco }}
+        {{ 'common.cancel' | transloco }}
       </button>
       <button mat-flat-button type="button" [mat-dialog-close]="true" cdkFocusInitial>
         {{ data.confirmKey | transloco }}

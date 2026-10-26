@@ -7,11 +7,11 @@ import { describe, expect, it, vi } from 'vitest';
 import { click, submit, texts, type } from '../../../../testing/forms';
 import { provideTestI18n } from '../../../../testing/test-i18n';
 import { ApiError } from '../../../core/http/api-error';
+import { ConfirmDialog } from '../../../shared/dialogs/confirm-dialog';
 import { LanguageService } from '../../../core/i18n/language.service';
 import { Catalog, Category, ServiceItem } from '../catalog.models';
 import { CatalogService } from '../catalog.service';
 import { CategoryDialog } from './category-dialog';
-import { ConfirmDialog } from './confirm-dialog';
 import { ServiceDialog } from './service-dialog';
 
 const RESULT: Catalog = { categories: [] };
@@ -247,7 +247,7 @@ describe('ConfirmDialog', () => {
 
     expect(texts(fixture, 'h2')).toEqual(['services.service.deleteTitle']);
     expect(texts(fixture, 'mat-dialog-actions button')).toEqual([
-      'services.cancel',
+      'Abbrechen',
       'services.service.delete',
     ]);
     click(fixture, 'mat-dialog-actions button:last-child');

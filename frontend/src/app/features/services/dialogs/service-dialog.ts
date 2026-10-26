@@ -57,7 +57,7 @@ interface ServiceModel {
     MatInputModule,
     TranslocoPipe,
   ],
-  styleUrl: './dialog.scss',
+  styleUrl: '../../../shared/dialogs/dialog.scss',
   template: `
     <h2 mat-dialog-title>
       {{ (data.service ? 'services.service.editTitle' : 'services.service.addTitle') | transloco }}
@@ -155,7 +155,7 @@ interface ServiceModel {
       </mat-dialog-content>
       <mat-dialog-actions align="end">
         <button mat-button type="button" mat-dialog-close>
-          {{ 'services.cancel' | transloco }}
+          {{ 'common.cancel' | transloco }}
         </button>
         <button mat-flat-button type="submit" [disabled]="form().submitting()">
           {{ 'services.save' | transloco }}

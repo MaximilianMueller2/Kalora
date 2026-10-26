@@ -17,14 +17,14 @@ describe('routes', () => {
     expect(routes.find((route) => route.path === 'app')?.canActivate).toHaveLength(1);
   });
 
-  it('defines onboarding and the six salon areas, each with a translated title and its own text scope', () => {
+  it('defines onboarding and the salon pages, each with a translated title and its own text scope', () => {
     expect(pages.map((route) => route.path)).toEqual([
       'onboarding',
       'dashboard',
       'calendar',
       'requests',
       'services',
-      'team',
+      'absences',
       'settings',
     ]);
     for (const page of pages) {
@@ -33,10 +33,17 @@ describe('routes', () => {
     }
   });
 
-  it('restricts services, team and settings to owners and managers', () => {
-    const guarded = pages.filter((route) => route.canActivate).map((route) => route.path);
+  it('restricts services, team and settings to owners and managers, but not the staff’s own absences', () => {
+    const guarded = area.filter((route) => route.canActivate).map((route) => route.path);
 
     expect(guarded).toEqual(['services', 'team', 'settings']);
+  });
+
+  it('loads the team area with its own routes, titles and text scopes', () => {
+    const team = area.find((route) => route.path === 'team');
+
+    expect(team?.loadChildren).toBeDefined();
+    expect(team?.loadComponent).toBeUndefined();
   });
 
   it('keeps login and registration for visitors and leaves reset, confirmation and invitation open', () => {

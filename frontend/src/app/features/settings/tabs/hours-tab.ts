@@ -25,7 +25,7 @@ import { SettingsService } from '../settings.service';
   selector: 'app-hours-tab',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatButtonModule, TranslocoPipe, WeekScheduleEditor],
-  styleUrl: '../settings-tabs.scss',
+  styleUrl: '../../../shared/forms/panel-form.scss',
   template: `
     <h2>{{ 'settings.hours.title' | transloco }}</h2>
     <p class="lead">{{ 'settings.hours.lead' | transloco }}</p>

@@ -29,7 +29,7 @@ export interface CategoryDialogData {
     MatInputModule,
     TranslocoPipe,
   ],
-  styleUrl: './dialog.scss',
+  styleUrl: '../../../shared/dialogs/dialog.scss',
   template: `
     <h2 mat-dialog-title>
       {{
@@ -51,7 +51,7 @@ export interface CategoryDialogData {
       </mat-dialog-content>
       <mat-dialog-actions align="end">
         <button mat-button type="button" mat-dialog-close>
-          {{ 'services.cancel' | transloco }}
+          {{ 'common.cancel' | transloco }}
         </button>
         <button mat-flat-button type="submit" [disabled]="form().submitting()">
           {{ 'services.save' | transloco }}

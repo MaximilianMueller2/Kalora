@@ -17,11 +17,11 @@ import { ApiError } from '../../core/http/api-error';
 import { ErrorNotifier } from '../../core/http/error-notifier';
 import { LocaleFormatService } from '../../core/i18n/locale-format.service';
 import { Toast } from '../../core/ui/toast';
+import { ConfirmDialog, ConfirmDialogData } from '../../shared/dialogs/confirm-dialog';
 import { Catalog, Category, ServiceItem } from './catalog.models';
 import { categoryIds, moveCategory, moveService, serviceIds } from './catalog-order';
 import { CatalogService } from './catalog.service';
 import { CategoryDialog, CategoryDialogData } from './dialogs/category-dialog';
-import { ConfirmDialog, ConfirmDialogData } from './dialogs/confirm-dialog';
 import { ServiceDialog, ServiceDialogData } from './dialogs/service-dialog';
 
 @Component({

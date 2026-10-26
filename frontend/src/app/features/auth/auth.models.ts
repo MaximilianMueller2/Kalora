@@ -17,6 +17,8 @@ export interface MeSalon {
   status: 'Trial' | 'Active' | 'PastDue' | 'Suspended' | 'Cancelled';
   planCode: 'Solo' | 'Team' | 'SalonPlus';
   trialEndsAtUtc: string | null;
+  /** IANA time zone of the salon; times from the API are UTC and shown in this zone. */
+  timeZone: string;
 }
 
 /** The signed-in user as returned by `GET /api/me`. */

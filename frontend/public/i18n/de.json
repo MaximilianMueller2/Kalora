@@ -4,7 +4,8 @@
     "language": "Sprache wählen",
     "skipToContent": "Zum Inhalt springen",
     "poweredBy": "Online-Buchung mit Kalora",
-    "loading": "Wird geladen …"
+    "loading": "Wird geladen …",
+    "cancel": "Abbrechen"
   },
   "nav": {
     "label": "Hauptnavigation",
@@ -14,7 +15,8 @@
     "services": "Leistungen",
     "team": "Team",
     "settings": "Einstellungen",
-    "logout": "Abmelden"
+    "logout": "Abmelden",
+    "absences": "Abwesenheiten"
   },
   "theme": {
     "system": "Darstellung: wie Gerät",
@@ -70,7 +72,8 @@
     "invitation": {
       "invalid": "Diese Einladung ist ungültig oder wurde schon verwendet.",
       "expired": "Diese Einladung ist abgelaufen. Bitte den Salon um eine neue.",
-      "staff_already_linked": "Für diese Person gibt es schon ein Konto."
+      "staff_already_linked": "Für diese Person gibt es schon ein Konto.",
+      "manager_requires_owner": "Nur die Inhaberin oder der Inhaber kann Manager:innen einladen."
     },
     "settings": {
       "slug_invalid": "Der Link darf nur Kleinbuchstaben, Ziffern und einzelne Bindestriche enthalten (3 bis 40 Zeichen).",
@@ -109,6 +112,20 @@
     },
     "catalog": {
       "order_mismatch": "Die Reihenfolge ist nicht mehr aktuell. Bitte lade neu."
+    },
+    "staff": {
+      "not_found": "Diese Person gibt es nicht mehr.",
+      "already_linked": "Du hast schon einen eigenen Kalender.",
+      "color_invalid": "Diese Farbe ist ungültig.",
+      "skills_duplicate": "Eine Leistung kommt doppelt vor.",
+      "schedule_empty": "Trage mindestens einen Arbeitstag ein.",
+      "schedule_date_in_past": "Das Datum liegt in der Vergangenheit."
+    },
+    "absence": {
+      "range_invalid": "Das Ende darf nicht vor dem Beginn liegen.",
+      "range_too_long": "Eine Abwesenheit darf höchstens 366 Tage dauern.",
+      "date_in_past": "Das Datum liegt in der Vergangenheit.",
+      "not_found": "Diese Abwesenheit gibt es nicht mehr."
     }
   },
   "title": {
@@ -132,7 +149,8 @@
     "maxLength": "Zu lang (höchstens {{maxLength}} Zeichen).",
     "range": "Bitte gib eine ganze Zahl im erlaubten Bereich ein.",
     "endBeforeStart": "Das Ende darf nicht vor dem Beginn liegen.",
-    "priceInvalid": "Bitte gib einen Preis wie 25 oder 25,50 ein (höchstens 10.000)."
+    "priceInvalid": "Bitte gib einen Preis wie 25 oder 25,50 ein (höchstens 10.000).",
+    "rangeTooLong": "Der Zeitraum ist zu lang (höchstens 366 Tage)."
   },
   "schedule": {
     "open": "Geöffnet",

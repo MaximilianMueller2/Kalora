@@ -1,4 +1,101 @@
 {
   "title": "Team",
-  "placeholder": "Here you manage staff, their services, working hours and absences."
+  "saved": "Saved",
+  "removed": "Removed",
+  "save": "Save",
+  "edit": "Edit",
+  "add": "Add person",
+  "back": "Back to team",
+  "notFound": "This person does not exist (any more).",
+  "empty": {
+    "title": "Nobody in the calendar yet",
+    "text": "Everyone who takes appointments needs a column in the calendar. If you work alone, your own entry is enough.",
+    "justMe": "Just me",
+    "addPerson": "Add person"
+  },
+  "role": {
+    "Owner": "Owner",
+    "Manager": "Manager",
+    "Staff": "Staff"
+  },
+  "status": {
+    "noLogin": "No login",
+    "invited": "Invitation pending",
+    "inactive": "inactive",
+    "notOnline": "not bookable online"
+  },
+  "tabs": {
+    "services": "Services",
+    "hours": "Working hours",
+    "absences": "Time off"
+  },
+  "dialog": {
+    "addTitle": "Add person",
+    "editTitle": "Edit person",
+    "name": "Display name",
+    "color": "Calendar color",
+    "bookableOnline": "Bookable online",
+    "autoConfirm": "Confirm requests automatically",
+    "autoConfirmHint": "Applies only to appointments with this person.",
+    "active": "Active",
+    "activeHint": "Inactive people appear neither in the calendar nor in online booking. Existing appointments are kept.",
+    "linkToMe": "This is me (my login controls this column)",
+    "inviteTitle": "Invite by e-mail (optional)",
+    "inviteHint": "The person receives a link to create their own login and see their calendar.",
+    "inviteEmail": "E-mail address",
+    "inviteRole": "Role",
+    "save": "Save"
+  },
+  "invite": {
+    "action": "Invite",
+    "again": "Invite again",
+    "title": "Invite {{name}}",
+    "lead": "We send a link with which the person chooses a password. It is valid for 7 days.",
+    "send": "Send invitation",
+    "sent": "Invitation sent"
+  },
+  "skills": {
+    "title": "Services",
+    "lead": "Which services does this person offer? Only these can be booked with them online.",
+    "noServices": "There are no services yet. Create them first under",
+    "all": "Select all",
+    "none": "None",
+    "duration": "Duration for this person",
+    "sameAsService": "Same as the service ({{duration}})"
+  },
+  "hours": {
+    "title": "Working hours",
+    "lead": "When does this person work? The salon's opening hours apply in addition.",
+    "none": "No working hours yet. Without working hours the person cannot be booked.",
+    "currentPlan": "Current plan",
+    "fromDate": "From {{date}}",
+    "until": "until {{date}}",
+    "edit": "Edit",
+    "validFrom": "Valid from",
+    "validFromHint": "The previous plan ends the day before.",
+    "emptyHint": "Enter at least one working day."
+  },
+  "absences": {
+    "title": "Time off",
+    "lead": "Vacation, sickness or private: the person cannot be booked during this time.",
+    "type": "Type",
+    "types": {
+      "Vacation": "Vacation",
+      "Sick": "Sick",
+      "Private": "Private"
+    },
+    "from": "From",
+    "to": "To (inclusive)",
+    "toHint": "Leave empty for a single day.",
+    "add": "Add time off",
+    "upcoming": "Current and upcoming",
+    "empty": "No time off entered.",
+    "remove": "Remove time off {{range}}",
+    "conflictCount": "Affected appointments: {{count}}",
+    "conflictTitle": "Appointments in this period: {{count}}",
+    "conflictText": "The time off is saved. Please contact these customers or move the appointments.",
+    "requested": "request",
+    "understood": "Got it",
+    "noCalendar": "You do not have a calendar of your own yet. Please ask the salon to add you."
+  }
 }

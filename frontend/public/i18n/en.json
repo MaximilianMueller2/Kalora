@@ -4,7 +4,8 @@
     "language": "Choose language",
     "skipToContent": "Skip to content",
     "poweredBy": "Online booking with Kalora",
-    "loading": "Loading …"
+    "loading": "Loading …",
+    "cancel": "Cancel"
   },
   "nav": {
     "label": "Main navigation",
@@ -14,7 +15,8 @@
     "services": "Services",
     "team": "Team",
     "settings": "Settings",
-    "logout": "Sign out"
+    "logout": "Sign out",
+    "absences": "Time off"
   },
   "theme": {
     "system": "Appearance: match device",
@@ -70,7 +72,8 @@
     "invitation": {
       "invalid": "This invitation is invalid or has already been used.",
       "expired": "This invitation has expired. Please ask the salon for a new one.",
-      "staff_already_linked": "This person already has an account."
+      "staff_already_linked": "This person already has an account.",
+      "manager_requires_owner": "Only the owner can invite managers."
     },
     "settings": {
       "slug_invalid": "The link may only contain lowercase letters, digits and single hyphens (3 to 40 characters).",
@@ -109,6 +112,20 @@
     },
     "catalog": {
       "order_mismatch": "The order is out of date. Please reload."
+    },
+    "staff": {
+      "not_found": "This person no longer exists.",
+      "already_linked": "You already have a calendar of your own.",
+      "color_invalid": "This color is invalid.",
+      "skills_duplicate": "A service appears twice.",
+      "schedule_empty": "Enter at least one working day.",
+      "schedule_date_in_past": "The date is in the past."
+    },
+    "absence": {
+      "range_invalid": "The end must not be before the start.",
+      "range_too_long": "Time off can last 366 days at most.",
+      "date_in_past": "The date is in the past.",
+      "not_found": "This time off no longer exists."
     }
   },
   "title": {
@@ -132,7 +149,8 @@
     "maxLength": "Too long (at most {{maxLength}} characters).",
     "range": "Please enter a whole number within the allowed range.",
     "endBeforeStart": "The end cannot be before the start.",
-    "priceInvalid": "Please enter a price like 25 or 25.50 (10,000 at most)."
+    "priceInvalid": "Please enter a price like 25 or 25.50 (10,000 at most).",
+    "rangeTooLong": "The range is too long (366 days at most)."
   },
   "schedule": {
     "open": "Open",
