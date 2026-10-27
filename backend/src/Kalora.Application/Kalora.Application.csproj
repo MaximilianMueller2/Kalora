@@ -15,5 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Kalora.UnitTests" />
+    <InternalsVisibleTo Include="Kalora.IntegrationTests" />
   </ItemGroup>
 </Project>

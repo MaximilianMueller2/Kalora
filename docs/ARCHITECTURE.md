@@ -107,6 +107,32 @@ Eingeladen wird mit dem bestehenden `POST /api/invitations` (Prompt 04), die Obe
 - **Frontend (`features/team`, eigene Routen in `team.routes.ts`):** Teamliste mit Initialen-Avatar und Kalenderfarbe (Textfarbe nach WCAG-Kontrast, alle angebotenen Farben erreichen 4,5:1), Detailseite mit den Tabs Leistungen (Checkliste mit optionaler eigener Dauer), Arbeitszeiten (gemeinsamer `WeekScheduleEditor` aus `shared/`, Liste der Pläne, „Gilt ab“) und Abwesenheiten. Mitarbeitende ohne Verwaltungsrechte sehen im Menü „Abwesenheiten“ (`/app/absences`) statt „Team“.
 - **Noch nicht enthalten:** Reihenfolge der Spalten ändern (neue Personen kommen ans Ende), Personen löschen (nur deaktivieren, Termine verweisen auf sie), Plan-Limits je Tarif (Prompt 22).
 
+## Verfügbarkeitsberechnung
+
+Reine Domain-Logik in `Kalora.Domain/Scheduling` (keine Datenbank, keine Systemuhr: „jetzt“ kommt vom Aufrufer), dazu `IAvailabilityService` in der Application-Schicht, der die Daten lädt. Es gibt noch keinen Endpunkt; die öffentliche Buchungs-API (Prompt 11) und der Kalender (Prompt 15) rufen den Service auf.
+
+**Bausteine**
+
+| Typ | Aufgabe |
+|-----|---------|
+| `Interval`, `IntervalSet` | halboffene UTC-Intervalle `[Start, Ende)`; `Union`, `Intersect`, `Subtract`, `Covers`. Ergebnisse sind sortiert, ohne leere Intervalle, sich berührende (9–13, 13–18) werden zu 9–18 verschmolzen |
+| `ZoneClock` (intern) | Wanduhrzeit im Salon ↔ UTC mit Sommerzeit: die übersprungene Stunde im März gibt es nicht (ein Block ab 02:30 beginnt um 03:30), die doppelte Stunde im Oktober liefert beide Zeitpunkte; ein Block, der in der doppelten Stunde endet, endet am späteren Zeitpunkt und deckt so die ganze Wanduhrspanne ab |
+| `AvailabilityCalculator` | `Calculate(AvailabilityRequest) → DaySlots[]`, nur Tage mit mindestens einer Startzeit |
+| `StaffPicker`, `Slot.BestStaff` | „Egal wer“: wenigste Termine an dem Tag, bei Gleichstand die frühere Kalenderspalte, zuletzt die ID (Ergebnis hängt nie von der Listenreihenfolge ab) |
+
+**Algorithmus je lokalem Tag:** Öffnungsblöcke des Wochentags (Schließtag ⇒ Tag entfällt) ∩ Arbeitszeit der Person (Blöcke mit `ValidFrom ≤ Tag ≤ ValidTo`) − Abwesenheiten − Belegtes = frei. Eine Startzeit *s* der Leistung ist gültig, wenn `[s − Puffer davor, s + Dauer + Puffer danach)` vollständig in **einem** freien Intervall liegt. Danach gelten Vorlauf (`s ≥ jetzt + Vorlauf`) und Horizont (letzter buchbarer Tag = heute + Horizont Tage, in Salonzeit). Tage vor heute werden nie angeboten.
+
+- **Raster:** Vielfache des Zeitrasters ab lokaler Mitternacht (09:00, 09:15, …), nicht ab Öffnungsbeginn. Ein Block ab 09:10 bietet also 09:15 als erste Startzeit. Am Umstelltag wird auf der Wanduhr gerastert, die übersprungene Stunde hat keine Startzeiten, die doppelte zwei.
+- **Dauer:** Die Dauer kann je Person abweichen (`StaffService.DurationOverrideMinutes`); `FreeStaff.DurationMinutes` sagt, wie lang der Termin bei dieser Person dauert. Der Puffer der Leistung gilt für alle gleich.
+- **Belegt** sind offene und bestätigte Termine (`Requested`, `Confirmed`) mit ihrem `BlockedStart/End` (inklusive Puffer, wie in der Datenbank) und Blocker (`TimeBlock`). Abgelehnte, abgelaufene, stornierte und abgeschlossene Termine blockieren nicht. Ein Termin, der genau zum Ladenschluss endet, oder eine Lücke, die genau passt, sind gültig.
+- **Ausgabe:** je Startzeit die freien Personen mit Dauer, Termine an dem Tag und Sortierreihenfolge. Das sind interne Daten; die öffentliche API liefert Kund:innen nur Startzeiten (und bei Wunschperson deren Anzeigename).
+
+**`IAvailabilityService`**
+
+- `GetSlotsAsync(AvailabilityQuery)`: Leistung, optional Person, Zeitraum von höchstens 62 Tagen (`availability.range_invalid`). Lädt mit zehn kleinen Abfragen (Salon, Leistung, Personen samt Fähigkeit, Öffnungszeiten, Schließtage, Arbeitszeiten, Abwesenheiten, Termine, Blocker; mit einem Tag Rand, damit Puffer über Mitternacht erfasst sind). Alles läuft durch den Mandantenfilter.
+- `CheckSlotAsync(SlotCheckQuery)`: prüft eine konkrete Startzeit noch einmal (für den Moment der Buchung) und liefert die zu nehmende Person: die gewünschte oder `BestStaff`. Nicht (mehr) angeboten ⇒ `booking.slot_unavailable` (409). Das ersetzt nicht den Exclusion-Constraint, der bei gleichzeitigen Anfragen die letzte Sicherheit bleibt.
+- **Zielgruppe:** `Customer` (nur aktive, online buchbare Leistungen und Personen, Vorlauf und Horizont) oder `Internal` (alle aktiven Leistungen und Personen, ohne Vorlauf und Horizont, aber nie in der Vergangenheit). Unpassende Leistungen oder Personen sind für Kund:innen schlicht „nicht gefunden“ (`service.not_found`, `staff.not_found`).
+
 ## Frontend-Gerüst
 
 Angular 22 (Standalone, zoneless, Signals, OnPush) mit Angular Material 3. Quelltext in `frontend/src/app`:
@@ -159,4 +185,4 @@ PostgreSQL 18, EF Core Code-First, Migrationen in `Kalora.Infrastructure/Persist
 
 ## Offene Abschnitte
 
-Statusautomat, Verfügbarkeitsberechnung, Hintergrunddienste.
+Statusautomat, Hintergrunddienste.
