@@ -23,6 +23,7 @@ public static class DependencyInjection
             .UseSnakeCaseNamingConvention()
             .AddInterceptors(provider.GetRequiredService<AuditTimestampInterceptor>()));
         services.AddScoped<IAppDbContext>(provider => provider.GetRequiredService<AppDbContext>());
+        services.AddSingleton<ISlotConflictDetector, SlotConflictDetector>();
 
         return services;
     }

@@ -25,6 +25,7 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 });
 
 builder.Services.AddKaloraAuth();
+builder.Services.AddPublicRateLimiting(builder.Configuration);
 builder.Services
     .AddControllers(options => options.Filters.Add<AntiforgeryValidationFilter>())
     .AddJsonOptions(options =>
@@ -56,6 +57,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseRateLimiter();
 app.UseMiddleware<TenantResolutionMiddleware>();
 
 app.MapControllers();

@@ -12,5 +12,12 @@ internal static class AppLinks
     public static string Invitation(string baseUrl, string token) =>
         $"{Trim(baseUrl)}/auth/invitation/{Uri.EscapeDataString(token)}";
 
+    /// <summary>The customer's own page for an appointment; the token is the only credential.</summary>
+    public static string ManageAppointment(string baseUrl, string salonSlug, string token) =>
+        $"{Trim(baseUrl)}/{Uri.EscapeDataString(salonSlug)}/appointment/{Uri.EscapeDataString(token)}";
+
+    /// <summary>The salon's inbox of requests.</summary>
+    public static string Requests(string baseUrl) => $"{Trim(baseUrl)}/app/requests";
+
     private static string Trim(string baseUrl) => baseUrl.TrimEnd('/');
 }

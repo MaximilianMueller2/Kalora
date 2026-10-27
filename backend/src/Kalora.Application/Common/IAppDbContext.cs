@@ -8,6 +8,7 @@ using Kalora.Domain.Salons;
 using Kalora.Domain.Services;
 using Kalora.Domain.Staff;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Kalora.Application.Common;
@@ -57,6 +58,9 @@ public interface IAppDbContext
 
     /// <summary>Bypasses tenant isolation for <typeparamref name="T"/>. Same restrictions as <see cref="AllSalons"/>.</summary>
     IQueryable<T> AllTenants<T>() where T : class, ISalonOwned;
+
+    /// <summary>For discarding entities of a failed save before trying again.</summary>
+    ChangeTracker ChangeTracker { get; }
 
     Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
 

@@ -26,7 +26,7 @@ internal static class TestJson
 }
 
 /// <summary>The real API with real cookie authentication and a controllable clock, over HTTPS (the cookies are Secure).</summary>
-public sealed class AuthApiFactory(string connectionString) : WebApplicationFactory<Program>
+public sealed class AuthApiFactory(string connectionString, IReadOnlyDictionary<string, string>? settings = null) : WebApplicationFactory<Program>
 {
     public FakeTimeProvider Clock { get; } = new(new DateTimeOffset(2026, 11, 3, 9, 0, 0, TimeSpan.Zero));
 
@@ -34,6 +34,11 @@ public sealed class AuthApiFactory(string connectionString) : WebApplicationFact
     {
         builder.UseEnvironment("Testing");
         builder.UseSetting("ConnectionStrings:Default", connectionString);
+        foreach (var (key, value) in settings ?? new Dictionary<string, string>())
+        {
+            builder.UseSetting(key, value);
+        }
+
         builder.ConfigureServices(services =>
         {
             services.RemoveAll<TimeProvider>();
@@ -100,10 +105,10 @@ internal sealed class AuthTestHost : IAsyncDisposable
 
     public FakeTimeProvider Clock => _factory.Clock;
 
-    public static async Task<AuthTestHost> StartAsync(PostgresFixture postgres)
+    public static async Task<AuthTestHost> StartAsync(PostgresFixture postgres, IReadOnlyDictionary<string, string>? settings = null)
     {
         var connectionString = await postgres.CreateMigratedDatabaseAsync();
-        return new AuthTestHost(new AuthApiFactory(connectionString), connectionString);
+        return new AuthTestHost(new AuthApiFactory(connectionString, settings), connectionString);
     }
 
     public ApiSession NewSession(Uri? baseAddress = null) => new(_factory.CreateClient(new WebApplicationFactoryClientOptions

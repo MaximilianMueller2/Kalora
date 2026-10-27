@@ -133,6 +133,37 @@ Reine Domain-Logik in `Kalora.Domain/Scheduling` (keine Datenbank, keine Systemu
 - `CheckSlotAsync(SlotCheckQuery)`: prüft eine konkrete Startzeit noch einmal (für den Moment der Buchung) und liefert die zu nehmende Person: die gewünschte oder `BestStaff`. Nicht (mehr) angeboten ⇒ `booking.slot_unavailable` (409). Das ersetzt nicht den Exclusion-Constraint, der bei gleichzeitigen Anfragen die letzte Sicherheit bleibt.
 - **Zielgruppe:** `Customer` (nur aktive, online buchbare Leistungen und Personen, Vorlauf und Horizont) oder `Internal` (alle aktiven Leistungen und Personen, ohne Vorlauf und Horizont, aber nie in der Vergangenheit). Unpassende Leistungen oder Personen sind für Kund:innen schlicht „nicht gefunden“ (`service.not_found`, `staff.not_found`).
 
+## Öffentliche Buchungs-API
+
+Alles unter `/api/public/salons/{slug}`, ohne Login (`PublicSalonController`). Der Salon kommt allein aus dem Slug in der URL; die Tenant-Middleware ignoriert auf diesen Pfaden jedes Cookie, ein angemeldeter Salon sieht also nie versehentlich Daten eines anderen. Gesperrte (`Suspended`) und gekündigte (`Cancelled`) Salons gelten als „nicht gefunden“, `PastDue` bucht weiter.
+
+| Endpunkt | Antwort |
+|----------|---------|
+| `GET /` | Name, Adresse, Telefon, Zeitzone, Standardsprache, Sprachen, Öffnungszeiten, Impressum, Datenschutz-Link |
+| `GET /services` | aktive, online buchbare Leistungen nach Kategorien (Name, Beschreibung, Preis, „ab“, Dauer); nur solche, die mindestens eine aktive, online buchbare Person anbietet. Keine Puffer, keine internen Felder |
+| `GET /staff?serviceId=` | Personen für die Leistung: nur `id`, `displayName`, `color` |
+| `GET /availability/days?serviceId=&staffId=&month=yyyy-MM` | Tage des Monats mit mindestens einer freien Startzeit |
+| `GET /availability/slots?serviceId=&staffId=&date=` | Startzeiten (`startUtc` und lokale Uhrzeit `time`), ohne Angabe, wer frei ist |
+| `POST /appointment-requests` | Terminanfrage, siehe unten; Antwort `201` mit `BookingReceipt` |
+
+**Terminanfrage (`IBookingService`)**
+
+Eingabe: Leistung, `startUtc` (eine der gelieferten Startzeiten), optional Person, Name, E-Mail, optional Telefon und Notiz (höchstens 1000 Zeichen), Sprache (sonst Standardsprache des Salons) und das Honeypot-Feld `website`. Ablauf in **einer Transaktion**:
+
+1. Honeypot gefüllt ⇒ scheinbarer Erfolg (`201`), es wird nichts gespeichert und nichts gemailt; ein Bot lernt nichts.
+2. Höchstens **3 offene Anfragen** (`Requested`) je E-Mail und Salon, sonst `booking.too_many_open_requests` (422). Bestätigte Termine zählen nicht.
+3. Startzeit erneut prüfen (`IAvailabilityService.CheckSlotAsync`, Zielgruppe `Customer`) und bei „Egal wer“ die Person wählen (wenigste Termine am Tag). Nicht mehr frei ⇒ `booking.slot_unavailable` (409).
+4. Kunde im Salon per E-Mail (klein geschrieben) finden oder anlegen; Name, Sprache und eine angegebene Telefonnummer werden aktualisiert, eine fehlende Nummer löscht die alte nicht.
+5. Termin mit **Snapshot** (Leistungsname, Preis, „ab“, Währung, Dauer der gewählten Person) und den Puffern der Leistung in `BlockedStart/End`. Status `Confirmed`, wenn der Salon **oder** die gewählte Person automatisch bestätigt, sonst `Requested`. Eine Anfrage läuft nach `RequestExpiryHours` ab, spätestens aber zu Beginn des Termins (`ExpiresAtUtc`).
+6. Verwaltungs-Token (32 Zufallsbytes) erzeugen; **nur der SHA-256-Hash** wird gespeichert. Das Token steht im Link der Mail (`/{slug}/appointment/{token}`, die Seite folgt später) und in der Antwort, damit die Oberfläche es direkt anzeigen kann.
+7. Mails in die Outbox (Versand folgt in einem späteren Schritt): an die Kundschaft `booking.request_received` bzw. `booking.confirmed` in der Sprache der Buchung, an Inhaber:in, Manager:innen und die gebuchte Person (wenn sie ein Login hat) `booking.new_for_salon` in der Standardsprache des Salons.
+
+**Gleichzeitige Anfragen:** Der Exclusion-Constraint `ex_appointments_no_overlap` ist die letzte Sicherheit. Verlieren zwei Anfragen das Rennen, erkennt `ISlotConflictDetector` (Infrastruktur, kennt Npgsql) den Fall, die Transaktion wird zurückgerollt (also auch Kunde und Mails des Verlierers) und die Antwort ist `booking.slot_unavailable`. Bei „Egal wer“ wird bis zu dreimal neu geprüft, weil eine Kollegin noch frei sein kann; dasselbe gilt, wenn PostgreSQL eine Transaktion wegen eines Deadlocks abbricht (zwei gleichzeitige Einfügungen in den Exclusion-Index können sich gegenseitig blockieren) und wenn ein Kunde mit derselben E-Mail im selben Moment angelegt wurde.
+
+**Rate-Limiting** (ASP.NET Core, je IP-Adresse und Art, Festes Fenster, konfigurierbar unter `RateLimiting`): Lesen (Profil, Leistungen, Personen) 120 pro Minute, Verfügbarkeit 60 pro Minute, Anfragen 10 pro 10 Minuten. Überschreitung: `429`, Code `rate_limited`, `Retry-After`. Die IP stammt hinter dem Reverse Proxy aus den Forwarded-Headers.
+
+**Datenschutz:** Keine Antwort enthält Daten anderer Kund:innen, auch nicht indirekt (die Startzeit eines gebuchten Termins verschwindet einfach aus der Liste). Es gibt keine Kundendaten in Logs: Namen, E-Mails und Notizen stehen nur in Datenbank und Outbox.
+
 ## Frontend-Gerüst
 
 Angular 22 (Standalone, zoneless, Signals, OnPush) mit Angular Material 3. Quelltext in `frontend/src/app`:
