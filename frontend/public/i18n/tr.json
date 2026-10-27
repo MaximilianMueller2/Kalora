@@ -126,7 +126,16 @@
       "range_too_long": "İzin en fazla 366 gün sürebilir.",
       "date_in_past": "Tarih geçmişte.",
       "not_found": "Bu izin artık yok."
-    }
+    },
+    "booking": {
+      "slot_unavailable": "Bu saat az önce alındı. Lütfen başka bir saat seçin.",
+      "too_many_open_requests": "Bu salonda zaten üç açık talebiniz var. Lütfen salon yanıtlayana kadar bekleyin."
+    },
+    "availability": {
+      "range_invalid": "Bu aralık geçersiz.",
+      "month_invalid": "Bu ay geçersiz."
+    },
+    "rate_limited": "Çok fazla istek. Lütfen biraz bekleyin."
   },
   "title": {
     "login": "Giriş yap",

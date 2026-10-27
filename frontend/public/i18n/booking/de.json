@@ -1,4 +1,72 @@
 {
   "title": "Online-Termin buchen",
-  "placeholder": "Die Buchungsseite dieses Salons entsteht in einem der nächsten Schritte."
+  "back": "Zurück",
+  "next": "Weiter",
+  "retry": "Noch einmal versuchen",
+  "stepOf": "Schritt {{step}} von {{total}}",
+  "priceFrom": "ab {{price}}",
+  "hours": "Öffnungszeiten",
+  "closed": "geschlossen",
+  "imprint": "Impressum",
+  "opensInNewTab": "(öffnet in neuem Tab)",
+  "submit": "Termin anfragen",
+  "slotGone": "Dieser Termin wurde gerade vergeben. Bitte wähle eine andere Zeit.",
+  "chooseAnotherTime": "Andere Zeit wählen",
+  "steps": {
+    "service": {
+      "title": "Was möchtest du buchen?",
+      "empty": "Online sind gerade keine Leistungen buchbar. Bitte ruf den Salon an."
+    },
+    "person": {
+      "title": "Bei wem?",
+      "anyone": "Egal wer",
+      "anyoneHint": "Du bekommst den ersten freien Termin."
+    },
+    "time": {
+      "title": "Wann passt es dir?",
+      "morning": "Vormittag",
+      "afternoon": "Nachmittag",
+      "evening": "Abend",
+      "noDays": "In diesem Monat gibt es keine freien Zeiten. Schau im nächsten Monat nach.",
+      "noTimes": "An diesem Tag ist leider nichts mehr frei.",
+      "pickDay": "Wähle einen Tag, um die freien Zeiten zu sehen."
+    },
+    "details": {
+      "title": "Deine Angaben"
+    }
+  },
+  "calendar": {
+    "previous": "Voriger Monat",
+    "next": "Nächster Monat"
+  },
+  "fields": {
+    "name": "Name",
+    "email": "E-Mail",
+    "emailHint": "Hierhin schicken wir die Bestätigung.",
+    "phone": "Telefon (optional)",
+    "note": "Nachricht an den Salon (optional)"
+  },
+  "summary": {
+    "service": "Leistung",
+    "person": "Bei",
+    "when": "Wann",
+    "duration": "Dauer",
+    "price": "Preis"
+  },
+  "privacy": {
+    "text": "Wir verwenden deine Angaben nur, um deinen Termin zu verwalten.",
+    "link": "Datenschutzerklärung"
+  },
+  "done": {
+    "title": "Fertig",
+    "requestedTitle": "Anfrage gesendet",
+    "requestedText": "Du bekommst eine E-Mail, sobald der Salon bestätigt.",
+    "confirmedTitle": "Termin bestätigt",
+    "confirmedText": "Wir haben dir eine Bestätigung per E-Mail geschickt.",
+    "another": "Weiteren Termin buchen"
+  },
+  "notFound": {
+    "title": "Salon nicht gefunden",
+    "text": "Bitte prüfe den Link, den du bekommen hast."
+  }
 }

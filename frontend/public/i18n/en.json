@@ -126,7 +126,16 @@
       "range_too_long": "Time off can last 366 days at most.",
       "date_in_past": "The date is in the past.",
       "not_found": "This time off no longer exists."
-    }
+    },
+    "booking": {
+      "slot_unavailable": "This time has just been taken. Please choose another time.",
+      "too_many_open_requests": "You already have three open requests with this salon. Please wait until the salon replies."
+    },
+    "availability": {
+      "range_invalid": "This period is invalid.",
+      "month_invalid": "This month is invalid."
+    },
+    "rate_limited": "Too many requests. Please wait a moment."
   },
   "title": {
     "login": "Sign in",

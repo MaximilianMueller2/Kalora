@@ -1,4 +1,72 @@
 {
-  "title": "Online randevu al",
-  "placeholder": "Bu salonun rezervasyon sayfası sonraki adımlardan birinde hazırlanacak."
+  "title": "Çevrimiçi randevu al",
+  "back": "Geri",
+  "next": "İleri",
+  "retry": "Yeniden dene",
+  "stepOf": "Adım {{step}} / {{total}}",
+  "priceFrom": "{{price}}’den başlayan",
+  "hours": "Çalışma saatleri",
+  "closed": "kapalı",
+  "imprint": "Künye",
+  "opensInNewTab": "(yeni sekmede açılır)",
+  "submit": "Randevu talep et",
+  "slotGone": "Bu saat az önce alındı. Lütfen başka bir saat seçin.",
+  "chooseAnotherTime": "Başka saat seç",
+  "steps": {
+    "service": {
+      "title": "Ne ayırtmak istersiniz?",
+      "empty": "Şu anda çevrimiçi ayırtılabilen hizmet yok. Lütfen salonu arayın."
+    },
+    "person": {
+      "title": "Kimde?",
+      "anyone": "Fark etmez",
+      "anyoneHint": "İlk boş randevuyu alırsınız."
+    },
+    "time": {
+      "title": "Ne zaman uygun?",
+      "morning": "Öğleden önce",
+      "afternoon": "Öğleden sonra",
+      "evening": "Akşam",
+      "noDays": "Bu ay boş saat yok. Gelecek aya bakın.",
+      "noTimes": "Bu gün artık boş yer yok.",
+      "pickDay": "Boş saatleri görmek için bir gün seçin."
+    },
+    "details": {
+      "title": "Bilgileriniz"
+    }
+  },
+  "calendar": {
+    "previous": "Önceki ay",
+    "next": "Sonraki ay"
+  },
+  "fields": {
+    "name": "Ad",
+    "email": "E-posta",
+    "emailHint": "Onayı buraya göndeririz.",
+    "phone": "Telefon (isteğe bağlı)",
+    "note": "Salona mesaj (isteğe bağlı)"
+  },
+  "summary": {
+    "service": "Hizmet",
+    "person": "Kimde",
+    "when": "Ne zaman",
+    "duration": "Süre",
+    "price": "Fiyat"
+  },
+  "privacy": {
+    "text": "Bilgilerinizi yalnızca randevunuzu yönetmek için kullanırız.",
+    "link": "Gizlilik politikası"
+  },
+  "done": {
+    "title": "Tamam",
+    "requestedTitle": "Talep gönderildi",
+    "requestedText": "Salon onayladığında e-posta alacaksınız.",
+    "confirmedTitle": "Randevu onaylandı",
+    "confirmedText": "Size e-postayla bir onay gönderdik.",
+    "another": "Başka randevu al"
+  },
+  "notFound": {
+    "title": "Salon bulunamadı",
+    "text": "Lütfen aldığınız bağlantıyı kontrol edin."
+  }
 }

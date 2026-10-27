@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { initials, readableTextColor } from './staff-display';
-import { STAFF_COLORS } from './team.models';
+import { STAFF_COLORS } from '../../features/team/team.models';
 
 describe('initials', () => {
   it.each([

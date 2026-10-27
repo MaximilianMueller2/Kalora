@@ -16,7 +16,7 @@ import { ApiError } from '../../core/http/api-error';
 import { ErrorNotifier } from '../../core/http/error-notifier';
 import { Toast } from '../../core/ui/toast';
 import { AuthService } from '../auth/auth.service';
-import { StaffAvatar } from './staff-avatar';
+import { StaffAvatar } from '../../shared/ui/staff-avatar';
 import { StaffDialog, StaffDialogData, StaffDialogResult } from './staff-dialog';
 import { StaffMember } from './team.models';
 import { TeamService } from './team.service';

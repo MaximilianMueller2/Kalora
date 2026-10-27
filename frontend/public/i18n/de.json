@@ -126,7 +126,16 @@
       "range_too_long": "Eine Abwesenheit darf höchstens 366 Tage dauern.",
       "date_in_past": "Das Datum liegt in der Vergangenheit.",
       "not_found": "Diese Abwesenheit gibt es nicht mehr."
-    }
+    },
+    "booking": {
+      "slot_unavailable": "Dieser Termin wurde gerade vergeben. Bitte wähle eine andere Zeit.",
+      "too_many_open_requests": "Du hast schon drei offene Anfragen bei diesem Salon. Bitte warte, bis der Salon antwortet."
+    },
+    "availability": {
+      "range_invalid": "Dieser Zeitraum ist ungültig.",
+      "month_invalid": "Dieser Monat ist ungültig."
+    },
+    "rate_limited": "Zu viele Anfragen. Bitte warte einen Moment."
   },
   "title": {
     "login": "Anmelden",

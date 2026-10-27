@@ -5,6 +5,7 @@ import { RouterTestingHarness } from '@angular/router/testing';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { provideTestI18n } from '../../../testing/test-i18n';
 import { LanguageService } from '../i18n/language.service';
+import { PageBrand } from './page-brand';
 import { AppTitleStrategy } from './title-strategy';
 
 @Component({ template: '' })
@@ -43,6 +44,22 @@ describe('AppTitleStrategy', () => {
 
     await harness.navigateByUrl('/plain');
 
+    expect(document.title).toBe('Kalora');
+  });
+
+  it('shows a salon’s name instead of the app name while its public page is open, and the app name again afterwards', async () => {
+    await TestBed.inject(LanguageService).use('de');
+    const brand = TestBed.inject(PageBrand);
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/dashboard');
+
+    brand.set('Haarwerk');
+    expect(document.title).toBe('Dashboard · Haarwerk');
+
+    await harness.navigateByUrl('/plain');
+    expect(document.title).toBe('Haarwerk');
+
+    brand.set(null);
     expect(document.title).toBe('Kalora');
   });
 });

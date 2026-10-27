@@ -15,7 +15,7 @@ import { LANGUAGE_NAMES, Language, SUPPORTED_LANGUAGES } from '../../core/i18n/l
       mat-button
       class="trigger"
       [matMenuTriggerFor]="menu"
-      [attr.aria-label]="'common.language' | transloco"
+      [attr.aria-label]="language.current().toUpperCase() + ': ' + ('common.language' | transloco)"
     >
       <mat-icon aria-hidden="true">translate</mat-icon>
       <span>{{ language.current().toUpperCase() }}</span>

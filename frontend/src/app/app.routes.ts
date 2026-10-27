@@ -130,16 +130,7 @@ export const routes: Routes = [
   // (admin, app, auth, api, m, ...) are blocked in the backend (SlugGenerator).
   {
     path: ':slug',
-    loadComponent: () =>
-      import('./core/layout/public-layout/public-layout').then((m) => m.PublicLayout),
-    children: [
-      {
-        path: '',
-        title: 'booking.title',
-        loadComponent: () => import('./features/booking/booking-page').then((m) => m.BookingPage),
-        providers: [provideTranslocoScope('booking')],
-      },
-    ],
+    loadChildren: () => import('./features/booking/booking.routes').then((m) => m.BOOKING_ROUTES),
   },
   {
     path: '**',

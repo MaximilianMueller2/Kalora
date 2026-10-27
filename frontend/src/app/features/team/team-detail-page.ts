@@ -17,7 +17,7 @@ import { ErrorNotifier } from '../../core/http/error-notifier';
 import { Toast } from '../../core/ui/toast';
 import { AuthService } from '../auth/auth.service';
 import { InviteDialog, InviteDialogData } from './invite-dialog';
-import { StaffAvatar } from './staff-avatar';
+import { StaffAvatar } from '../../shared/ui/staff-avatar';
 import { StaffDialog, StaffDialogData, StaffDialogResult } from './staff-dialog';
 import { TeamService } from './team.service';
 

@@ -164,6 +164,29 @@ Eingabe: Leistung, `startUtc` (eine der gelieferten Startzeiten), optional Perso
 
 **Datenschutz:** Keine Antwort enthält Daten anderer Kund:innen, auch nicht indirekt (die Startzeit eines gebuchten Termins verschwindet einfach aus der Liste). Es gibt keine Kundendaten in Logs: Namen, E-Mails und Notizen stehen nur in Datenbank und Outbox.
 
+## Öffentliche Buchungsseite
+
+`features/booking` unter `/:slug` (Kunden brauchen kein Konto). Die Seite nutzt nur die öffentliche API (siehe oben) und kommt mit Sprache aus dem Browser (de, en, tr), Umschalter oben rechts.
+
+**Aufbau:** `PublicLayout` (schlichter Rahmen) → `BookingShell` (Salonname, Adresse mit Link zur Karte, Telefon, aufklappbare Öffnungszeiten; unten Impressum und Datenschutz des Salons) → ein Schritt je Route:
+
+| Route | Schritt |
+|-------|---------|
+| `/:slug` | 1 Leistung (nach Kategorien, Dauer, Preis, „ab“-Preis) |
+| `/:slug/person` | 2 Person, „Egal wer“ ist vorgewählt |
+| `/:slug/time` | 3 Datum (Monatskalender, Tage ohne freie Zeit deaktiviert) und Uhrzeit (Chips: Vormittag, Nachmittag, Abend) |
+| `/:slug/details` | 4 Name, E-Mail, Telefon, Nachricht, Datenschutz-Hinweis und Zusammenfassung |
+| `/:slug/done` | Erfolgsseite: „Anfrage gesendet“ bzw. bei Auto-Bestätigung „Termin bestätigt“ |
+| `/:slug/imprint` | Impressum des Salons |
+
+- **Ein Schritt pro Bildschirm, Zurück-Taste funktioniert:** Jeder Schritt hat eine eigene URL, der Browserverlauf trägt die Navigation. Die Auswahl steckt im `BookingService` (Signals: Leistung, Person, Tag, Zeit, Kontaktdaten; Salon, Leistungen, Personen, freie Tage und Zeiten als `resource`). Eine neue Leistung verwirft Person, Tag und Zeit, eine neue Person oder ein neuer Tag verwirft die Zeit. Guards schicken zum Anfang, wenn eine frühere Wahl fehlt (Neuladen, geteilter Link); die Erfolgsseite lässt sich nur nach einer Buchung öffnen. Ein anderer Salon beginnt immer von vorn.
+- **Zeitzone:** Datum, „heute“ und Uhrzeiten zeigen die Zeit des Salons, nicht die des Geräts (`slot.time` kommt vom Server, auch am Umstelltag eindeutig).
+- **`booking.slot_unavailable`:** Wurde die Zeit inzwischen vergeben, bleibt die Kundschaft auf Schritt 4 mit einem freundlichen Hinweis und „Andere Zeit wählen“; Tag und Zeit werden verworfen und die freien Zeiten neu geladen.
+- **Honeypot:** Ein für Menschen unsichtbares Feld (`aria-hidden`, nicht per Tab erreichbar); Bots, die es füllen, bekommen scheinbar Erfolg.
+- **Barrierefreiheit:** Der Titel jedes Schritts erhält den Fokus, Kalendertage sind Schaltflächen mit vollem Datum als Namen, Personen sind echte Radiobuttons, Ladezustände sind Skeletons mit `aria-busy`, Bewegung folgt `prefers-reduced-motion`. Das Dokumenttitel trägt den Salonnamen (`PageBrand`).
+- **Ladezeit:** Rahmen, Kopf und erster Schritt sind direkt in der Routen-Datei importiert und kommen in einem Download; die späteren Schritte laden bei Bedarf. Gemessen mit Lighthouse (mobil, simuliertes langsames 4G, lokal ausgeliefertes Produktions-Bundle): Barrierefreiheit 100, Best Practices 100, Performance 0,85–0,93 (Median 0,91). Größte Posten sind die Icon-Schrift (155 kB) und die Inter-Schrift (48 kB).
+- **Noch nicht enthalten:** Kalender-Buttons auf der Erfolgsseite (Prompt 14) und die Verwaltungsseite `/:slug/appointment/:token`, auf die der Link in der Mail zeigt.
+
 ## Frontend-Gerüst
 
 Angular 22 (Standalone, zoneless, Signals, OnPush) mit Angular Material 3. Quelltext in `frontend/src/app`:

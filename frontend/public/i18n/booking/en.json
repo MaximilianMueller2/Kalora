@@ -1,4 +1,72 @@
 {
   "title": "Book an appointment online",
-  "placeholder": "The booking page for this salon is built in one of the next steps."
+  "back": "Back",
+  "next": "Next",
+  "retry": "Try again",
+  "stepOf": "Step {{step}} of {{total}}",
+  "priceFrom": "from {{price}}",
+  "hours": "Opening hours",
+  "closed": "closed",
+  "imprint": "Legal notice",
+  "opensInNewTab": "(opens in a new tab)",
+  "submit": "Request appointment",
+  "slotGone": "This time has just been taken. Please choose another time.",
+  "chooseAnotherTime": "Choose another time",
+  "steps": {
+    "service": {
+      "title": "What would you like to book?",
+      "empty": "No services can be booked online right now. Please call the salon."
+    },
+    "person": {
+      "title": "With whom?",
+      "anyone": "Anyone",
+      "anyoneHint": "You get the first free appointment."
+    },
+    "time": {
+      "title": "When suits you?",
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "evening": "Evening",
+      "noDays": "There are no free times this month. Try the next month.",
+      "noTimes": "Nothing is free on this day any more.",
+      "pickDay": "Pick a day to see the free times."
+    },
+    "details": {
+      "title": "Your details"
+    }
+  },
+  "calendar": {
+    "previous": "Previous month",
+    "next": "Next month"
+  },
+  "fields": {
+    "name": "Name",
+    "email": "E-mail",
+    "emailHint": "We send the confirmation here.",
+    "phone": "Phone (optional)",
+    "note": "Message to the salon (optional)"
+  },
+  "summary": {
+    "service": "Service",
+    "person": "With",
+    "when": "When",
+    "duration": "Duration",
+    "price": "Price"
+  },
+  "privacy": {
+    "text": "We only use your details to manage your appointment.",
+    "link": "Privacy policy"
+  },
+  "done": {
+    "title": "Done",
+    "requestedTitle": "Request sent",
+    "requestedText": "You will get an e-mail as soon as the salon confirms.",
+    "confirmedTitle": "Appointment confirmed",
+    "confirmedText": "We have sent you a confirmation by e-mail.",
+    "another": "Book another appointment"
+  },
+  "notFound": {
+    "title": "Salon not found",
+    "text": "Please check the link you received."
+  }
 }
