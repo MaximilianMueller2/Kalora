@@ -7,11 +7,13 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Options" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Catalog\Templates\service-templates.json" LogicalName="Kalora.Application.Catalog.service-templates.json" />
+    <EmbeddedResource Include="Email\Texts\*.json" LogicalName="Kalora.Application.Email.Texts.%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Kalora.UnitTests" />

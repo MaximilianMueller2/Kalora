@@ -60,7 +60,7 @@ npm run i18n:check      # fehlende Übersetzungen de/en/tr
 npm run build
 ```
 
-Ausprobieren: Auf http://localhost:4200 ein Konto registrieren. Die Bestätigungs-, Passwort-Reset- und Einladungs-Mails landen vorerst nur in der Tabelle `email_outbox` (der Versand folgt später); die Links stehen dort im Feld `payload_json` und führen auf `/auth/confirm-email`, `/auth/reset-password` bzw. `/auth/invitation/<token>`.
+Ausprobieren: Auf http://localhost:4200 ein Konto registrieren. Die Bestätigungs-, Passwort-Reset- und Einladungs-Mails werden vom Hintergrunddienst über Mailpit zugestellt und sind unter http://localhost:8025 zu sehen (die Links führen auf `/auth/confirm-email`, `/auth/reset-password` bzw. `/auth/invitation/<token>`).
 
 Hinweis: Das Backend setzt `Secure`-Cookies. Chrome und Firefox akzeptieren sie auch auf `http://localhost`, Safari nicht – dort lokal besser Chrome oder Firefox nutzen.
 

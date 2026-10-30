@@ -18,6 +18,8 @@ Erlaubt: MIT, Apache-2.0, BSD-2/3, ISC, PostgreSQL, SIL OFL (Schriften). Regeln 
 | Serilog.AspNetCore | 10.0.0 | Apache-2.0 | Strukturiertes Logging |
 | Microsoft.Extensions.DependencyInjection.Abstractions | 10.0.13 | MIT | DI-Registrierung in Application |
 | Microsoft.Extensions.Options | 10.0.13 | MIT | Options-Validierung |
+| Microsoft.Extensions.Logging.Abstractions | 10.0.13 | MIT | Logging im Mail-Prozessor (Application) |
+| MailKit | 4.18.2 | MIT | SMTP-Versand in Infrastructure (bringt MimeKit 4.18.2, MIT, und BouncyCastle.Cryptography 2.7.0, MIT, mit) |
 | Microsoft.Extensions.Options.ConfigurationExtensions | 10.0.13 | MIT | Options an Konfiguration binden |
 | Microsoft.AspNetCore.Mvc.Testing | 10.0.13 | MIT | Integrationstests (Test) |
 | Microsoft.Extensions.TimeProvider.Testing | 10.11.0 | MIT | `FakeTimeProvider` (Test) |

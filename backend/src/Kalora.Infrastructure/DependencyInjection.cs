@@ -1,4 +1,6 @@
 using Kalora.Application.Common;
+using Kalora.Application.Email;
+using Kalora.Infrastructure.Mail;
 using Kalora.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +26,7 @@ public static class DependencyInjection
             .AddInterceptors(provider.GetRequiredService<AuditTimestampInterceptor>()));
         services.AddScoped<IAppDbContext>(provider => provider.GetRequiredService<AppDbContext>());
         services.AddSingleton<ISlotConflictDetector, SlotConflictDetector>();
+        services.AddSingleton<IEmailSender, MailKitEmailSender>();
 
         return services;
     }

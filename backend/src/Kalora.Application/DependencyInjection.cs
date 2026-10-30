@@ -2,12 +2,14 @@ using FluentValidation;
 using Kalora.Application.Auth;
 using Kalora.Application.Availability;
 using Kalora.Application.Catalog;
+using Kalora.Application.Email;
 using Kalora.Application.PublicBooking;
 using Kalora.Application.Staff;
 using Kalora.Application.Common;
 using Kalora.Application.Configuration;
 using Kalora.Application.Ping;
 using Kalora.Application.Salons;
+using Kalora.Application.Security;
 using Kalora.Application.Tenancy;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -23,6 +25,13 @@ public static class DependencyInjection
             .BindConfiguration(AppOptions.SectionName)
             .ValidateOnStart();
         services.TryAddSingleton<IValidateOptions<AppOptions>, AppOptionsValidator>();
+        services.AddOptions<MailOptions>()
+            .BindConfiguration(MailOptions.SectionName)
+            .ValidateOnStart();
+        services.TryAddSingleton<IValidateOptions<MailOptions>, MailOptionsValidator>();
+        services.AddSingleton<IManageTokens, ManageTokens>();
+        services.AddSingleton<IEmailRenderer, EmailRenderer>();
+        services.AddScoped<IEmailOutboxProcessor, EmailOutboxProcessor>();
 
         services.AddScoped<TenantContext>();
         services.AddScoped<ITenantContext>(provider => provider.GetRequiredService<TenantContext>());

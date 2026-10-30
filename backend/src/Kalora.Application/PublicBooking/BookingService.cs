@@ -20,6 +20,7 @@ internal sealed class BookingService(
     IEmailOutbox outbox,
     IValidator<CreateAppointmentRequest> validator,
     IOptions<AppOptions> appOptions,
+    IManageTokens manageTokens,
     TimeProvider timeProvider) : IBookingService
 {
     public const int MaxOpenRequestsPerEmail = 3;
@@ -111,7 +112,6 @@ internal sealed class BookingService(
         var start = request.StartUtc.ToUniversalTime();
         var end = start.AddMinutes(chosen.Value.DurationMinutes);
         var autoConfirm = salon.AutoConfirm || staff.AutoConfirm;
-        var token = TokenHasher.NewToken();
         var appointment = new Appointment
         {
             StaffId = staff.Id,
@@ -130,8 +130,11 @@ internal sealed class BookingService(
             Currency = service.Currency,
             DurationMinutes = chosen.Value.DurationMinutes,
             CustomerNote = string.IsNullOrWhiteSpace(request.Note) ? null : request.Note.Trim(),
-            ManageTokenHash = TokenHasher.Hash(token),
+            ManageTokenHash = null,
         };
+        // The management link is derived from the appointment's ID, so later e-mails can contain it again; only its hash is stored.
+        var token = manageTokens.Create(appointment.Id);
+        appointment.ManageTokenHash = TokenHasher.Hash(token);
         if (autoConfirm)
         {
             appointment.ConfirmedAtUtc = now;
@@ -160,6 +163,7 @@ internal sealed class BookingService(
         outbox.Enqueue(salon.Id, customer.Email!, confirmed ? EmailTypes.BookingConfirmed : EmailTypes.BookingRequestReceived, appointment.Language, new
         {
             SalonName = salon.Name,
+            SalonAddress = Address(salon),
             SalonPhone = salon.Phone,
             appointment.ServiceName,
             StaffName = staffName,
@@ -169,6 +173,7 @@ internal sealed class BookingService(
             CustomerName = customer.Name,
             RespondByUtc = appointment.ExpiresAtUtc,
             ManageUrl = manageUrl,
+            BookingUrl = AppLinks.Booking(baseUrl, salon.Slug),
         });
 
         // The owners and managers, and the person the appointment is with if they have a login.
@@ -194,9 +199,16 @@ internal sealed class BookingService(
                 CustomerPhone = customer.Phone,
                 appointment.CustomerNote,
                 RespondByUtc = appointment.ExpiresAtUtc,
-                RequestsUrl = AppLinks.Requests(baseUrl),
+                AppointmentId = appointment.Id,
+                RequestUrl = AppLinks.Request(baseUrl, appointment.Id),
             });
         }
+    }
+
+    private static string Address(Salon salon)
+    {
+        var city = string.Join(' ', new[] { salon.PostalCode, salon.City }.Where(part => !string.IsNullOrWhiteSpace(part)));
+        return string.Join(", ", new[] { salon.Street, city }.Where(part => !string.IsNullOrWhiteSpace(part)));
     }
 
     private static Result<BookingReceipt> LookAlikeReceipt(CreateAppointmentRequest request) =>

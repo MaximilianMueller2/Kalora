@@ -1,0 +1,168 @@
+{
+  "weekdays": [
+    "Pazar",
+    "Pazartesi",
+    "Salı",
+    "Çarşamba",
+    "Perşembe",
+    "Cuma",
+    "Cumartesi"
+  ],
+  "months": [
+    "Ocak",
+    "Şubat",
+    "Mart",
+    "Nisan",
+    "Mayıs",
+    "Haziran",
+    "Temmuz",
+    "Ağustos",
+    "Eylül",
+    "Ekim",
+    "Kasım",
+    "Aralık"
+  ],
+  "dateFormat": "{day} {month} {year} {weekday}, {hh}:{mm}",
+  "labels": {
+    "service": "Hizmet",
+    "staff": "Kimde",
+    "when": "Ne zaman",
+    "customer": "Müşteri",
+    "email": "E-posta",
+    "phone": "Telefon",
+    "note": "Mesaj",
+    "status": "Durum",
+    "reason": "Neden"
+  },
+  "status": {
+    "Requested": "Onay bekliyor",
+    "Confirmed": "Onaylandı"
+  },
+  "layout": {
+    "buttonFallback": "Düğme çalışmazsa bu bağlantıyı tarayıcınıza kopyalayın:",
+    "manageLink": "Randevunuzu görüntüleyin veya iptal edin:",
+    "salonContact": "{salon} ile iletişim:",
+    "automatic": "Bu e-posta otomatik olarak gönderildi. Lütfen yanıtlamayın.",
+    "ignore": "Bu işlemi siz yapmadıysanız bu e-postayı yok sayabilirsiniz."
+  },
+  "mails": {
+    "auth.confirm_email": {
+      "subject": "Lütfen e-posta adresinizi onaylayın",
+      "heading": "E-posta adresinizi onaylayın",
+      "intro": [
+        "Merhaba {name},",
+        "Kalora’ya hoş geldiniz. {salon} ile ilgili size ulaşabilmemiz için lütfen e-posta adresinizi onaylayın."
+      ],
+      "button": "E-postayı onayla",
+      "outro": [
+        "{ignore}"
+      ]
+    },
+    "auth.reset_password": {
+      "subject": "Kalora için yeni şifre",
+      "heading": "Yeni şifre belirleyin",
+      "intro": [
+        "Merhaba {name},",
+        "hesabınız için yeni bir şifre istendi. Bağlantı bir saat geçerlidir."
+      ],
+      "button": "Şifreyi değiştir",
+      "outro": [
+        "{ignore}"
+      ]
+    },
+    "auth.staff_invitation": {
+      "subject": "{salon} sizi Kalora’ya davet ediyor",
+      "heading": "Davet edildiniz",
+      "intro": [
+        "Merhaba {name},",
+        "{salon} sizi Kalora’da kendi erişiminizi oluşturmaya ve takviminizi görmeye davet etti.",
+        "Davet {expires} tarihine kadar geçerlidir."
+      ],
+      "button": "Daveti kabul et"
+    },
+    "booking.request_received": {
+      "subject": "{salon} için randevu talebiniz",
+      "heading": "Talep gönderildi",
+      "intro": [
+        "Merhaba {name},",
+        "talebiniz {salon} salonuna ulaştı. Salon yanıt verdiğinde e-posta alacaksınız."
+      ],
+      "button": "Talebi görüntüle",
+      "deadline": "Salon {respondBy} tarihine kadar yanıt verir."
+    },
+    "booking.confirmed": {
+      "subject": "{salon} randevunuz onaylandı",
+      "heading": "Randevu onaylandı",
+      "intro": [
+        "Merhaba {name},",
+        "{salon} randevunuz onaylandı. Sizi bekliyoruz!"
+      ],
+      "button": "Randevuyu yönet"
+    },
+    "booking.declined": {
+      "subject": "{salon} için randevu talebiniz",
+      "heading": "Maalesef randevu yok",
+      "intro": [
+        "Merhaba {name},",
+        "{salon} maalesef randevu talebinizi kabul edemiyor."
+      ],
+      "button": "Yeni randevu al",
+      "reasonLine": "Salonun belirttiği neden: {reason}"
+    },
+    "booking.expired": {
+      "subject": "{salon} için randevu talebinizin süresi doldu",
+      "heading": "Talebin süresi doldu",
+      "intro": [
+        "Merhaba {name},",
+        "{salon} talebinize zamanında yanıt vermediği için talebin süresi doldu. Üzgünüz.",
+        "Hemen yeni bir randevu talep edebilirsiniz."
+      ],
+      "button": "Yeni randevu al"
+    },
+    "booking.cancelled_by_customer": {
+      "subject": "{salon} randevunuz iptal edildi",
+      "heading": "Randevu iptal edildi",
+      "intro": [
+        "Merhaba {name},",
+        "{salon} randevunuzu iptal ettiniz. Salon bilgilendirildi."
+      ],
+      "button": "Yeni randevu al"
+    },
+    "booking.cancelled_by_salon": {
+      "subject": "{salon} randevunuz iptal edildi",
+      "heading": "Randevu iptal edildi",
+      "intro": [
+        "Merhaba {name},",
+        "{salon} maalesef randevunuzu iptal etmek zorunda kaldı. Üzgünüz."
+      ],
+      "button": "Yeni randevu al",
+      "reasonLine": "Salonun belirttiği neden: {reason}"
+    },
+    "booking.reminder": {
+      "subject": "Hatırlatma: {salon} randevunuz",
+      "heading": "Randevunuz yaklaşıyor",
+      "intro": [
+        "Merhaba {name},",
+        "{salon} randevunuzu hatırlatırız."
+      ],
+      "button": "Randevuyu yönet"
+    },
+    "booking.new_for_salon": {
+      "subject": "{name} kişisinden yeni randevu talebi",
+      "heading": "Yeni randevu talebi",
+      "intro": [
+        "Rezervasyon sayfasından yeni bir randevu geldi."
+      ],
+      "button": "Talebi görüntüle",
+      "deadline": "Lütfen {respondBy} tarihine kadar yanıt verin."
+    },
+    "booking.cancellation_for_salon": {
+      "subject": "{name} bir randevuyu iptal etti",
+      "heading": "Randevu iptal edildi",
+      "intro": [
+        "{name} aşağıdaki randevuyu iptal etti. Saat yeniden boş."
+      ],
+      "button": "Takvimi aç"
+    }
+  }
+}

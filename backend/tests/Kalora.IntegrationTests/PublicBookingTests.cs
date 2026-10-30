@@ -4,12 +4,16 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using Kalora.Application.Common;
+using Kalora.Application.Email;
+using Kalora.Application.Security;
 using Kalora.Application.PublicBooking;
 using Kalora.Domain.Appointments;
 using Kalora.Domain.Salons;
 using Kalora.Domain.Services;
 using Kalora.Domain.Staff;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Kalora.IntegrationTests;
 
@@ -247,6 +251,43 @@ public class PublicBookingTests(PostgresFixture postgres)
             Assert.DoesNotContain(receipt.ManageToken, toSalon.PayloadJson);
             return 0;
         });
+    }
+
+    [Fact]
+    public async Task The_mails_carry_what_the_templates_need_and_the_link_is_the_signed_token()
+    {
+        await using var world = await NewWorldAsync();
+        await world.Salon.ConfigureSalonAsync(s => { s.Street = "Hauptstraße 1"; s.PostalCode = "10115"; s.City = "Berlin"; s.Phone = "+49 30 123456"; });
+        var receipt = await ReadAsync<BookingReceipt>(await world.PostAsync(Booking(world.Cut)));
+
+        await world.Salon.WithDbAsync(async db =>
+        {
+            var appointment = await db.Appointments.SingleAsync();
+            var manageTokens = world.Host.Services.GetRequiredService<IManageTokens>();
+            Assert.Equal(manageTokens.Create(appointment.Id), receipt.ManageToken);
+
+            var toCustomer = JsonDocument.Parse((await db.EmailOutbox.SingleAsync(m => m.Type == EmailTypes.BookingRequestReceived)).PayloadJson!).RootElement;
+            Assert.Equal("Haarwerk Müller", toCustomer.GetProperty("SalonName").GetString());
+            Assert.Contains("Hauptstraße 1", toCustomer.GetProperty("SalonAddress").GetString());
+            Assert.Equal("+49 30 123456", toCustomer.GetProperty("SalonPhone").GetString());
+            Assert.Equal("Europe/Berlin", toCustomer.GetProperty("TimeZone").GetString());
+            Assert.EndsWith($"/{world.Slug}/appointment/{receipt.ManageToken}", toCustomer.GetProperty("ManageUrl").GetString());
+            Assert.EndsWith($"/{world.Slug}", toCustomer.GetProperty("BookingUrl").GetString());
+
+            var toSalon = JsonDocument.Parse((await db.EmailOutbox.SingleAsync(m => m.Type == EmailTypes.BookingNewForSalon)).PayloadJson!).RootElement;
+            Assert.EndsWith($"/app/requests/{appointment.Id}", toSalon.GetProperty("RequestUrl").GetString());
+            return 0;
+        });
+    }
+
+    [Fact]
+    public async Task The_mail_processor_is_available_but_the_background_worker_is_off_in_tests()
+    {
+        await using var world = await NewWorldAsync();
+
+        await using var scope = world.Host.Services.CreateAsyncScope();
+        Assert.NotNull(scope.ServiceProvider.GetRequiredService<IEmailOutboxProcessor>());
+        Assert.DoesNotContain(world.Host.Services.GetServices<IHostedService>(), service => service.GetType().Name == "EmailOutboxWorker");
     }
 
     [Fact]

@@ -105,6 +105,8 @@ internal sealed class AuthTestHost : IAsyncDisposable
 
     public FakeTimeProvider Clock => _factory.Clock;
 
+    public IServiceProvider Services => _factory.Services;
+
     public static async Task<AuthTestHost> StartAsync(PostgresFixture postgres, IReadOnlyDictionary<string, string>? settings = null)
     {
         var connectionString = await postgres.CreateMigratedDatabaseAsync();

@@ -19,5 +19,11 @@ internal static class AppLinks
     /// <summary>The salon's inbox of requests.</summary>
     public static string Requests(string baseUrl) => $"{Trim(baseUrl)}/app/requests";
 
+    /// <summary>Direct link to one request in the salon's inbox.</summary>
+    public static string Request(string baseUrl, Guid appointmentId) => $"{Trim(baseUrl)}/app/requests/{appointmentId}";
+
+    /// <summary>The salon's public booking page.</summary>
+    public static string Booking(string baseUrl, string salonSlug) => $"{Trim(baseUrl)}/{Uri.EscapeDataString(salonSlug)}";
+
     private static string Trim(string baseUrl) => baseUrl.TrimEnd('/');
 }

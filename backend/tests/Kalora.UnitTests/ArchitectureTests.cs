@@ -10,6 +10,7 @@ public class ArchitectureTests
         "Kalora.Application/Auth/InvitationService.cs", // the invitation token identifies the salon
         "Kalora.Application/Auth/MeResponseFactory.cs", // profile of a user right after login, before a tenant exists
         "Kalora.Application/Common/IAppDbContext.cs",
+        "Kalora.Application/Email/EmailOutboxProcessor.cs", // the mail sender is a background job without a tenant
         "Kalora.Application/Salons/SlugAllocator.cs", // slugs are unique across all salons
         "Kalora.Application/Tenancy/SalonResolver.cs",
         "Kalora.Infrastructure/Identity/KaloraClaimsPrincipalFactory.cs", // reads the membership while the cookie is created

@@ -1,0 +1,168 @@
+{
+  "weekdays": [
+    "Sonntag",
+    "Montag",
+    "Dienstag",
+    "Mittwoch",
+    "Donnerstag",
+    "Freitag",
+    "Samstag"
+  ],
+  "months": [
+    "Januar",
+    "Februar",
+    "März",
+    "April",
+    "Mai",
+    "Juni",
+    "Juli",
+    "August",
+    "September",
+    "Oktober",
+    "November",
+    "Dezember"
+  ],
+  "dateFormat": "{weekday}, {day}. {month} {year}, {hh}:{mm} Uhr",
+  "labels": {
+    "service": "Leistung",
+    "staff": "Bei",
+    "when": "Wann",
+    "customer": "Kunde",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "note": "Nachricht",
+    "status": "Status",
+    "reason": "Grund"
+  },
+  "status": {
+    "Requested": "Wartet auf Bestätigung",
+    "Confirmed": "Bestätigt"
+  },
+  "layout": {
+    "buttonFallback": "Falls der Button nicht funktioniert, kopiere diesen Link in den Browser:",
+    "manageLink": "Termin ansehen oder stornieren:",
+    "salonContact": "So erreichst du {salon}:",
+    "automatic": "Diese E-Mail wurde automatisch verschickt. Bitte antworte nicht darauf.",
+    "ignore": "Wenn du das nicht warst, kannst du diese E-Mail ignorieren."
+  },
+  "mails": {
+    "auth.confirm_email": {
+      "subject": "Bitte bestätige deine E-Mail-Adresse",
+      "heading": "E-Mail-Adresse bestätigen",
+      "intro": [
+        "Hallo {name},",
+        "willkommen bei Kalora. Bitte bestätige deine E-Mail-Adresse, damit wir dich bei Fragen zu {salon} erreichen können."
+      ],
+      "button": "E-Mail bestätigen",
+      "outro": [
+        "{ignore}"
+      ]
+    },
+    "auth.reset_password": {
+      "subject": "Neues Passwort für Kalora",
+      "heading": "Neues Passwort festlegen",
+      "intro": [
+        "Hallo {name},",
+        "für dein Konto wurde ein neues Passwort angefordert. Der Link ist eine Stunde gültig."
+      ],
+      "button": "Passwort ändern",
+      "outro": [
+        "{ignore}"
+      ]
+    },
+    "auth.staff_invitation": {
+      "subject": "{salon} lädt dich zu Kalora ein",
+      "heading": "Du wurdest eingeladen",
+      "intro": [
+        "Hallo {name},",
+        "{salon} hat dich eingeladen, einen eigenen Zugang zu Kalora zu erstellen und deinen Kalender zu sehen.",
+        "Die Einladung ist bis {expires} gültig."
+      ],
+      "button": "Einladung annehmen"
+    },
+    "booking.request_received": {
+      "subject": "Deine Terminanfrage bei {salon}",
+      "heading": "Anfrage gesendet",
+      "intro": [
+        "Hallo {name},",
+        "deine Anfrage ist bei {salon} eingegangen. Du bekommst eine E-Mail, sobald der Salon antwortet."
+      ],
+      "button": "Anfrage ansehen",
+      "deadline": "Der Salon antwortet bis {respondBy}."
+    },
+    "booking.confirmed": {
+      "subject": "Dein Termin bei {salon} ist bestätigt",
+      "heading": "Termin bestätigt",
+      "intro": [
+        "Hallo {name},",
+        "dein Termin bei {salon} ist bestätigt. Wir freuen uns auf dich!"
+      ],
+      "button": "Termin verwalten"
+    },
+    "booking.declined": {
+      "subject": "Dein Terminwunsch bei {salon}",
+      "heading": "Leider kein Termin",
+      "intro": [
+        "Hallo {name},",
+        "{salon} kann deinen Terminwunsch leider nicht annehmen."
+      ],
+      "button": "Neuen Termin buchen",
+      "reasonLine": "Begründung des Salons: {reason}"
+    },
+    "booking.expired": {
+      "subject": "Deine Terminanfrage bei {salon} ist abgelaufen",
+      "heading": "Anfrage abgelaufen",
+      "intro": [
+        "Hallo {name},",
+        "{salon} hat nicht rechtzeitig auf deine Anfrage geantwortet, deshalb ist sie abgelaufen. Das tut uns leid.",
+        "Du kannst direkt einen neuen Termin anfragen."
+      ],
+      "button": "Neuen Termin buchen"
+    },
+    "booking.cancelled_by_customer": {
+      "subject": "Dein Termin bei {salon} wurde storniert",
+      "heading": "Termin storniert",
+      "intro": [
+        "Hallo {name},",
+        "du hast deinen Termin bei {salon} storniert. Der Salon wurde informiert."
+      ],
+      "button": "Neuen Termin buchen"
+    },
+    "booking.cancelled_by_salon": {
+      "subject": "Dein Termin bei {salon} wurde abgesagt",
+      "heading": "Termin abgesagt",
+      "intro": [
+        "Hallo {name},",
+        "{salon} musste deinen Termin leider absagen. Das tut uns leid."
+      ],
+      "button": "Neuen Termin buchen",
+      "reasonLine": "Begründung des Salons: {reason}"
+    },
+    "booking.reminder": {
+      "subject": "Erinnerung: dein Termin bei {salon}",
+      "heading": "Dein Termin steht an",
+      "intro": [
+        "Hallo {name},",
+        "wir erinnern dich an deinen Termin bei {salon}."
+      ],
+      "button": "Termin verwalten"
+    },
+    "booking.new_for_salon": {
+      "subject": "Neue Terminanfrage von {name}",
+      "heading": "Neue Terminanfrage",
+      "intro": [
+        "Über die Buchungsseite ist ein neuer Termin eingegangen."
+      ],
+      "button": "Anfrage ansehen",
+      "deadline": "Bitte antworte bis {respondBy}."
+    },
+    "booking.cancellation_for_salon": {
+      "subject": "{name} hat einen Termin storniert",
+      "heading": "Termin storniert",
+      "intro": [
+        "{name} hat folgenden Termin storniert. Die Zeit ist wieder frei."
+      ],
+      "button": "Kalender öffnen"
+    }
+  }
+}
