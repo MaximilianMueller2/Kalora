@@ -141,7 +141,18 @@
     "appointment.invalid_transition": "Der Termin wurde inzwischen schon anders bearbeitet.",
     "appointment.request_expired": "Die Zeit zum Antworten ist abgelaufen. Die Anfrage kann nicht mehr angenommen werden.",
     "appointment.not_started": "Der Termin hat noch nicht begonnen.",
-    "appointment.calendar_unavailable": "Für diesen Termin gibt es noch keine Kalenderdatei."
+    "appointment.calendar_unavailable": "Für diesen Termin gibt es noch keine Kalenderdatei.",
+    "calendar": {
+      "range_invalid": "Dieser Zeitraum ist nicht möglich.",
+      "block_overlaps_appointment": "In dieser Zeit liegt schon ein Termin.",
+      "block_range_invalid": "Das Ende muss nach dem Anfang liegen (höchstens 14 Tage).",
+      "block_not_found": "Diesen Blocker gibt es nicht (mehr)."
+    },
+    "appointment.not_movable": "Dieser Termin kann nicht mehr verschoben werden.",
+    "customer": {
+      "not_found": "Diesen Kunden gibt es nicht (mehr).",
+      "duplicate": "Diese E-Mail-Adresse gehört schon zu einem anderen Kunden."
+    }
   },
   "title": {
     "login": "Anmelden",

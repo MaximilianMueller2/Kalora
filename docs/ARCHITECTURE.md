@@ -283,6 +283,26 @@ Nur `Requested` und `Confirmed` halten die Zeit (Exclusion-Constraint); jeder an
 
 **Frontend** (`features/requests`, Route `/app/requests` und `/app/requests/:id` für den Link aus der Mail): offene Anfragen als gestrichelte Karten mit Leistung, Zeit im Salon-Zeitzone, Person, Kunde (Telefon und E-Mail als Links), Nachricht und Restzeit bis zum Ablauf (dringend unter 2 Stunden, bei „Zeit abgelaufen“ ist Annehmen gesperrt). „Annehmen“ und „Ablehnen“ (mit Dialog für den optionalen Grund) blenden die Karte sofort aus und zeigen eine Snackbar mit „Rückgängig“; **die Anfrage geht erst an den Server, wenn die Snackbar ohne Rückgängig verschwindet** (6 Sekunden) oder die Seite verlassen wird. So braucht es keinen Rückwärts-Übergang im Statusautomaten. Das Badge in der Navigation (`OpenRequestsBadge`) fragt jede Minute die Anzahl ab (still, ohne Fehlermeldungen) und zeigt „99+“ ab 100.
 
+## Team-Kalender
+
+**Backend** (`ICalendarService`, `/api/calendar`, Richtlinie `SalonMember`): Wer was sieht und ändert, regelt `AppointmentScope`: Inhaber:in und Manager:innen alle Spalten, Mitarbeitende nur ihre eigene (eine fremde Spalte ist „nicht gefunden“, nach einer fremden Spalte zu fragen liefert nichts). Ein Teamkalender für Mitarbeitende ist nicht freischaltbar, das Konzept nennt ihn „optional“.
+
+| Endpunkt | Wirkung |
+|----------|---------|
+| `GET ?from=&to=&staffIds=` | Lokale Tage (höchstens 14, `calendar.range_invalid`); je aktiver Person eine Spalte mit Arbeitszeit (Dienstplan ∩ Öffnungszeiten, ohne Schließtage, als UTC-Spannen), Abwesenheiten, Blockern und Terminen (offen, bestätigt, erschienen, nicht erschienen; mit Puffern, Kunde und erlaubten Folgezuständen) |
+| `GET customers?q=` | bis zu 8 Kunden, deren Name, E-Mail oder Telefon den Text enthält (ab 2 Zeichen, ohne Anonymisierte) |
+| `POST appointments` | Manueller Termin (Telefon, Laufkundschaft): Quelle `Manual`, sofort `Confirmed`, geprüft wie eine Online-Buchung (`booking.slot_unavailable`), Kunde per ID, oder neu bzw. über die E-Mail wiedergefunden. Mit E-Mail und Beginn in der Zukunft geht `booking.confirmed` (mit .ics) raus. Auch schon Begonnenes von heute ist erlaubt |
+| `POST appointments/{id}/move` | Nur bestätigte, noch nicht beendete Termine (`appointment.not_movable`). Prüfung wie bei der Buchung, der Termin blockiert sich dabei nicht selbst (`IgnoreAppointmentId`); auch zu einer Kollegin, die die Leistung anbietet. `CalendarSequence` + 1, Erinnerung wird neu erlaubt, Audit `appointment.moved`, Mail `booking.rescheduled` (.ics mit gleicher UID und höherer SEQUENCE). Gleiche Zeit und Person ändert nichts |
+| `POST blocks`, `DELETE blocks/{id}` | Blocker (Pause, Privates, bis 14 Tage); über einem offenen oder bestätigten Termin `calendar.block_overlaps_appointment` |
+
+`WorkingTime` (Domain) liefert Arbeitszeit-Spannen und Öffnungszeiten eines Tages und wird auch vom Verfügbarkeitsrechner benutzt.
+
+**Frontend** (`features/calendar`, ohne Fremdbibliothek, nur CDK Drag & Drop): `CalendarStore` (Signals; Datum, Ansicht, Filter, Daten, Takt der „Jetzt“-Linie) wird von der Seite bereitgestellt. `calendar-geometry.ts` rechnet Zeit und Pixel um (Wandzeit der Salon-Zeitzone, ein Pixel pro Minute mal 1,2, Sommerzeit-Tage inklusive), `calendar-conflicts.ts` findet Konflikte vorab (Vergangenheit, außerhalb der Arbeitszeit, Abwesenheit, Blocker, anderer Termin, jeweils mit Puffern). `CalendarGrid` zeichnet Zeitachse und Spalten: außerhalb der Arbeitszeit grau, Abwesenheiten schraffiert, offene Anfragen gestrichelt, bestätigte Termine in der Farbe der Person, „Jetzt“-Linie.
+
+- **Tagesansicht:** eine Spalte je Person (ausblendbar). **Wochenansicht:** sieben Tage einer Person. **Handy:** Tagesansicht mit einer Person, Wechsel per Wischen oder Reiter.
+- **Antippen:** freie Fläche öffnet „Neu im Kalender“ (Termin oder Blocker, mit Kundensuche), ein Termin das Seitenpanel (auf dem Handy von unten) mit Details und Aktionen: annehmen, ablehnen, absagen, erschienen, nicht erschienen und **Verschieben per Formular** (Datum, Uhrzeit, Person), damit es auch ohne Maus geht. Die Schaltfläche „Neu“ ersetzt das Antippen der Fläche.
+- **Verschieben per Ziehen:** Beim Ziehen zeigt ein Geisterfeld das Ziel, rot mit Grund, wenn es nicht passt. Ein Konflikt wird beim Loslassen abgelehnt, ohne den Server zu fragen; sonst entscheidet der Server (`booking.slot_unavailable` ⇒ die Karte springt zurück). Auf dem Handy beginnt das Ziehen nach 350 ms, damit Scrollen möglich bleibt.
+
 ## Offene Abschnitte
 
-Verfügbarkeitsberechnung im Detail (Mermaid), Verwaltungsseite hinter dem Token, Verschieben von Terminen.
+Verfügbarkeitsberechnung im Detail (Mermaid), Verwaltungsseite hinter dem Token.

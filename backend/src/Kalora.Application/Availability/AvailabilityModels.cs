@@ -13,7 +13,8 @@ public enum AvailabilityAudience
 /// <param name="StaffId">Only this person; null for "anyone".</param>
 /// <param name="FromDate">First local day (salon time zone), inclusive.</param>
 /// <param name="ToDate">Last local day, inclusive; at most <see cref="AvailabilityService.MaxDays"/> days after the first.</param>
-public sealed record AvailabilityQuery(Guid ServiceId, Guid? StaffId, DateOnly FromDate, DateOnly ToDate, AvailabilityAudience Audience);
+public sealed record AvailabilityQuery(Guid ServiceId, Guid? StaffId, DateOnly FromDate, DateOnly ToDate, AvailabilityAudience Audience, Guid? IgnoreAppointmentId = null);
 
 /// <param name="StartUtc">The exact start of the service, as returned by <see cref="IAvailabilityService.GetSlotsAsync"/>.</param>
-public sealed record SlotCheckQuery(Guid ServiceId, Guid? StaffId, DateTimeOffset StartUtc, AvailabilityAudience Audience);
+/// <param name="IgnoreAppointmentId">An appointment that is being moved: its own time does not count as taken.</param>
+public sealed record SlotCheckQuery(Guid ServiceId, Guid? StaffId, DateTimeOffset StartUtc, AvailabilityAudience Audience, Guid? IgnoreAppointmentId = null);

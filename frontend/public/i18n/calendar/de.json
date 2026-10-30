@@ -1,4 +1,92 @@
 {
   "title": "Kalender",
-  "placeholder": "Der Teamkalender mit einer Spalte pro Mitarbeitendem folgt in einem der nächsten Schritte."
+  "navigation": "Datum wechseln",
+  "previous": "Zurück",
+  "next": "Weiter",
+  "today": "Heute",
+  "view": "Ansicht",
+  "day": "Tag",
+  "week": "Woche",
+  "new": "Neu",
+  "people": "Personen",
+  "loadFailed": "Der Kalender konnte nicht geladen werden.",
+  "empty": "Noch keine Mitarbeitenden im Kalender. Lege im Bereich Team eine Person an.",
+  "moved": "Termin verschoben. Der Kunde bekommt eine E-Mail.",
+  "legend": {
+    "request": "Anfrage (noch nicht bestätigt)",
+    "off": "Außerhalb der Arbeitszeit",
+    "absence": "Abwesend"
+  },
+  "absence": {
+    "Vacation": "Urlaub",
+    "Sick": "Krank",
+    "Private": "Privat"
+  },
+  "block": {
+    "default": "Blocker",
+    "remove": "Blocker entfernen",
+    "removed": "Blocker entfernt"
+  },
+  "conflict": {
+    "past": "Liegt in der Vergangenheit",
+    "closed": "Außerhalb der Arbeitszeit",
+    "absence": "Person ist abwesend",
+    "block": "Blocker im Weg",
+    "appointment": "Anderer Termin im Weg"
+  },
+  "status": {
+    "Requested": "Anfrage",
+    "Confirmed": "Bestätigt",
+    "Declined": "Abgelehnt",
+    "Expired": "Abgelaufen",
+    "Cancelled": "Abgesagt",
+    "Completed": "Erschienen",
+    "NoShow": "Nicht erschienen"
+  },
+  "panel": {
+    "label": "Termindetails",
+    "when": "Wann",
+    "person": "Bei",
+    "customer": "Kunde",
+    "customerNote": "Nachricht des Kunden",
+    "internalNote": "Interne Notiz",
+    "source": "Quelle",
+    "manual": "Vom Salon eingetragen",
+    "moveTitle": "Termin verschieben",
+    "date": "Datum",
+    "time": "Uhrzeit",
+    "moveHint": "Der Kunde bekommt eine E-Mail mit der neuen Zeit und einer aktualisierten Kalenderdatei.",
+    "moveConfirm": "Verschieben",
+    "move": "Verschieben",
+    "attended": "Erschienen",
+    "noShow": "Nicht erschienen",
+    "cancel": "Absagen",
+    "cancelTitle": "Termin absagen",
+    "cancelLead": "Der Kunde bekommt eine E-Mail. Du kannst einen Grund dazuschreiben.",
+    "cancelConfirm": "Absagen",
+    "moved": "Termin verschoben",
+    "confirmed": "Termin angenommen",
+    "declined": "Anfrage abgelehnt",
+    "cancelled": "Termin abgesagt"
+  },
+  "create": {
+    "title": "Neu im Kalender",
+    "appointment": "Termin",
+    "block": "Blocker",
+    "from": "Von",
+    "to": "Bis",
+    "service": "Leistung",
+    "chooseService": "Leistung wählen",
+    "customer": "Kunde (Name)",
+    "existing": "Bekannte Kunden",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "emailHint": "Mit E-Mail-Adresse bekommt der Kunde die Bestätigung samt Kalenderdatei.",
+    "note": "Interne Notiz",
+    "label": "Bezeichnung (z. B. Pause)",
+    "save": "Speichern",
+    "changeCustomer": "Ändern",
+    "appointmentSaved": "Termin eingetragen",
+    "blockSaved": "Blocker eingetragen"
+  }
 }

@@ -141,7 +141,18 @@
     "appointment.invalid_transition": "Bu randevu bu arada başka şekilde işlendi.",
     "appointment.request_expired": "Yanıt süresi doldu. Talep artık kabul edilemez.",
     "appointment.not_started": "Bu randevu henüz başlamadı.",
-    "appointment.calendar_unavailable": "Bu randevu için henüz bir takvim dosyası yok."
+    "appointment.calendar_unavailable": "Bu randevu için henüz bir takvim dosyası yok.",
+    "calendar": {
+      "range_invalid": "Bu dönem mümkün değil.",
+      "block_overlaps_appointment": "Bu zamanda zaten bir randevu var.",
+      "block_range_invalid": "Bitiş başlangıçtan sonra olmalı (en fazla 14 gün).",
+      "block_not_found": "Bu engel yok (artık)."
+    },
+    "appointment.not_movable": "Bu randevu artık taşınamaz.",
+    "customer": {
+      "not_found": "Bu müşteri yok (artık).",
+      "duplicate": "Bu e-posta adresi zaten başka bir müşteriye ait."
+    }
   },
   "title": {
     "login": "Giriş yap",

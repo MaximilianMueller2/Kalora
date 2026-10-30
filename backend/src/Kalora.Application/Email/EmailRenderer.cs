@@ -16,7 +16,7 @@ internal sealed class EmailRenderer : IEmailRenderer
     private static readonly string[] CustomerTypes =
     [
         EmailTypes.BookingRequestReceived, EmailTypes.BookingConfirmed, EmailTypes.BookingDeclined, EmailTypes.BookingExpired,
-        EmailTypes.BookingCancelledByCustomer, EmailTypes.BookingCancelledBySalon, EmailTypes.BookingReminder,
+        EmailTypes.BookingCancelledByCustomer, EmailTypes.BookingCancelledBySalon, EmailTypes.BookingReminder, EmailTypes.BookingRescheduled,
     ];
 
     private static readonly string[] SalonTypes = [EmailTypes.BookingNewForSalon, EmailTypes.BookingCancellationForSalon];
@@ -65,7 +65,7 @@ internal sealed class EmailRenderer : IEmailRenderer
             isCustomerMail ? texts.Layout["manageLink"] : null,
             isCustomerMail ? payload.Text("ManageUrl") : null,
             Footer(type, isCustomerMail, payload, texts, values),
-            type == EmailTypes.BookingConfirmed ? CalendarBlock(document.RootElement, language, texts) : null);
+            type is EmailTypes.BookingConfirmed or EmailTypes.BookingRescheduled ? CalendarBlock(document.RootElement, language, texts) : null);
         return EmailLayout.Build(content);
     }
 

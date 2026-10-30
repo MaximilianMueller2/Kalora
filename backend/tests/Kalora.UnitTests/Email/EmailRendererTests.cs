@@ -15,7 +15,7 @@ public partial class EmailRendererTests
     private static readonly string[] CustomerTypes =
     [
         EmailTypes.BookingRequestReceived, EmailTypes.BookingConfirmed, EmailTypes.BookingDeclined, EmailTypes.BookingExpired,
-        EmailTypes.BookingCancelledByCustomer, EmailTypes.BookingCancelledBySalon, EmailTypes.BookingReminder,
+        EmailTypes.BookingCancelledByCustomer, EmailTypes.BookingCancelledBySalon, EmailTypes.BookingReminder, EmailTypes.BookingRescheduled,
     ];
 
     private static readonly string[] SalonTypes = [EmailTypes.BookingNewForSalon, EmailTypes.BookingCancellationForSalon];
@@ -257,7 +257,7 @@ public partial class EmailRendererTests
     }
 
     [Fact]
-    public void Only_the_confirmation_offers_web_calendar_links_and_names_the_attached_file()
+    public void Only_confirmation_and_reschedule_offer_web_calendar_links_and_names_the_attached_file()
     {
         foreach (var language in Languages)
         {
@@ -276,7 +276,7 @@ public partial class EmailRendererTests
 
             Assert.Equal(1, Regex.Count(confirmed.Html, "class=\"button\"")); // the calendar links are quiet text links
 
-            foreach (var other in AllTypes.Where(type => type != EmailTypes.BookingConfirmed))
+            foreach (var other in AllTypes.Where(type => type is not (EmailTypes.BookingConfirmed or EmailTypes.BookingRescheduled)))
             {
                 var mail = Render(other, language);
                 Assert.DoesNotContain("calendar.google.com", mail.Html + mail.Text);

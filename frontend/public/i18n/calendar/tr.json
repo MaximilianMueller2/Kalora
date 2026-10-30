@@ -1,4 +1,92 @@
 {
   "title": "Takvim",
-  "placeholder": "Çalışan başına bir sütunlu ekip takvimi sonraki adımlardan birinde gelecek."
+  "navigation": "Tarihi değiştir",
+  "previous": "Önceki",
+  "next": "Sonraki",
+  "today": "Bugün",
+  "view": "Görünüm",
+  "day": "Gün",
+  "week": "Hafta",
+  "new": "Yeni",
+  "people": "Kişiler",
+  "loadFailed": "Takvim yüklenemedi.",
+  "empty": "Takvimde henüz çalışan yok. Ekip bölümünden bir kişi ekleyin.",
+  "moved": "Randevu taşındı. Müşteriye e-posta gider.",
+  "legend": {
+    "request": "Talep (henüz onaylanmadı)",
+    "off": "Çalışma saati dışı",
+    "absence": "Yok"
+  },
+  "absence": {
+    "Vacation": "İzin",
+    "Sick": "Hasta",
+    "Private": "Özel"
+  },
+  "block": {
+    "default": "Engel",
+    "remove": "Engeli kaldır",
+    "removed": "Engel kaldırıldı"
+  },
+  "conflict": {
+    "past": "Geçmişte",
+    "closed": "Çalışma saati dışı",
+    "absence": "Kişi yok",
+    "block": "Engel var",
+    "appointment": "Başka bir randevu var"
+  },
+  "status": {
+    "Requested": "Talep",
+    "Confirmed": "Onaylandı",
+    "Declined": "Reddedildi",
+    "Expired": "Süresi doldu",
+    "Cancelled": "İptal edildi",
+    "Completed": "Geldi",
+    "NoShow": "Gelmedi"
+  },
+  "panel": {
+    "label": "Randevu ayrıntıları",
+    "when": "Ne zaman",
+    "person": "Kiminle",
+    "customer": "Müşteri",
+    "customerNote": "Müşterinin mesajı",
+    "internalNote": "Dahili not",
+    "source": "Kaynak",
+    "manual": "Salon tarafından girildi",
+    "moveTitle": "Randevuyu taşı",
+    "date": "Tarih",
+    "time": "Saat",
+    "moveHint": "Müşteriye yeni saati ve güncellenmiş bir takvim dosyasını içeren bir e-posta gider.",
+    "moveConfirm": "Taşı",
+    "move": "Taşı",
+    "attended": "Geldi",
+    "noShow": "Gelmedi",
+    "cancel": "İptal et",
+    "cancelTitle": "Randevuyu iptal et",
+    "cancelLead": "Müşteriye e-posta gider. İsterseniz bir gerekçe ekleyebilirsiniz.",
+    "cancelConfirm": "İptal et",
+    "moved": "Randevu taşındı",
+    "confirmed": "Randevu kabul edildi",
+    "declined": "Talep reddedildi",
+    "cancelled": "Randevu iptal edildi"
+  },
+  "create": {
+    "title": "Takvime yeni",
+    "appointment": "Randevu",
+    "block": "Engel",
+    "from": "Başlangıç",
+    "to": "Bitiş",
+    "service": "Hizmet",
+    "chooseService": "Hizmet seçin",
+    "customer": "Müşteri (ad)",
+    "existing": "Tanıdık müşteriler",
+    "phone": "Telefon",
+    "email": "E-posta",
+    "emailHint": "E-posta adresiyle müşteriye onay ve takvim dosyası gider.",
+    "note": "Dahili not",
+    "label": "Etiket (ör. mola)",
+    "save": "Kaydet",
+    "changeCustomer": "Değiştir",
+    "appointmentSaved": "Randevu eklendi",
+    "blockSaved": "Engel eklendi"
+  }
 }

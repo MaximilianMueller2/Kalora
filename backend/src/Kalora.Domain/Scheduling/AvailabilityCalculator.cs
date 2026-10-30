@@ -37,15 +37,8 @@ public static class AvailabilityCalculator
 
     private static List<Slot> SlotsOfDay(AvailabilityRequest request, List<PreparedCandidate> people, DateOnly date, DateTimeOffset earliestStart)
     {
-        if (request.ClosedDates.Contains(date))
-        {
-            return [];
-        }
-
         var zone = request.Rules.TimeZone;
-        var opening = IntervalSet.Union(request.OpeningHours
-            .Where(block => block.Weekday == date.DayOfWeek && block.End > block.Start)
-            .Select(block => new Interval(ZoneClock.BlockStart(date, block.Start, zone), ZoneClock.BlockEnd(date, block.End, zone))));
+        var opening = WorkingTime.OpeningOfDay(request.OpeningHours, request.ClosedDates, date, zone);
         if (opening.Count == 0)
         {
             return [];
@@ -116,12 +109,7 @@ public static class AvailabilityCalculator
         /// <summary>Working time inside the opening hours, minus absences, minus what is already booked.</summary>
         public IReadOnlyList<Interval> FreeTime(DateOnly date, IReadOnlyList<Interval> opening)
         {
-            var working = IntervalSet.Union(Source.WorkingHours
-                .Where(block => block.Weekday == date.DayOfWeek
-                    && block.End > block.Start
-                    && block.ValidFrom <= date
-                    && (block.ValidTo is null || block.ValidTo >= date))
-                .Select(block => new Interval(ZoneClock.BlockStart(date, block.Start, _zone), ZoneClock.BlockEnd(date, block.End, _zone))));
+            var working = WorkingTime.OfDay(Source.WorkingHours, date, _zone);
 
             var window = IntervalSet.Subtract(IntervalSet.Intersect(working, opening), _absences);
             return IntervalSet.Subtract(window, _busy);

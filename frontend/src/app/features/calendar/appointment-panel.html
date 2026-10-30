@@ -1,0 +1,125 @@
+<header class="top">
+  <h2>{{ appointment().serviceName }}</h2>
+  <span class="status" [attr.data-status]="appointment().status">
+    {{ 'calendar.status.' + appointment().status | transloco }}
+  </span>
+  <button
+    mat-icon-button
+    type="button"
+    [attr.aria-label]="'common.close' | transloco"
+    (click)="closed.emit()"
+  >
+    <mat-icon aria-hidden="true">close</mat-icon>
+  </button>
+</header>
+
+@if (error(); as message) {
+  <p class="alert" role="alert">{{ message }}</p>
+}
+
+<dl>
+  <dt>{{ 'calendar.panel.when' | transloco }}</dt>
+  <dd>{{ when() }}</dd>
+  <dt>{{ 'calendar.panel.person' | transloco }}</dt>
+  <dd>
+    <span class="dot" [style.background]="appointment().staff.color" aria-hidden="true"></span>
+    {{ appointment().staff.displayName }}
+  </dd>
+  <dt>{{ 'calendar.panel.customer' | transloco }}</dt>
+  <dd>
+    {{ appointment().customer.name }}
+    @if (appointment().customer.phone; as phone) {
+      <a class="contact" [href]="'tel:' + phone">{{ phone }}</a>
+    }
+    @if (appointment().customer.email; as mail) {
+      <a class="contact" [href]="'mailto:' + mail">{{ mail }}</a>
+    }
+  </dd>
+  @if (appointment().customerNote; as note) {
+    <dt>{{ 'calendar.panel.customerNote' | transloco }}</dt>
+    <dd class="note">{{ note }}</dd>
+  }
+  @if (appointment().internalNote; as note) {
+    <dt>{{ 'calendar.panel.internalNote' | transloco }}</dt>
+    <dd class="note">{{ note }}</dd>
+  }
+  @if (appointment().source === 'Manual') {
+    <dt>{{ 'calendar.panel.source' | transloco }}</dt>
+    <dd>{{ 'calendar.panel.manual' | transloco }}</dd>
+  }
+</dl>
+
+@if (moving()) {
+  <form class="move" (ngSubmit)="submitMove()">
+    <h3>{{ 'calendar.panel.moveTitle' | transloco }}</h3>
+    <label>
+      {{ 'calendar.panel.date' | transloco }}
+      <input
+        type="date"
+        name="date"
+        required
+        [ngModel]="moveDate()"
+        (ngModelChange)="moveDate.set($event)"
+      />
+    </label>
+    <label>
+      {{ 'calendar.panel.time' | transloco }}
+      <input
+        type="time"
+        name="time"
+        required
+        [step]="step()"
+        [ngModel]="moveTime()"
+        (ngModelChange)="moveTime.set($event)"
+      />
+    </label>
+    <label>
+      {{ 'calendar.panel.person' | transloco }}
+      <select name="staff" (change)="moveStaff.set(valueOf($event))">
+        @for (person of people(); track person.staffId) {
+          <option [value]="person.staffId" [selected]="person.staffId === moveStaff()">
+            {{ person.displayName }}
+          </option>
+        }
+      </select>
+    </label>
+    <p class="hint">{{ 'calendar.panel.moveHint' | transloco }}</p>
+    <div class="actions">
+      <button mat-flat-button type="submit" [disabled]="busy()">
+        {{ 'calendar.panel.moveConfirm' | transloco }}
+      </button>
+      <button mat-button type="button" (click)="moving.set(false)">
+        {{ 'common.cancel' | transloco }}
+      </button>
+    </div>
+  </form>
+} @else {
+  <div class="actions">
+    @if (can().answer) {
+      <button mat-flat-button type="button" [disabled]="busy()" (click)="confirm()">
+        {{ 'requests.confirm' | transloco }}
+      </button>
+      <button mat-stroked-button type="button" [disabled]="busy()" (click)="decline()">
+        {{ 'requests.declineAction' | transloco }}
+      </button>
+    }
+    @if (can().mark) {
+      <button mat-flat-button type="button" [disabled]="busy()" (click)="attended()">
+        {{ 'calendar.panel.attended' | transloco }}
+      </button>
+      <button mat-stroked-button type="button" [disabled]="busy()" (click)="noShow()">
+        {{ 'calendar.panel.noShow' | transloco }}
+      </button>
+    }
+    @if (can().move) {
+      <button mat-stroked-button type="button" [disabled]="busy()" (click)="openMove()">
+        {{ 'calendar.panel.move' | transloco }}
+      </button>
+    }
+    @if (can().cancel) {
+      <button mat-button type="button" class="danger" [disabled]="busy()" (click)="cancel()">
+        {{ 'calendar.panel.cancel' | transloco }}
+      </button>
+    }
+  </div>
+}

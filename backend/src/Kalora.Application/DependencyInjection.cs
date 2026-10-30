@@ -68,9 +68,14 @@ public static class DependencyInjection
         services.AddSingleton<IValidator<CreateAppointmentRequest>, CreateAppointmentRequestValidator>();
         services.AddScoped<IPublicSalonService, PublicSalonService>();
         services.AddScoped<AppointmentMails>();
+        services.AddScoped<AppointmentScope>();
         services.AddScoped<IBookingService, BookingService>();
         services.AddScoped<IAppointmentCalendarService, AppointmentCalendarService>();
         services.AddScoped<IAppointmentService, AppointmentService>();
+        services.AddScoped<ICalendarService, CalendarService>();
+        services.AddSingleton<IValidator<CreateManualAppointmentRequest>, CreateManualAppointmentRequestValidator>();
+        services.AddSingleton<IValidator<MoveAppointmentRequest>, MoveAppointmentRequestValidator>();
+        services.AddSingleton<IValidator<CreateBlockRequest>, CreateBlockRequestValidator>();
         services.AddScoped<IAppointmentScheduler, AppointmentScheduler>();
         services.AddSingleton<IValidator<ReasonRequest>, ReasonRequestValidator>();
         services.AddScoped<IAvailabilityService, AvailabilityService>();

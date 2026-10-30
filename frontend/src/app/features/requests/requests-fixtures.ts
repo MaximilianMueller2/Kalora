@@ -12,11 +12,15 @@ export function request(overrides: Partial<Appointment> = {}): Appointment {
     source: 'Online',
     startUtc: '2026-11-04T08:00:00Z',
     endUtc: '2026-11-04T09:00:00Z',
+    blockedStartUtc: '2026-11-04T08:00:00Z',
+    blockedEndUtc: '2026-11-04T09:00:00Z',
+    serviceId: 'sv1',
     serviceName: 'Haarschnitt',
     priceCents: 4500,
     priceIsFrom: false,
     currency: 'EUR',
     staff: { id: 'st1', displayName: 'Anna', color: '#2563EB' },
+    customerId: 'c1',
     customer: { name: 'Kim Kundin', email: 'kim@example.com', phone: '+49 170 1234567' },
     customerNote: 'Bitte ohne Föhn',
     internalNote: null,
@@ -38,6 +42,9 @@ export function fakeRequests(list: Appointment[] = [request()]) {
     count: vi.fn().mockResolvedValue(list.length),
     confirm: vi.fn().mockResolvedValue(request({ status: 'Confirmed' })),
     decline: vi.fn().mockResolvedValue(request({ status: 'Declined' })),
+    cancel: vi.fn().mockResolvedValue(request({ status: 'Cancelled' })),
+    markAttended: vi.fn().mockResolvedValue(request({ status: 'Completed' })),
+    markNoShow: vi.fn().mockResolvedValue(request({ status: 'NoShow' })),
   };
 }
 

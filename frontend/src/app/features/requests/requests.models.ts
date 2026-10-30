@@ -20,11 +20,16 @@ export interface Appointment {
   source: 'Online' | 'Manual';
   startUtc: string;
   endUtc: string;
+  /** Start and end including the service's buffers: the time that is really taken. */
+  blockedStartUtc: string;
+  blockedEndUtc: string;
+  serviceId: string;
   serviceName: string;
   priceCents: number;
   priceIsFrom: boolean;
   currency: string;
   staff: AppointmentStaff;
+  customerId: string;
   customer: AppointmentCustomer;
   customerNote: string | null;
   internalNote: string | null;

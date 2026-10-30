@@ -1,0 +1,116 @@
+<div class="grid" [class.by-day]="byDay()" [style.--lane-count]="columns().length">
+  <div class="heads" role="row">
+    <div class="axis-head"></div>
+    @for (column of columns(); track column.lane.key) {
+      <div class="head" role="columnheader" [class.today]="column.lane.isToday">
+        @if (!byDay()) {
+          <span class="dot" [style.background]="column.lane.column.color" aria-hidden="true"></span>
+        }
+        {{ laneTitle(column.lane) }}
+      </div>
+    }
+  </div>
+
+  <div class="body" [style.height.px]="height()">
+    <div class="axis" aria-hidden="true">
+      @for (hour of hours(); track hour.label) {
+        <span class="hour" [style.top.px]="hour.top">{{ hour.label }}</span>
+      }
+    </div>
+
+    @for (column of columns(); track column.lane.key) {
+      <div
+        #laneBody
+        class="lane"
+        role="group"
+        [attr.aria-label]="laneTitle(column.lane)"
+        [class.today]="column.lane.isToday"
+        [style.--staff]="column.lane.column.color"
+      >
+        @for (rect of column.off; track rect.top) {
+          <div
+            class="off"
+            aria-hidden="true"
+            [style.top.px]="rect.top"
+            [style.height.px]="rect.height"
+          ></div>
+        }
+        @for (item of column.absences; track item.absence.id) {
+          <div
+            class="absence"
+            [style.top.px]="item.rect.top"
+            [style.height.px]="item.rect.height"
+            [attr.title]="'calendar.absence.' + item.absence.type | transloco"
+          >
+            <span>{{ 'calendar.absence.' + item.absence.type | transloco }}</span>
+          </div>
+        }
+
+        <div class="tap" role="presentation" (click)="tapped($event, column.lane)"></div>
+
+        @for (item of column.blocks; track item.block.id) {
+          <button
+            type="button"
+            class="block"
+            [style.top.px]="item.rect.top"
+            [style.height.px]="cardHeight(item.rect)"
+            (click)="blockTapped(item.block)"
+          >
+            <mat-icon aria-hidden="true">block</mat-icon>
+            {{ item.block.label || ('calendar.block.default' | transloco) }}
+          </button>
+        }
+
+        @for (item of column.appointments; track item.appointment.id) {
+          <button
+            type="button"
+            class="event"
+            cdkDrag
+            [cdkDragDisabled]="!item.movable"
+            [cdkDragStartDelay]="touchDelay"
+            [class.request]="item.appointment.status === 'Requested'"
+            [class.finished]="
+              item.appointment.status === 'Completed' || item.appointment.status === 'NoShow'
+            "
+            [class.selected]="item.appointment.id === selectedId()"
+            [style.top.px]="item.rect.top"
+            [style.height.px]="cardHeight(item.rect)"
+            [attr.aria-pressed]="item.appointment.id === selectedId()"
+            (click)="cardTapped(item.appointment)"
+            (cdkDragMoved)="dragMoved($event, item.appointment, column.lane)"
+            (cdkDragEnded)="dragEnded($event, item.appointment, column.lane)"
+          >
+            <span class="time">{{ timeRange(item.appointment) }}</span>
+            <span class="what">{{ item.appointment.customer.name }}</span>
+            <span class="service">{{ item.appointment.serviceName }}</span>
+            @if (item.appointment.status === 'NoShow') {
+              <mat-icon class="state" aria-hidden="true">person_off</mat-icon>
+            } @else if (item.appointment.status === 'Completed') {
+              <mat-icon class="state" aria-hidden="true">check</mat-icon>
+            }
+          </button>
+        }
+
+        @if (ghost(); as ghost) {
+          @if (ghost.laneKey === column.lane.key) {
+            <div
+              class="ghost"
+              aria-hidden="true"
+              [class.conflict]="ghost.conflict !== null"
+              [style.top.px]="ghost.rect.top"
+              [style.height.px]="ghost.rect.height"
+            >
+              @if (ghost.conflict; as reason) {
+                <span>{{ 'calendar.conflict.' + reason | transloco }}</span>
+              }
+            </div>
+          }
+        }
+
+        @if (column.nowTop !== null) {
+          <div class="now" aria-hidden="true" [style.top.px]="column.nowTop"></div>
+        }
+      </div>
+    }
+  </div>
+</div>

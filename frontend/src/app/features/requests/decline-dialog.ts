@@ -1,13 +1,26 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { MAX_REASON_LENGTH } from './requests.models';
 
-/** Asks for an optional reason before a request is declined. Closes with the reason ('' for none) or nothing on cancel. */
+/** Texts of the dialog; the defaults are those of declining a request. */
+export interface ReasonDialogData {
+  titleKey: string;
+  leadKey: string;
+  confirmKey: string;
+}
+
+const DECLINE_TEXTS: ReasonDialogData = {
+  titleKey: 'requests.decline.title',
+  leadKey: 'requests.decline.lead',
+  confirmKey: 'requests.decline.confirm',
+};
+
+/** Asks for an optional reason before a request is declined or an appointment cancelled. Closes with the reason ('' for none) or nothing on cancel. */
 @Component({
   selector: 'app-decline-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,9 +34,9 @@ import { MAX_REASON_LENGTH } from './requests.models';
   ],
   styleUrl: '../../shared/dialogs/dialog.scss',
   template: `
-    <h2 mat-dialog-title>{{ 'requests.decline.title' | transloco }}</h2>
+    <h2 mat-dialog-title>{{ texts.titleKey | transloco }}</h2>
     <mat-dialog-content>
-      <p class="lead">{{ 'requests.decline.lead' | transloco }}</p>
+      <p class="lead">{{ texts.leadKey | transloco }}</p>
       <mat-form-field appearance="outline">
         <mat-label>{{ 'requests.decline.reason' | transloco }}</mat-label>
         <textarea
@@ -41,7 +54,7 @@ import { MAX_REASON_LENGTH } from './requests.models';
         {{ 'common.cancel' | transloco }}
       </button>
       <button mat-flat-button type="button" [mat-dialog-close]="reason().trim()">
-        {{ 'requests.decline.confirm' | transloco }}
+        {{ texts.confirmKey | transloco }}
       </button>
     </mat-dialog-actions>
   `,
@@ -53,6 +66,8 @@ import { MAX_REASON_LENGTH } from './requests.models';
   `,
 })
 export class DeclineDialog {
+  protected readonly texts =
+    inject<ReasonDialogData | null>(MAT_DIALOG_DATA, { optional: true }) ?? DECLINE_TEXTS;
   protected readonly maxLength = MAX_REASON_LENGTH;
   protected readonly reason = signal('');
 }

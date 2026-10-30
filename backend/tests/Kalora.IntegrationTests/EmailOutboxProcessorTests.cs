@@ -334,6 +334,23 @@ public class EmailOutboxProcessorTests(PostgresFixture postgres)
         Assert.DoesNotContain("ATTENDEE", ics);
     }
 
+    [Fact]
+    public async Task A_rescheduling_mail_carries_the_updated_entry_with_the_raised_sequence()
+    {
+        var setup = await NewSetupAsync();
+        var appointmentId = Guid.NewGuid();
+        await setup.QueueAsync(await setup.AddSalonAsync(), type: EmailTypes.BookingRescheduled, payload: AppointmentPayload(appointmentId, sequence: 2));
+
+        await setup.Processor().ProcessDueAsync();
+
+        var attachment = Assert.Single(Assert.Single(setup.Sender.Sent).Attachments!);
+        Assert.Equal("text/calendar; method=PUBLISH; charset=utf-8", attachment.ContentType);
+        var ics = System.Text.Encoding.UTF8.GetString(attachment.Content);
+        Assert.Contains($"UID:{appointmentId}@kalora", ics);
+        Assert.Contains("SEQUENCE:2", ics);
+        Assert.Contains("calendar.google.com", Assert.Single(setup.Sender.Sent).Text);
+    }
+
     [Theory]
     [InlineData(EmailTypes.BookingCancelledByCustomer)]
     [InlineData(EmailTypes.BookingCancelledBySalon)]

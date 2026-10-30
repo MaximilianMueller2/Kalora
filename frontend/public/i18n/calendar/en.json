@@ -1,4 +1,92 @@
 {
   "title": "Calendar",
-  "placeholder": "The team calendar with one column per staff member follows in one of the next steps."
+  "navigation": "Change date",
+  "previous": "Previous",
+  "next": "Next",
+  "today": "Today",
+  "view": "View",
+  "day": "Day",
+  "week": "Week",
+  "new": "New",
+  "people": "People",
+  "loadFailed": "The calendar could not be loaded.",
+  "empty": "No team members in the calendar yet. Add a person under Team.",
+  "moved": "Appointment moved. The customer gets an e-mail.",
+  "legend": {
+    "request": "Request (not yet confirmed)",
+    "off": "Outside working hours",
+    "absence": "Away"
+  },
+  "absence": {
+    "Vacation": "Vacation",
+    "Sick": "Sick",
+    "Private": "Private"
+  },
+  "block": {
+    "default": "Blocker",
+    "remove": "Remove blocker",
+    "removed": "Blocker removed"
+  },
+  "conflict": {
+    "past": "Is in the past",
+    "closed": "Outside working hours",
+    "absence": "Person is away",
+    "block": "Blocker in the way",
+    "appointment": "Another appointment in the way"
+  },
+  "status": {
+    "Requested": "Request",
+    "Confirmed": "Confirmed",
+    "Declined": "Declined",
+    "Expired": "Expired",
+    "Cancelled": "Cancelled",
+    "Completed": "Attended",
+    "NoShow": "No-show"
+  },
+  "panel": {
+    "label": "Appointment details",
+    "when": "When",
+    "person": "With",
+    "customer": "Customer",
+    "customerNote": "Customer's message",
+    "internalNote": "Internal note",
+    "source": "Source",
+    "manual": "Entered by the salon",
+    "moveTitle": "Move appointment",
+    "date": "Date",
+    "time": "Time",
+    "moveHint": "The customer gets an e-mail with the new time and an updated calendar file.",
+    "moveConfirm": "Move",
+    "move": "Move",
+    "attended": "Attended",
+    "noShow": "No-show",
+    "cancel": "Cancel",
+    "cancelTitle": "Cancel appointment",
+    "cancelLead": "The customer gets an e-mail. You can add a reason.",
+    "cancelConfirm": "Cancel appointment",
+    "moved": "Appointment moved",
+    "confirmed": "Appointment accepted",
+    "declined": "Request declined",
+    "cancelled": "Appointment cancelled"
+  },
+  "create": {
+    "title": "New in the calendar",
+    "appointment": "Appointment",
+    "block": "Blocker",
+    "from": "From",
+    "to": "To",
+    "service": "Service",
+    "chooseService": "Choose a service",
+    "customer": "Customer (name)",
+    "existing": "Known customers",
+    "phone": "Phone",
+    "email": "E-mail",
+    "emailHint": "With an e-mail address the customer gets the confirmation and a calendar file.",
+    "note": "Internal note",
+    "label": "Label (e.g. break)",
+    "save": "Save",
+    "changeCustomer": "Change",
+    "appointmentSaved": "Appointment added",
+    "blockSaved": "Blocker added"
+  }
 }

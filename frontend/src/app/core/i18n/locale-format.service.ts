@@ -2,7 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { WEEKDAYS, Weekday } from '../../shared/week-schedule/week-schedule.model';
 import { LanguageService } from './language.service';
 
-export type DateStyle = 'date' | 'time' | 'dateTime' | 'weekdayDate' | 'fullDate' | 'monthYear';
+export type DateStyle =
+  'date' | 'time' | 'dateTime' | 'weekdayDate' | 'fullDate' | 'monthYear' | 'weekdayDay';
 
 const DATE_OPTIONS: Record<DateStyle, Intl.DateTimeFormatOptions> = {
   date: { day: '2-digit', month: '2-digit', year: 'numeric' },
@@ -17,6 +18,7 @@ const DATE_OPTIONS: Record<DateStyle, Intl.DateTimeFormatOptions> = {
   weekdayDate: { weekday: 'long', day: 'numeric', month: 'long' },
   fullDate: { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' },
   monthYear: { month: 'long', year: 'numeric' },
+  weekdayDay: { weekday: 'short', day: 'numeric' },
 };
 
 /** Dates, times, numbers and money in the active language's conventions (Intl, no locale data bundles needed). */

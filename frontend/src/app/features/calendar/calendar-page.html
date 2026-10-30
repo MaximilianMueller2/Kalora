@@ -1,0 +1,131 @@
+<header class="bar">
+  <div class="nav" role="group" [attr.aria-label]="'calendar.navigation' | transloco">
+    <button
+      mat-icon-button
+      type="button"
+      [attr.aria-label]="'calendar.previous' | transloco"
+      (click)="step(-1)"
+    >
+      <mat-icon aria-hidden="true">chevron_left</mat-icon>
+    </button>
+    <button mat-stroked-button type="button" (click)="today()">
+      {{ 'calendar.today' | transloco }}
+    </button>
+    <button
+      mat-icon-button
+      type="button"
+      [attr.aria-label]="'calendar.next' | transloco"
+      (click)="step(1)"
+    >
+      <mat-icon aria-hidden="true">chevron_right</mat-icon>
+    </button>
+  </div>
+  <h1 aria-live="polite">{{ title() }}</h1>
+  <div class="views" role="group" [attr.aria-label]="'calendar.view' | transloco">
+    <button
+      type="button"
+      [class.on]="store.view() === 'day'"
+      [attr.aria-pressed]="store.view() === 'day'"
+      (click)="setView('day')"
+    >
+      {{ 'calendar.day' | transloco }}
+    </button>
+    <button
+      type="button"
+      [class.on]="store.view() === 'week'"
+      [attr.aria-pressed]="store.view() === 'week'"
+      (click)="setView('week')"
+    >
+      {{ 'calendar.week' | transloco }}
+    </button>
+  </div>
+  <button mat-flat-button type="button" class="new" (click)="openNew()">
+    <mat-icon aria-hidden="true">add</mat-icon>
+    {{ 'calendar.new' | transloco }}
+  </button>
+</header>
+
+@if (showPeopleFilter()) {
+  <div class="people" role="group" [attr.aria-label]="'calendar.people' | transloco">
+    @for (person of store.people(); track person.staffId) {
+      <button
+        type="button"
+        [attr.aria-pressed]="!store.hiddenStaff().has(person.staffId)"
+        (click)="store.toggleStaff(person.staffId)"
+      >
+        <span class="dot" [style.background]="person.color" aria-hidden="true"></span>
+        {{ person.displayName }}
+      </button>
+    }
+  </div>
+}
+
+@if (showPeopleTabs() || (store.view() === 'week' && store.people().length > 1)) {
+  <div class="people choose" role="group" [attr.aria-label]="'calendar.people' | transloco">
+    @for (person of store.people(); track person.staffId) {
+      <button
+        type="button"
+        [attr.aria-pressed]="store.focused()?.staffId === person.staffId"
+        (click)="store.focusOn(person.staffId)"
+      >
+        <span class="dot" [style.background]="person.color" aria-hidden="true"></span>
+        {{ person.displayName }}
+      </button>
+    }
+  </div>
+}
+
+<div class="layout" [class.with-panel]="selection() !== null">
+  <div class="main" (touchstart)="touchStart($event)" (touchend)="touchEnd($event)">
+    @if (store.loading()) {
+      <div class="skeleton" aria-busy="true" aria-hidden="true"></div>
+    } @else if (store.failed()) {
+      <p class="notice error" role="alert">{{ 'calendar.loadFailed' | transloco }}</p>
+    } @else if (lanes().length === 0) {
+      <p class="notice">{{ 'calendar.empty' | transloco }}</p>
+    } @else {
+      <app-calendar-grid
+        [lanes]="lanes()"
+        [window]="window()"
+        [zone]="store.zone()"
+        [slotMinutes]="store.slotMinutes()"
+        [now]="store.now()"
+        [byDay]="byDay()"
+        [selectedId]="selectedAppointment()?.id ?? null"
+        (slotTap)="openFree($event)"
+        (appointmentTap)="select($event)"
+        (blockTap)="selectBlock($event)"
+        (moved)="moved($event)"
+        (rejected)="rejected($event)"
+      />
+      <ul class="legend" aria-hidden="true">
+        <li><span class="swatch request"></span>{{ 'calendar.legend.request' | transloco }}</li>
+        <li><span class="swatch off"></span>{{ 'calendar.legend.off' | transloco }}</li>
+        <li><span class="swatch absence"></span>{{ 'calendar.legend.absence' | transloco }}</li>
+      </ul>
+    }
+  </div>
+
+  @if (selectedAppointment(); as appointment) {
+    <aside class="panel" [attr.aria-label]="'calendar.panel.label' | transloco">
+      <app-appointment-panel
+        [appointment]="appointment"
+        [zone]="store.zone()"
+        [people]="people()"
+        [slotMinutes]="store.slotMinutes()"
+        [now]="store.now()"
+        (closed)="closePanel()"
+        (changed)="changed()"
+      />
+    </aside>
+  } @else if (selectedBlock(); as block) {
+    <aside class="panel" [attr.aria-label]="'calendar.panel.label' | transloco">
+      <app-block-panel
+        [block]="block"
+        [zone]="store.zone()"
+        (closed)="closePanel()"
+        (changed)="changed()"
+      />
+    </aside>
+  }
+</div>

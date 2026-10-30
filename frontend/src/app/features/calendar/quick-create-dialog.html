@@ -1,0 +1,182 @@
+<h2 mat-dialog-title>{{ 'calendar.create.title' | transloco }}</h2>
+<form (ngSubmit)="save()">
+  <mat-dialog-content>
+    <div class="modes" role="group" [attr.aria-label]="'calendar.create.title' | transloco">
+      <button
+        type="button"
+        [class.on]="mode() === 'appointment'"
+        [attr.aria-pressed]="mode() === 'appointment'"
+        (click)="mode.set('appointment')"
+      >
+        {{ 'calendar.create.appointment' | transloco }}
+      </button>
+      <button
+        type="button"
+        [class.on]="mode() === 'block'"
+        [attr.aria-pressed]="mode() === 'block'"
+        (click)="mode.set('block')"
+      >
+        {{ 'calendar.create.block' | transloco }}
+      </button>
+    </div>
+
+    @if (error(); as message) {
+      <p class="alert" role="alert">{{ message }}</p>
+    }
+
+    <label>
+      {{ 'calendar.panel.person' | transloco }}
+      <select name="staff" (change)="staffId.set(valueOf($event))">
+        @for (person of data.people; track person.staffId) {
+          <option [value]="person.staffId" [selected]="person.staffId === staffId()">
+            {{ person.displayName }}
+          </option>
+        }
+      </select>
+    </label>
+
+    <div class="row">
+      <label>
+        {{ 'calendar.panel.date' | transloco }}
+        <input
+          type="date"
+          name="date"
+          required
+          [ngModel]="date()"
+          (ngModelChange)="date.set($event)"
+        />
+      </label>
+      <label>
+        {{
+          mode() === 'block'
+            ? ('calendar.create.from' | transloco)
+            : ('calendar.panel.time' | transloco)
+        }}
+        <input
+          type="time"
+          name="start"
+          required
+          [step]="step"
+          [ngModel]="start()"
+          (ngModelChange)="start.set($event)"
+        />
+      </label>
+      @if (mode() === 'block') {
+        <label>
+          {{ 'calendar.create.to' | transloco }}
+          <input
+            type="time"
+            name="end"
+            required
+            [step]="step"
+            [ngModel]="end()"
+            (ngModelChange)="end.set($event)"
+          />
+        </label>
+      }
+    </div>
+
+    @if (mode() === 'appointment') {
+      <label>
+        {{ 'calendar.create.service' | transloco }}
+        <select name="service" required (change)="serviceId.set(valueOf($event))">
+          <option value="" [selected]="serviceId() === ''">
+            {{ 'calendar.create.chooseService' | transloco }}
+          </option>
+          @for (service of servicesOfPerson(); track service.id) {
+            <option [value]="service.id" [selected]="service.id === serviceId()">
+              {{ service.name }} ({{ service.durationMinutes }} min)
+            </option>
+          }
+        </select>
+      </label>
+
+      @if (chosenCustomer(); as customer) {
+        <div class="chosen">
+          <strong>{{ customer.name }}</strong>
+          <span>{{ customer.phone || customer.email }}</span>
+          <button mat-button type="button" (click)="clearCustomer()">
+            {{ 'calendar.create.changeCustomer' | transloco }}
+          </button>
+        </div>
+      } @else {
+        <label>
+          {{ 'calendar.create.customer' | transloco }}
+          <input
+            type="text"
+            name="name"
+            autocomplete="off"
+            maxlength="100"
+            [ngModel]="customerName()"
+            (ngModelChange)="typeName($event)"
+          />
+        </label>
+        @if (hits().length > 0) {
+          <ul class="hits" [attr.aria-label]="'calendar.create.existing' | transloco">
+            @for (hit of hits(); track hit.id) {
+              <li>
+                <button type="button" (click)="choose(hit)">
+                  <strong>{{ hit.name }}</strong>
+                  <span>{{ hit.phone || hit.email }}</span>
+                </button>
+              </li>
+            }
+          </ul>
+        }
+        <div class="row">
+          <label>
+            {{ 'calendar.create.phone' | transloco }}
+            <input
+              type="tel"
+              name="phone"
+              autocomplete="off"
+              maxlength="40"
+              [ngModel]="customerPhone()"
+              (ngModelChange)="customerPhone.set($event)"
+            />
+          </label>
+          <label>
+            {{ 'calendar.create.email' | transloco }}
+            <input
+              type="email"
+              name="email"
+              autocomplete="off"
+              maxlength="320"
+              [ngModel]="customerEmail()"
+              (ngModelChange)="customerEmail.set($event)"
+            />
+          </label>
+        </div>
+        <p class="hint">{{ 'calendar.create.emailHint' | transloco }}</p>
+      }
+
+      <label>
+        {{ 'calendar.create.note' | transloco }}
+        <textarea
+          name="note"
+          rows="2"
+          maxlength="2000"
+          [ngModel]="note()"
+          (ngModelChange)="note.set($event)"
+        ></textarea>
+      </label>
+    } @else {
+      <label>
+        {{ 'calendar.create.label' | transloco }}
+        <input
+          type="text"
+          name="label"
+          maxlength="100"
+          [ngModel]="label()"
+          (ngModelChange)="label.set($event)"
+        />
+      </label>
+    }
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" mat-dialog-close>{{ 'common.cancel' | transloco }}</button>
+    <button mat-flat-button type="submit" [disabled]="busy() || !canSave()">
+      {{ 'calendar.create.save' | transloco }}
+    </button>
+  </mat-dialog-actions>
+</form>

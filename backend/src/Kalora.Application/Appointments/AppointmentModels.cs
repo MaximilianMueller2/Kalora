@@ -7,6 +7,7 @@ public sealed record AppointmentStaffDto(Guid Id, string DisplayName, string Col
 /// <summary>Contact details are for the salon's own screens only; the public pages never get this type.</summary>
 public sealed record AppointmentCustomerDto(string Name, string? Email, string? Phone);
 
+/// <param name="BlockedStartUtc">Start and end including the service's buffers: the time that is really taken in the calendar.</param>
 /// <param name="ExpiresAtUtc">Until when an open request may be answered.</param>
 /// <param name="NextStates">What the status rules allow next; clients show only these actions.</param>
 public sealed record AppointmentDto(
@@ -15,11 +16,15 @@ public sealed record AppointmentDto(
     AppointmentSource Source,
     DateTimeOffset StartUtc,
     DateTimeOffset EndUtc,
+    DateTimeOffset BlockedStartUtc,
+    DateTimeOffset BlockedEndUtc,
+    Guid ServiceId,
     string ServiceName,
     int PriceCents,
     bool PriceIsFrom,
     string Currency,
     AppointmentStaffDto Staff,
+    Guid CustomerId,
     AppointmentCustomerDto Customer,
     string? CustomerNote,
     string? InternalNote,

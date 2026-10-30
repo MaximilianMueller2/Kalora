@@ -141,7 +141,18 @@
     "appointment.invalid_transition": "This appointment has been handled differently in the meantime.",
     "appointment.request_expired": "The time to answer is over. The request can no longer be accepted.",
     "appointment.not_started": "This appointment has not started yet.",
-    "appointment.calendar_unavailable": "There is no calendar file for this appointment yet."
+    "appointment.calendar_unavailable": "There is no calendar file for this appointment yet.",
+    "calendar": {
+      "range_invalid": "This period is not possible.",
+      "block_overlaps_appointment": "There is already an appointment in this time.",
+      "block_range_invalid": "The end must be after the start (14 days at most).",
+      "block_not_found": "This blocker does not exist (any more)."
+    },
+    "appointment.not_movable": "This appointment can no longer be moved.",
+    "customer": {
+      "not_found": "This customer does not exist (any more).",
+      "duplicate": "This e-mail address already belongs to another customer."
+    }
   },
   "title": {
     "login": "Sign in",

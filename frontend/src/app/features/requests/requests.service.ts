@@ -24,6 +24,18 @@ export class RequestsService {
     return firstValueFrom(this.api.post<Appointment>(`/appointments/${id}/confirm`));
   }
 
+  cancel(id: string, reason: string | null): Promise<Appointment> {
+    return firstValueFrom(this.api.post<Appointment>(`/appointments/${id}/cancel`, { reason }));
+  }
+
+  markAttended(id: string): Promise<Appointment> {
+    return firstValueFrom(this.api.post<Appointment>(`/appointments/${id}/attended`));
+  }
+
+  markNoShow(id: string): Promise<Appointment> {
+    return firstValueFrom(this.api.post<Appointment>(`/appointments/${id}/no-show`));
+  }
+
   decline(id: string, reason: string | null): Promise<Appointment> {
     return firstValueFrom(this.api.post<Appointment>(`/appointments/${id}/decline`, { reason }));
   }

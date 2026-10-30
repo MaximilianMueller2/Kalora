@@ -11,6 +11,9 @@ internal sealed class AvailabilityService(IAppDbContext db, TimeProvider timePro
 
     private const int InternalHorizonDays = 3650;
 
+    /// <summary>The salon's own staff may also enter what already began today (a walk-in at 10:00, entered at 10:07).</summary>
+    private const int InternalLeadTimeMinutes = -24 * 60;
+
     private static readonly AppointmentStatus[] BlockingStatuses = [AppointmentStatus.Requested, AppointmentStatus.Confirmed];
 
     public async Task<Result<IReadOnlyList<DaySlots>>> GetSlotsAsync(AvailabilityQuery query, CancellationToken cancellationToken = default)
@@ -28,7 +31,7 @@ internal sealed class AvailabilityService(IAppDbContext db, TimeProvider timePro
         }
 
         var date = SalonTime.LocalDate(query.StartUtc, TimeZoneInfo.FindSystemTimeZoneById(zoneId));
-        var days = await CalculateAsync(new AvailabilityQuery(query.ServiceId, query.StaffId, date, date, query.Audience), cancellationToken);
+        var days = await CalculateAsync(new AvailabilityQuery(query.ServiceId, query.StaffId, date, date, query.Audience, query.IgnoreAppointmentId), cancellationToken);
         if (!days.IsSuccess)
         {
             return days.Error;
@@ -90,7 +93,7 @@ internal sealed class AvailabilityService(IAppDbContext db, TimeProvider timePro
             .Select(a => new { a.StaffId, a.StartUtc, a.EndUtc })
             .ToListAsync(cancellationToken);
         var appointments = await db.Appointments
-            .Where(a => ids.Contains(a.StaffId) && BlockingStatuses.Contains(a.Status) && a.BlockedStartUtc < to && a.BlockedEndUtc > from)
+            .Where(a => ids.Contains(a.StaffId) && BlockingStatuses.Contains(a.Status) && a.Id != query.IgnoreAppointmentId && a.BlockedStartUtc < to && a.BlockedEndUtc > from)
             .Select(a => new { a.StaffId, a.StartUtc, a.BlockedStartUtc, a.BlockedEndUtc })
             .ToListAsync(cancellationToken);
         var blockers = await db.TimeBlocks
@@ -110,7 +113,7 @@ internal sealed class AvailabilityService(IAppDbContext db, TimeProvider timePro
 
         var rules = forCustomers
             ? new SchedulingRules(zone, salon.SlotIntervalMinutes, salon.MinLeadTimeMinutes, salon.BookingHorizonDays)
-            : new SchedulingRules(zone, salon.SlotIntervalMinutes, 0, InternalHorizonDays);
+            : new SchedulingRules(zone, salon.SlotIntervalMinutes, InternalLeadTimeMinutes, InternalHorizonDays);
         var request = new AvailabilityRequest(
             rules,
             timeProvider.GetUtcNow(),

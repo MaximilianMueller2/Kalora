@@ -13,6 +13,7 @@ namespace Kalora.Application.Appointments;
 internal sealed class AppointmentService(
     IAppDbContext db,
     ICurrentUser currentUser,
+    AppointmentScope scope,
     AppointmentMails mails,
     IValidator<ReasonRequest> reasonValidator,
     TimeProvider timeProvider) : IAppointmentService
@@ -124,39 +125,10 @@ internal sealed class AppointmentService(
         CancellationToken cancellationToken) =>
         (await Project(order(Visible().Where(filter))).ToListAsync(cancellationToken)).ConvertAll(WithNextStates);
 
-    private static AppointmentDto WithNextStates(AppointmentDto dto) => dto with { NextStates = AppointmentStatusRules.NextStates(dto.Status) };
 
-    /// <summary>Owners and managers see the salon's appointments, everyone else only those with their own staff profile.</summary>
-    private IQueryable<Appointment> Visible()
-    {
-        if (currentUser.SalonRole is SalonRole.Owner or SalonRole.Manager)
-        {
-            return db.Appointments;
-        }
+    private IQueryable<Appointment> Visible() => scope.Appointments();
 
-        var userId = currentUser.UserId;
-        return db.Appointments.Where(a => db.StaffMembers.Any(s => s.Id == a.StaffId && s.UserId == userId));
-    }
+    private IQueryable<AppointmentDto> Project(IQueryable<Appointment> appointments) => AppointmentProjection.Project(db, appointments);
 
-    private IQueryable<AppointmentDto> Project(IQueryable<Appointment> appointments) =>
-        from a in appointments
-        join s in db.StaffMembers on a.StaffId equals s.Id
-        join c in db.Customers on a.CustomerId equals c.Id
-        select new AppointmentDto(
-            a.Id,
-            a.Status,
-            a.Source,
-            a.StartUtc,
-            a.EndUtc,
-            a.ServiceName,
-            a.PriceCents,
-            a.PriceIsFrom,
-            a.Currency,
-            new AppointmentStaffDto(s.Id, s.DisplayName, s.Color),
-            new AppointmentCustomerDto(c.Name, c.Email, c.Phone),
-            a.CustomerNote,
-            a.InternalNote,
-            a.ExpiresAtUtc,
-            a.CreatedAtUtc,
-            Array.Empty<AppointmentStatus>());
+    private static AppointmentDto WithNextStates(AppointmentDto dto) => AppointmentProjection.WithNextStates(dto);
 }

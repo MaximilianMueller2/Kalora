@@ -168,6 +168,16 @@
         "{name} aşağıdaki randevuyu iptal etti. Saat yeniden boş."
       ],
       "button": "Takvimi aç"
+    },
+    "booking.rescheduled": {
+      "subject": "{salon} randevunuz taşındı",
+      "heading": "Randevu taşındı",
+      "intro": [
+        "Merhaba {name},",
+        "{salon} randevunuzu taşımak zorunda kaldı. Yeni zaman aşağıda; ekteki dosya takviminizi günceller."
+      ],
+      "button": "Randevuyu yönet",
+      "reasonLine": "Salonun notu: {reason}"
     }
   }
 }

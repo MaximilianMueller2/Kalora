@@ -19,7 +19,7 @@ internal sealed class CalendarAttachments(ICalendarFileService files, IOptions<M
     {
         var method = type switch
         {
-            EmailTypes.BookingConfirmed => CalendarMethod.Publish,
+            EmailTypes.BookingConfirmed or EmailTypes.BookingRescheduled => CalendarMethod.Publish,
             EmailTypes.BookingCancelledByCustomer or EmailTypes.BookingCancelledBySalon => CalendarMethod.Cancel,
             _ => (CalendarMethod?)null,
         };

@@ -168,6 +168,16 @@
         "{name} hat folgenden Termin storniert. Die Zeit ist wieder frei."
       ],
       "button": "Kalender öffnen"
+    },
+    "booking.rescheduled": {
+      "subject": "Dein Termin bei {salon} wurde verschoben",
+      "heading": "Termin verschoben",
+      "intro": [
+        "Hallo {name},",
+        "{salon} musste deinen Termin leider verschieben. Der neue Termin steht unten; die angehängte Datei aktualisiert deinen Kalender."
+      ],
+      "button": "Termin verwalten",
+      "reasonLine": "Hinweis des Salons: {reason}"
     }
   }
 }

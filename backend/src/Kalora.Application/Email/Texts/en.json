@@ -168,6 +168,16 @@
         "{name} cancelled the following appointment. The time is free again."
       ],
       "button": "Open calendar"
+    },
+    "booking.rescheduled": {
+      "subject": "Your appointment at {salon} has been moved",
+      "heading": "Appointment moved",
+      "intro": [
+        "Hello {name},",
+        "{salon} had to move your appointment. The new time is below; the attached file updates your calendar."
+      ],
+      "button": "Manage appointment",
+      "reasonLine": "Note from the salon: {reason}"
     }
   }
 }

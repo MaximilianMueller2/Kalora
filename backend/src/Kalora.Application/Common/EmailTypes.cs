@@ -27,6 +27,7 @@ public static class EmailTypes
 
     /// <summary>To the customer: the salon called the appointment off.</summary>
     public const string BookingCancelledBySalon = "booking.cancelled_by_salon";
+    public const string BookingRescheduled = "booking.rescheduled";
 
     /// <summary>To the customer: shortly before the appointment.</summary>
     public const string BookingReminder = "booking.reminder";
