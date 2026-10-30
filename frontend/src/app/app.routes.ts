@@ -50,6 +50,12 @@ export const routes: Routes = [
         () => import('./features/requests/requests-page').then((m) => m.RequestsPage),
         'requests',
       ),
+      // Direct link from the "new request" mail: the same page, with the card of this request in view.
+      areaRoute(
+        'requests/:id',
+        () => import('./features/requests/requests-page').then((m) => m.RequestsPage),
+        'requests',
+      ),
       areaRoute(
         'services',
         () => import('./features/services/services-page').then((m) => m.ServicesPage),

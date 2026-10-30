@@ -259,6 +259,30 @@ Termine lassen sich als iCalendar-Datei (.ics) in iPhone, Android, Outlook & Co.
 - **Öffentlicher Endpunkt** `GET /api/public/appointments/{token}/calendar.ics` (ohne Login, Rate-Limit „Lesen“, `Cache-Control: no-store`, Dateiname `appointment.ics`): Der Token ist die einzige Berechtigung. Gesucht wird über seinen Hash in allen Salons (`AppointmentCalendarService`, in der Architektur-Testliste). Unbekannter Token und gesperrter oder gekündigter Salon ⇒ `404 appointment.not_found`; offene, abgelehnte und abgelaufene Anfragen ⇒ `409 appointment.calendar_unavailable`; bestätigt (auch erschienen / nicht erschienen) ⇒ `PUBLISH`; storniert ⇒ `CANCEL`.
 - **Frontend:** Die Erfolgsseite der Buchung zeigt bei bestätigtem Termin „Kalenderdatei (.ics)“ (Link auf den Endpunkt), „Zu Google Kalender hinzufügen“ und „Zu Outlook hinzufügen“.
 
+## Terminstatus und Anfragen
+
+**Statusautomat** (`AppointmentStatusRules` in der Domain, reine Regeln; `Appointment.TryMoveTo` setzt Status und Zeitstempel):
+
+| Von | Erlaubt nach |
+|-----|--------------|
+| `Requested` | `Confirmed`, `Declined`, `Expired`, `Cancelled` |
+| `Confirmed` | `Cancelled`, `Completed`, `NoShow` |
+| `Declined`, `Expired`, `Cancelled`, `Completed`, `NoShow` | nichts (Endzustände) |
+
+Nur `Requested` und `Confirmed` halten die Zeit (Exclusion-Constraint); jeder andere Status gibt sie sofort frei. Eine unerlaubte Bewegung ist `409 appointment.invalid_transition`. `Requested → Cancelled` (Rücknahme einer Anfrage, z. B. durch die Kundschaft) ist die einzige Ergänzung zu den sechs Übergängen des Konzepts.
+
+**`IAppointmentService`** (`/api/appointments`, Richtlinie `SalonMember`): offene Anfragen (die dringendste zuerst), deren Anzahl, „Termine ohne Ergebnis“ (bestätigt, vorbei, nicht markiert; abgeleitet per Abfrage, nichts wird gespeichert), ein Termin, annehmen, ablehnen und stornieren (jeweils mit optionalem Grund bis 500 Zeichen), erschienen, nicht erschienen.
+
+- **Rechte:** Inhaber:in und Manager:innen sehen und ändern alle Termine des Salons, Mitarbeitende nur die mit ihrem eigenen Team-Profil; alles andere ist für sie `404 appointment.not_found`.
+- **Regeln:** Annehmen nur, solange die Antwortzeit läuft (`409 appointment.request_expired`); „erschienen / nicht erschienen“ erst ab Terminbeginn (`422 appointment.not_started`).
+- **Mails** (in derselben Transaktion in die Outbox): annehmen ⇒ `booking.confirmed` (mit .ics), ablehnen ⇒ `booking.declined` (mit Grund), stornieren ⇒ `booking.cancelled_by_salon` (mit Grund und Absage-.ics). Die Nutzlast baut für alle Kundenmails derselbe `AppointmentMails`.
+- **AuditLog:** jede Änderung als `appointment.confirmed|declined|cancelled|completed|no_show|expired` mit handelnder Person (beim Scheduler leer) und Details `{from, to, hasReason}`; der Grund selbst steht dort nicht, weil er Namen enthalten kann.
+- **Gleichzeitigkeit:** `xmin` (PostgreSQL-Zeilenversion) ist das Concurrency-Token der Termine. Antworten zwei Personen oder die Person und der Scheduler im selben Moment, gewinnt die erste, die zweite bekommt `409 appointment.invalid_transition`, und es geht nur eine Mail raus.
+
+**Scheduler** (`AppointmentSchedulerWorker` ruft `IAppointmentScheduler` alle `Scheduler:IntervalMinutes` = 5 Minuten; nur wenn `Scheduler:Enabled`, in genau einer Instanz): (1) offene Anfragen mit abgelaufener `ExpiresAtUtc` ⇒ `Expired`, Audit, Mail `booking.expired`; (2) Erinnerung `booking.reminder` `Scheduler:ReminderHoursBefore` = 24 Stunden vor bestätigten Terminen, einmal (`ReminderSentAtUtc`); wer erst innerhalb der letzten 24 Stunden bestätigt wurde, bekommt keine, die Bestätigung ist die Erinnerung. Je Lauf höchstens `Scheduler:BatchSize` = 100 Termine je Aufgabe, bei vollem Stapel folgt sofort der nächste Lauf. Der Scheduler liest alle Salons (ohne Tenant; in der Architektur-Testliste).
+
+**Frontend** (`features/requests`, Route `/app/requests` und `/app/requests/:id` für den Link aus der Mail): offene Anfragen als gestrichelte Karten mit Leistung, Zeit im Salon-Zeitzone, Person, Kunde (Telefon und E-Mail als Links), Nachricht und Restzeit bis zum Ablauf (dringend unter 2 Stunden, bei „Zeit abgelaufen“ ist Annehmen gesperrt). „Annehmen“ und „Ablehnen“ (mit Dialog für den optionalen Grund) blenden die Karte sofort aus und zeigen eine Snackbar mit „Rückgängig“; **die Anfrage geht erst an den Server, wenn die Snackbar ohne Rückgängig verschwindet** (6 Sekunden) oder die Seite verlassen wird. So braucht es keinen Rückwärts-Übergang im Statusautomaten. Das Badge in der Navigation (`OpenRequestsBadge`) fragt jede Minute die Anzahl ab (still, ohne Fehlermeldungen) und zeigt „99+“ ab 100.
+
 ## Offene Abschnitte
 
-Statusautomat, Erinnerungs- und Ablauf-Hintergrunddienste, Verwaltungsseite hinter dem Token.
+Verfügbarkeitsberechnung im Detail (Mermaid), Verwaltungsseite hinter dem Token, Verschieben von Terminen.

@@ -1,4 +1,5 @@
 using FluentValidation;
+using Kalora.Application.Appointments;
 using Kalora.Application.Auth;
 using Kalora.Application.Availability;
 using Kalora.Application.Calendar;
@@ -30,6 +31,10 @@ public static class DependencyInjection
             .BindConfiguration(MailOptions.SectionName)
             .ValidateOnStart();
         services.TryAddSingleton<IValidateOptions<MailOptions>, MailOptionsValidator>();
+        services.AddOptions<SchedulerOptions>()
+            .BindConfiguration(SchedulerOptions.SectionName)
+            .ValidateOnStart();
+        services.TryAddSingleton<IValidateOptions<SchedulerOptions>, SchedulerOptionsValidator>();
         services.AddSingleton<IManageTokens, ManageTokens>();
         services.AddSingleton<IEmailRenderer, EmailRenderer>();
         services.AddSingleton<CalendarAttachments>();
@@ -62,8 +67,12 @@ public static class DependencyInjection
         services.AddSingleton<IValidator<CreateAbsenceRequest>, CreateAbsenceRequestValidator>();
         services.AddSingleton<IValidator<CreateAppointmentRequest>, CreateAppointmentRequestValidator>();
         services.AddScoped<IPublicSalonService, PublicSalonService>();
+        services.AddScoped<AppointmentMails>();
         services.AddScoped<IBookingService, BookingService>();
         services.AddScoped<IAppointmentCalendarService, AppointmentCalendarService>();
+        services.AddScoped<IAppointmentService, AppointmentService>();
+        services.AddScoped<IAppointmentScheduler, AppointmentScheduler>();
+        services.AddSingleton<IValidator<ReasonRequest>, ReasonRequestValidator>();
         services.AddScoped<IAvailabilityService, AvailabilityService>();
         services.AddScoped<IStaffService, StaffManagementService>();
         services.AddScoped<IStaffScheduleService, StaffScheduleService>();

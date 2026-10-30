@@ -16,7 +16,8 @@
     "team": "Team",
     "settings": "Einstellungen",
     "logout": "Abmelden",
-    "absences": "Abwesenheiten"
+    "absences": "Abwesenheiten",
+    "openRequests": "Offene Anfragen: {{count}}"
   },
   "theme": {
     "system": "Darstellung: wie Gerät",
@@ -135,7 +136,12 @@
       "range_invalid": "Dieser Zeitraum ist ungültig.",
       "month_invalid": "Dieser Monat ist ungültig."
     },
-    "rate_limited": "Zu viele Anfragen. Bitte warte einen Moment."
+    "rate_limited": "Zu viele Anfragen. Bitte warte einen Moment.",
+    "appointment.not_found": "Diesen Termin gibt es nicht (mehr).",
+    "appointment.invalid_transition": "Der Termin wurde inzwischen schon anders bearbeitet.",
+    "appointment.request_expired": "Die Zeit zum Antworten ist abgelaufen. Die Anfrage kann nicht mehr angenommen werden.",
+    "appointment.not_started": "Der Termin hat noch nicht begonnen.",
+    "appointment.calendar_unavailable": "Für diesen Termin gibt es noch keine Kalenderdatei."
   },
   "title": {
     "login": "Anmelden",

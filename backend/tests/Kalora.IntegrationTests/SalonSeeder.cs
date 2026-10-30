@@ -79,4 +79,41 @@ internal sealed class SalonSeeder(string connectionString, Guid salonId)
         await db.SaveChangesAsync();
         return staff;
     });
+
+    /// <summary>An appointment of a new customer, straight in the database (no availability check, no mails).</summary>
+    public Task<Kalora.Domain.Appointments.Appointment> AddAppointmentAsync(
+        Service service,
+        StaffMember staff,
+        DateTimeOffset start,
+        Kalora.Domain.Appointments.AppointmentStatus status = Kalora.Domain.Appointments.AppointmentStatus.Requested,
+        DateTimeOffset? expiresAt = null,
+        int minutes = 60,
+        string customerName = "Kim Kundin",
+        string language = "de") => WithDbAsync(async db =>
+    {
+        var customer = new Kalora.Domain.Customers.Customer { Name = customerName, Email = $"kim-{Guid.NewGuid():N}@example.com", Phone = "+49 170 1234567", PreferredLanguage = language };
+        db.Customers.Add(customer);
+        var appointment = new Kalora.Domain.Appointments.Appointment
+        {
+            StaffId = staff.Id,
+            ServiceId = service.Id,
+            CustomerId = customer.Id,
+            StartUtc = start,
+            EndUtc = start.AddMinutes(minutes),
+            BlockedStartUtc = start,
+            BlockedEndUtc = start.AddMinutes(minutes),
+            Status = status,
+            Source = Kalora.Domain.Appointments.AppointmentSource.Online,
+            Language = language,
+            ServiceName = service.Name,
+            DurationMinutes = minutes,
+            PriceCents = 4500,
+            CustomerNote = "Bitte ohne Föhn",
+            ExpiresAtUtc = status == Kalora.Domain.Appointments.AppointmentStatus.Requested ? expiresAt ?? start.AddHours(-2) : null,
+        };
+        appointment.ManageTokenHash = Kalora.Application.Security.TokenHasher.Hash(appointment.Id.ToString("N"));
+        db.Appointments.Add(appointment);
+        await db.SaveChangesAsync();
+        return appointment;
+    });
 }

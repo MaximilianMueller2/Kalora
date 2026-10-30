@@ -231,6 +231,10 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("price_is_from");
 
+                    b.Property<DateTimeOffset?>("ReminderSentAtUtc")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("reminder_sent_at_utc");
+
                     b.Property<Guid>("SalonId")
                         .IsConcurrencyToken()
                         .HasColumnType("uuid")
@@ -269,6 +273,12 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                     b.Property<DateTimeOffset>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at_utc");
+
+                    b.Property<uint>("xmin")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("xid")
+                        .HasColumnName("xmin");
 
                     b.HasKey("Id")
                         .HasName("pk_appointments");

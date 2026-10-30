@@ -70,4 +70,42 @@ public class Appointment : Entity, ISalonOwned
     public DateTimeOffset? CompletedAtUtc { get; set; }
 
     public DateTimeOffset? NoShowAtUtc { get; set; }
+
+    /// <summary>When the reminder mail was queued; set once, so the scheduler never sends it twice.</summary>
+    public DateTimeOffset? ReminderSentAtUtc { get; set; }
+
+    /// <summary>Moves to <paramref name="to"/> if the status rules allow it and records when. Returns false and changes nothing otherwise.</summary>
+    public bool TryMoveTo(AppointmentStatus to, DateTimeOffset now)
+    {
+        if (!AppointmentStatusRules.CanMove(Status, to))
+        {
+            return false;
+        }
+
+        Status = to;
+        switch (to)
+        {
+            case AppointmentStatus.Confirmed:
+                ConfirmedAtUtc = now;
+                ExpiresAtUtc = null;
+                break;
+            case AppointmentStatus.Declined:
+                DeclinedAtUtc = now;
+                break;
+            case AppointmentStatus.Expired:
+                ExpiredAtUtc = now;
+                break;
+            case AppointmentStatus.Cancelled:
+                CancelledAtUtc = now;
+                break;
+            case AppointmentStatus.Completed:
+                CompletedAtUtc = now;
+                break;
+            case AppointmentStatus.NoShow:
+                NoShowAtUtc = now;
+                break;
+        }
+
+        return true;
+    }
 }

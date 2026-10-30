@@ -23,12 +23,15 @@ describe('routes', () => {
       'dashboard',
       'calendar',
       'requests',
+      'requests/:id',
       'services',
       'absences',
       'settings',
     ]);
     for (const page of pages) {
-      expect(page.title).toBe(page.path === 'onboarding' ? 'title.onboarding' : `nav.${page.path}`);
+      expect(page.title).toBe(
+        page.path === 'onboarding' ? 'title.onboarding' : `nav.${page.path?.split('/')[0]}`,
+      );
       expect(page.providers).toHaveLength(1);
     }
   });

@@ -1,4 +1,5 @@
 using FluentValidation;
+using Kalora.Application.Appointments;
 using Kalora.Application.Auth;
 using Kalora.Application.Availability;
 using Kalora.Application.Common;
@@ -21,6 +22,7 @@ internal sealed class BookingService(
     IValidator<CreateAppointmentRequest> validator,
     IOptions<AppOptions> appOptions,
     IManageTokens manageTokens,
+    AppointmentMails mails,
     TimeProvider timeProvider) : IBookingService
 {
     public const int MaxOpenRequestsPerEmail = 3;
@@ -147,37 +149,18 @@ internal sealed class BookingService(
         }
 
         db.Appointments.Add(appointment);
-        await QueueEmailsAsync(salon, appointment, staff.DisplayName, customerEntity, token, cancellationToken);
+        await QueueEmailsAsync(salon, appointment, staff.DisplayName, customerEntity, cancellationToken);
         await db.SaveChangesAsync(cancellationToken);
         await transaction.CommitAsync(cancellationToken);
 
         return new BookingReceipt(appointment.Status, start, end, service.Name, staff.DisplayName, token, appointment.ExpiresAtUtc);
     }
 
-    private async Task QueueEmailsAsync(Salon salon, Appointment appointment, string staffName, Customer customer, string token, CancellationToken cancellationToken)
+    private async Task QueueEmailsAsync(Salon salon, Appointment appointment, string staffName, Customer customer, CancellationToken cancellationToken)
     {
         var baseUrl = appOptions.Value.PublicBaseUrl;
         var confirmed = appointment.Status == AppointmentStatus.Confirmed;
-        var manageUrl = AppLinks.ManageAppointment(baseUrl, salon.Slug, token);
-
-        outbox.Enqueue(salon.Id, customer.Email!, confirmed ? EmailTypes.BookingConfirmed : EmailTypes.BookingRequestReceived, appointment.Language, new
-        {
-            AppointmentId = appointment.Id,
-            appointment.CalendarSequence,
-            StampUtc = timeProvider.GetUtcNow(),
-            SalonName = salon.Name,
-            SalonAddress = SalonAddressText.Format(salon),
-            SalonPhone = salon.Phone,
-            appointment.ServiceName,
-            StaffName = staffName,
-            appointment.StartUtc,
-            appointment.EndUtc,
-            salon.TimeZone,
-            CustomerName = customer.Name,
-            RespondByUtc = appointment.ExpiresAtUtc,
-            ManageUrl = manageUrl,
-            BookingUrl = AppLinks.Booking(baseUrl, salon.Slug),
-        });
+        mails.QueueForCustomer(confirmed ? EmailTypes.BookingConfirmed : EmailTypes.BookingRequestReceived, salon, appointment, staffName, customer);
 
         // The owners and managers, and the person the appointment is with if they have a login.
         var staffUserId = await db.StaffMembers.Where(s => s.Id == appointment.StaffId).Select(s => s.UserId).FirstAsync(cancellationToken);

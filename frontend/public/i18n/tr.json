@@ -16,7 +16,8 @@
     "team": "Ekip",
     "settings": "Ayarlar",
     "logout": "Çıkış yap",
-    "absences": "İzinler"
+    "absences": "İzinler",
+    "openRequests": "Açık talepler: {{count}}"
   },
   "theme": {
     "system": "Görünüm: cihaza göre",
@@ -135,7 +136,12 @@
       "range_invalid": "Bu aralık geçersiz.",
       "month_invalid": "Bu ay geçersiz."
     },
-    "rate_limited": "Çok fazla istek. Lütfen biraz bekleyin."
+    "rate_limited": "Çok fazla istek. Lütfen biraz bekleyin.",
+    "appointment.not_found": "Bu randevu yok (artık).",
+    "appointment.invalid_transition": "Bu randevu bu arada başka şekilde işlendi.",
+    "appointment.request_expired": "Yanıt süresi doldu. Talep artık kabul edilemez.",
+    "appointment.not_started": "Bu randevu henüz başlamadı.",
+    "appointment.calendar_unavailable": "Bu randevu için henüz bir takvim dosyası yok."
   },
   "title": {
     "login": "Giriş yap",

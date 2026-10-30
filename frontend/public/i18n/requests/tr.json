@@ -1,4 +1,27 @@
 {
   "title": "Talepler",
-  "placeholder": "Burada yeni randevu taleplerini tek dokunuşla kabul eder veya reddedersin."
+  "lead": "Yeni randevu taleplerini tek dokunuşla kabul edin veya reddedin.",
+  "loadFailed": "Talepler yüklenemedi.",
+  "alreadyHandled": "Bu talep artık açık değil.",
+  "empty": {
+    "title": "Açık talep yok",
+    "text": "Yeni talepler burada ve e-posta ile görünür."
+  },
+  "remaining": "{{time}} kaldı",
+  "overdue": "Süre doldu",
+  "when": "Ne zaman",
+  "person": "Kiminle",
+  "customer": "Müşteri",
+  "note": "Mesaj",
+  "confirm": "Kabul et",
+  "declineAction": "Reddet",
+  "confirmed": "Randevu kabul edildi",
+  "declined": "Talep reddedildi",
+  "undo": "Geri al",
+  "decline": {
+    "title": "Talebi reddet",
+    "lead": "Müşteriye e-posta gider. İsterseniz bir gerekçe ekleyebilirsiniz.",
+    "reason": "Gerekçe (isteğe bağlı)",
+    "confirm": "Reddet"
+  }
 }

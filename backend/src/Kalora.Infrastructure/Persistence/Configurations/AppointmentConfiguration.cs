@@ -23,6 +23,9 @@ internal sealed class AppointmentConfiguration : IEntityTypeConfiguration<Appoin
         builder.Property(a => a.ManageTokenHash).HasMaxLength(64);
         builder.Property(a => a.CalendarSequence).HasDefaultValue(0);
 
+        // PostgreSQL's row version: two people answering the same request at once cannot both succeed.
+        builder.Property<uint>("xmin").HasColumnType("xid").ValueGeneratedOnAddOrUpdate().IsConcurrencyToken();
+
         // Shadow column kept out of the domain model: the range the exclusion constraint operates on.
         builder.Property<NpgsqlRange<DateTime>>("BlockedRange")
             .HasColumnType("tstzrange")

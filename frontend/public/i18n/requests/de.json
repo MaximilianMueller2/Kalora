@@ -1,4 +1,27 @@
 {
   "title": "Anfragen",
-  "placeholder": "Hier nimmst du neue Terminanfragen mit einem Tipp an oder lehnst sie ab."
+  "lead": "Neue Terminanfragen nimmst du mit einem Tipp an oder lehnst sie ab.",
+  "loadFailed": "Die Anfragen konnten nicht geladen werden.",
+  "alreadyHandled": "Diese Anfrage ist nicht mehr offen.",
+  "empty": {
+    "title": "Keine offenen Anfragen",
+    "text": "Neue Anfragen erscheinen hier und per E-Mail."
+  },
+  "remaining": "Noch {{time}}",
+  "overdue": "Zeit abgelaufen",
+  "when": "Wann",
+  "person": "Bei",
+  "customer": "Kunde",
+  "note": "Nachricht",
+  "confirm": "Annehmen",
+  "declineAction": "Ablehnen",
+  "confirmed": "Termin angenommen",
+  "declined": "Anfrage abgelehnt",
+  "undo": "Rückgängig",
+  "decline": {
+    "title": "Anfrage ablehnen",
+    "lead": "Der Kunde bekommt eine E-Mail. Du kannst einen Grund dazuschreiben.",
+    "reason": "Grund (optional)",
+    "confirm": "Ablehnen"
+  }
 }

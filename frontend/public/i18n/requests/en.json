@@ -1,4 +1,27 @@
 {
   "title": "Requests",
-  "placeholder": "Here you accept or decline new appointment requests with a tap."
+  "lead": "Accept new appointment requests with one tap, or decline them.",
+  "loadFailed": "The requests could not be loaded.",
+  "alreadyHandled": "This request is no longer open.",
+  "empty": {
+    "title": "No open requests",
+    "text": "New requests appear here and by e-mail."
+  },
+  "remaining": "{{time}} left",
+  "overdue": "Time is up",
+  "when": "When",
+  "person": "With",
+  "customer": "Customer",
+  "note": "Message",
+  "confirm": "Accept",
+  "declineAction": "Decline",
+  "confirmed": "Appointment accepted",
+  "declined": "Request declined",
+  "undo": "Undo",
+  "decline": {
+    "title": "Decline request",
+    "lead": "The customer gets an e-mail. You can add a reason.",
+    "reason": "Reason (optional)",
+    "confirm": "Decline"
+  }
 }

@@ -1,0 +1,90 @@
+<header class="head">
+  <h1>{{ 'requests.title' | transloco }}</h1>
+  <p class="lead">{{ 'requests.lead' | transloco }}</p>
+</header>
+
+@if (missingTarget()) {
+  <p class="notice" role="status">{{ 'requests.alreadyHandled' | transloco }}</p>
+}
+
+@if (loading()) {
+  <div class="cards" aria-busy="true">
+    @for (placeholder of [1, 2]; track placeholder) {
+      <div class="card skeleton" aria-hidden="true"></div>
+    }
+  </div>
+} @else if (failed()) {
+  <p class="notice error" role="alert">{{ 'requests.loadFailed' | transloco }}</p>
+} @else if (cards().length === 0) {
+  <div class="empty">
+    <mat-icon aria-hidden="true">inbox</mat-icon>
+    <h2>{{ 'requests.empty.title' | transloco }}</h2>
+    <p>{{ 'requests.empty.text' | transloco }}</p>
+  </div>
+} @else {
+  <ul class="cards">
+    @for (card of cards(); track card.request.id) {
+      <li
+        class="card"
+        [id]="'request-' + card.request.id"
+        tabindex="-1"
+        [class.highlight]="card.request.id === id()"
+        [class.urgent]="card.minutesLeft !== null && card.minutesLeft <= urgentMinutes"
+      >
+        <div class="top">
+          <h2>{{ card.request.serviceName }}</h2>
+          @if (card.minutesLeft !== null) {
+            <span class="chip" [class.over]="card.minutesLeft <= 0">
+              <mat-icon aria-hidden="true">timer</mat-icon>
+              @if (card.minutesLeft > 0) {
+                {{ 'requests.remaining' | transloco: { time: remaining(card.minutesLeft) } }}
+              } @else {
+                {{ 'requests.overdue' | transloco }}
+              }
+            </span>
+          }
+        </div>
+        <dl>
+          <dt>{{ 'requests.when' | transloco }}</dt>
+          <dd>{{ card.when }}</dd>
+          <dt>{{ 'requests.person' | transloco }}</dt>
+          <dd>
+            <span
+              class="dot"
+              [style.background]="card.request.staff.color"
+              aria-hidden="true"
+            ></span>
+            {{ card.request.staff.displayName }}
+          </dd>
+          <dt>{{ 'requests.customer' | transloco }}</dt>
+          <dd>
+            {{ card.request.customer.name }}
+            @if (phone(card.request); as number) {
+              <a class="contact" [href]="'tel:' + number">{{ number }}</a>
+            }
+            @if (card.request.customer.email; as mail) {
+              <a class="contact" [href]="'mailto:' + mail">{{ mail }}</a>
+            }
+          </dd>
+          @if (card.request.customerNote; as note) {
+            <dt>{{ 'requests.note' | transloco }}</dt>
+            <dd class="note">{{ note }}</dd>
+          }
+        </dl>
+        <div class="actions">
+          <button
+            mat-flat-button
+            type="button"
+            [disabled]="card.minutesLeft !== null && card.minutesLeft <= 0"
+            (click)="confirm(card.request)"
+          >
+            {{ 'requests.confirm' | transloco }}
+          </button>
+          <button mat-stroked-button type="button" (click)="decline(card.request)">
+            {{ 'requests.declineAction' | transloco }}
+          </button>
+        </div>
+      </li>
+    }
+  </ul>
+}
