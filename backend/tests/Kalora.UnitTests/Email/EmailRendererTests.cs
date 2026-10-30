@@ -42,13 +42,15 @@ public partial class EmailRendererTests
 
     private static Dictionary<string, object?> Payload(string customerName = "Kim Kundin") => new()
     {
+        ["AppointmentId"] = "0197a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b",
+        ["CalendarSequence"] = 0,
+        ["EndUtc"] = "2026-11-04T09:00:00+00:00",
         ["SalonName"] = "Haarwerk Müller",
         ["SalonAddress"] = "Hauptstraße 1, 10115 Berlin",
         ["SalonPhone"] = "+49 30 123456",
         ["ServiceName"] = "Färben",
         ["StaffName"] = "Anna",
         ["StartUtc"] = "2026-11-04T08:00:00+00:00",
-        ["EndUtc"] = "2026-11-04T09:00:00+00:00",
         ["TimeZone"] = "Europe/Berlin",
         ["CustomerName"] = customerName,
         ["CustomerEmail"] = "kim@example.com",
@@ -252,6 +254,76 @@ public partial class EmailRendererTests
 
         Assert.DoesNotContain("javascript:", mail.Html + mail.Text);
         Assert.Equal(0, Regex.Count(mail.Html, "class=\"button\""));
+    }
+
+    [Fact]
+    public void Only_the_confirmation_offers_web_calendar_links_and_names_the_attached_file()
+    {
+        foreach (var language in Languages)
+        {
+            var confirmed = Render(EmailTypes.BookingConfirmed, language);
+            var html = WebUtility.HtmlDecode(confirmed.Html);
+            var texts = EmailTexts.For(language);
+
+            foreach (var body in new[] { html, confirmed.Text })
+            {
+                Assert.Contains("https://calendar.google.com/calendar/render?action=TEMPLATE", body);
+                Assert.Contains("https://outlook.live.com/calendar/0/deeplink/compose", body);
+                Assert.Contains(texts.Layout["googleCalendar"], body);
+                Assert.Contains(texts.Layout["outlookCalendar"], body);
+                Assert.Contains(texts.Layout["calendarAttached"], body);
+            }
+
+            Assert.Equal(1, Regex.Count(confirmed.Html, "class=\"button\"")); // the calendar links are quiet text links
+
+            foreach (var other in AllTypes.Where(type => type != EmailTypes.BookingConfirmed))
+            {
+                var mail = Render(other, language);
+                Assert.DoesNotContain("calendar.google.com", mail.Html + mail.Text);
+                Assert.DoesNotContain("outlook.live.com", mail.Html + mail.Text);
+            }
+        }
+    }
+
+    [Fact]
+    public void The_google_link_is_prefilled_with_title_time_place_and_link()
+    {
+        var text = Render(EmailTypes.BookingConfirmed, "de").Text;
+
+        var url = Regex.Match(text, @"https://calendar\.google\.com\S+").Value;
+        var query = System.Web.HttpUtility.ParseQueryString(url[(url.IndexOf('?') + 1)..]);
+        Assert.Equal("TEMPLATE", query["action"]);
+        Assert.Equal("Färben – Haarwerk Müller", query["text"]);
+        Assert.Equal("20261104T080000Z/20261104T090000Z", query["dates"]);
+        Assert.Equal("Hauptstraße 1, 10115 Berlin", query["location"]);
+        Assert.Contains(ManageUrl, query["details"]);
+    }
+
+    [Fact]
+    public void The_outlook_link_is_prefilled_with_title_time_place_and_link()
+    {
+        var text = Render(EmailTypes.BookingConfirmed, "en").Text;
+
+        var url = Regex.Match(text, @"https://outlook\.live\.com\S+").Value;
+        var query = System.Web.HttpUtility.ParseQueryString(url[(url.IndexOf('?') + 1)..]);
+        Assert.Equal("addevent", query["rru"]);
+        Assert.Equal("Färben – Haarwerk Müller", query["subject"]);
+        Assert.Equal("2026-11-04T08:00:00Z", query["startdt"]);
+        Assert.Equal("2026-11-04T09:00:00Z", query["enddt"]);
+        Assert.Equal("Hauptstraße 1, 10115 Berlin", query["location"]);
+        Assert.Contains(ManageUrl, query["body"]);
+    }
+
+    [Fact]
+    public void Without_an_appointment_in_the_data_the_confirmation_has_no_calendar_part()
+    {
+        var payload = Payload();
+        payload.Remove("AppointmentId");
+
+        var mail = Render(EmailTypes.BookingConfirmed, "de", payload);
+
+        Assert.DoesNotContain("calendar.google.com", mail.Html + mail.Text);
+        Assert.DoesNotContain("Zum Kalender hinzufügen", mail.Text);
     }
 
     [Fact]

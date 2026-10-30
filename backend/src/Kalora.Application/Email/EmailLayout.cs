@@ -58,6 +58,17 @@ internal static class EmailLayout
             html.Append("<tr><td style=\"padding:16px 28px 0;font-size:14px;line-height:21px;color:#5f5b66;\">").Append(e(line)).Append("</td></tr>\n");
         }
 
+        if (c.Calendar is { } calendar)
+        {
+            html.Append("<tr><td style=\"padding:20px 28px 0;font-size:14px;line-height:22px;\">").Append(e(calendar.Heading)).Append("<br>");
+            foreach (var (label, url) in calendar.Links.Where(link => SafeUrl(link.Url) is not null))
+            {
+                html.Append("<a href=\"").Append(e(url)).Append("\" style=\"color:").Append(Accent).Append(";\">").Append(e(label)).Append("</a><br>");
+            }
+
+            html.Append("<span style=\"color:#5f5b66;font-size:13px;\">").Append(e(calendar.Note)).Append("</span></td></tr>\n");
+        }
+
         html.Append("<tr><td style=\"padding:24px 28px 24px;\"><div style=\"border-top:1px solid #e6e1ec;padding-top:16px;font-size:13px;line-height:20px;color:#5f5b66;\">\n");
         if (c.ManageLabel is not null && SafeUrl(c.ManageUrl) is { } manageUrl)
         {
@@ -96,6 +107,17 @@ internal static class EmailLayout
         foreach (var line in c.Outro)
         {
             text.AppendLine(line).AppendLine();
+        }
+
+        if (c.Calendar is { } calendar)
+        {
+            text.AppendLine(calendar.Heading);
+            foreach (var (label, url) in calendar.Links.Where(link => SafeUrl(link.Url) is not null))
+            {
+                text.Append(label).AppendLine(":").AppendLine(url);
+            }
+
+            text.AppendLine(calendar.Note).AppendLine();
         }
 
         text.AppendLine("--");

@@ -1,5 +1,7 @@
+using Kalora.Application.Calendar;
 using Kalora.Application.Common;
 using Kalora.Application.Email;
+using Kalora.Infrastructure.Calendar;
 using Kalora.Infrastructure.Mail;
 using Kalora.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +29,7 @@ public static class DependencyInjection
         services.AddScoped<IAppDbContext>(provider => provider.GetRequiredService<AppDbContext>());
         services.AddSingleton<ISlotConflictDetector, SlotConflictDetector>();
         services.AddSingleton<IEmailSender, MailKitEmailSender>();
+        services.AddSingleton<ICalendarFileService, IcalNetCalendarFileService>();
 
         return services;
     }

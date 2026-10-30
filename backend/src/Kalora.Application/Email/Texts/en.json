@@ -43,7 +43,12 @@
     "manageLink": "View or cancel your appointment:",
     "salonContact": "How to reach {salon}:",
     "automatic": "This e-mail was sent automatically. Please do not reply to it.",
-    "ignore": "If this was not you, you can ignore this e-mail."
+    "ignore": "If this was not you, you can ignore this e-mail.",
+    "calendarAdd": "Add to your calendar:",
+    "googleCalendar": "Add to Google Calendar",
+    "outlookCalendar": "Add to Outlook",
+    "calendarAttached": "The calendar file (.ics) is attached to this mail; on an iPhone it opens straight in Calendar.",
+    "calendarReminder": "Reminder: {service} at {salon}"
   },
   "mails": {
     "auth.confirm_email": {

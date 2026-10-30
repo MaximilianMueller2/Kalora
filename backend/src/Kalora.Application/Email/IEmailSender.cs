@@ -1,7 +1,9 @@
 namespace Kalora.Application.Email;
 
+public sealed record EmailAttachment(string FileName, string ContentType, byte[] Content);
+
 /// <param name="To">A single recipient.</param>
-public sealed record EmailMessage(string To, string Subject, string Html, string Text);
+public sealed record EmailMessage(string To, string Subject, string Html, string Text, IReadOnlyList<EmailAttachment>? Attachments = null);
 
 /// <summary>What happened to one attempt to deliver a mail.</summary>
 /// <param name="IsPermanent">Trying again will not help (the address does not exist, the message is invalid).</param>

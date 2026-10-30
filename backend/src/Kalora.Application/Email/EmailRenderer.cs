@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Text.Json;
+using Kalora.Application.Calendar;
 using Kalora.Application.Common;
 
 namespace Kalora.Application.Email;
@@ -63,8 +64,24 @@ internal sealed class EmailRenderer : IEmailRenderer
             texts.Layout["buttonFallback"],
             isCustomerMail ? texts.Layout["manageLink"] : null,
             isCustomerMail ? payload.Text("ManageUrl") : null,
-            Footer(type, isCustomerMail, payload, texts, values));
+            Footer(type, isCustomerMail, payload, texts, values),
+            type == EmailTypes.BookingConfirmed ? CalendarBlock(document.RootElement, language, texts) : null);
         return EmailLayout.Build(content);
+    }
+
+    /// <summary>"Add to Google Calendar / Outlook" links; the attached .ics file covers iPhone and everything else.</summary>
+    private static CalendarBlock? CalendarBlock(JsonElement root, string language, LanguageTexts texts)
+    {
+        if (CalendarSource.FromPayload(root, EmailTexts.ResolveLanguage(language)) is not { } source)
+        {
+            return null;
+        }
+
+        var entry = CalendarEntryFactory.Create(source, CalendarMethod.Publish, organizerEmail: null, attendeeEmail: null);
+        return new CalendarBlock(
+            texts.Layout["calendarAdd"],
+            [(texts.Layout["googleCalendar"], CalendarLinks.Google(entry)), (texts.Layout["outlookCalendar"], CalendarLinks.Outlook(entry))],
+            texts.Layout["calendarAttached"]);
     }
 
     private static string Brand(string type, Payload payload) =>

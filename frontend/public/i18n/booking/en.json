@@ -63,7 +63,11 @@
     "requestedText": "You will get an e-mail as soon as the salon confirms.",
     "confirmedTitle": "Appointment confirmed",
     "confirmedText": "We have sent you a confirmation by e-mail.",
-    "another": "Book another appointment"
+    "another": "Book another appointment",
+    "addToCalendar": "Add to your calendar",
+    "downloadIcs": "Calendar file (.ics)",
+    "googleCalendar": "Add to Google Calendar",
+    "outlookCalendar": "Add to Outlook"
   },
   "notFound": {
     "title": "Salon not found",

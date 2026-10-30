@@ -43,7 +43,12 @@
     "manageLink": "Termin ansehen oder stornieren:",
     "salonContact": "So erreichst du {salon}:",
     "automatic": "Diese E-Mail wurde automatisch verschickt. Bitte antworte nicht darauf.",
-    "ignore": "Wenn du das nicht warst, kannst du diese E-Mail ignorieren."
+    "ignore": "Wenn du das nicht warst, kannst du diese E-Mail ignorieren.",
+    "calendarAdd": "Zum Kalender hinzufügen:",
+    "googleCalendar": "Zu Google Kalender hinzufügen",
+    "outlookCalendar": "Zu Outlook hinzufügen",
+    "calendarAttached": "Die Termindatei (.ics) hängt an dieser Mail; auf dem iPhone öffnest du sie direkt.",
+    "calendarReminder": "Erinnerung: {service} bei {salon}"
   },
   "mails": {
     "auth.confirm_email": {

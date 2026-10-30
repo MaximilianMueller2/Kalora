@@ -50,6 +50,32 @@ public class MailMessageTests
     }
 
     [Fact]
+    public void A_calendar_file_is_attached_so_that_the_phone_can_open_it_directly()
+    {
+        var ics = System.Text.Encoding.UTF8.GetBytes("BEGIN:VCALENDAR\r\nEND:VCALENDAR\r\n");
+        var mime = MailMessageFactory.Create(Options, Message with { Attachments = [new EmailAttachment("appointment.ics", "text/calendar; method=PUBLISH; charset=utf-8", ics)] });
+
+        var attachment = Assert.Single(mime.Attachments.OfType<MimePart>());
+        Assert.Equal("text/calendar", attachment.ContentType.MimeType);
+        Assert.Equal("PUBLISH", attachment.ContentType.Parameters["method"]);
+        Assert.Equal("appointment.ics", attachment.FileName);
+        using var content = new MemoryStream();
+        attachment.Content!.DecodeTo(content);
+        Assert.Equal(ics, content.ToArray());
+        Assert.Contains("<b>Kim</b>", mime.HtmlBody);
+        Assert.Equal("Hallo Kim", mime.TextBody?.TrimEnd());
+    }
+
+    [Fact]
+    public void Mails_without_attachments_stay_plain_alternatives()
+    {
+        var mime = MailMessageFactory.Create(Options, Message);
+
+        Assert.Empty(mime.Attachments);
+        Assert.IsType<MultipartAlternative>(mime.Body);
+    }
+
+    [Fact]
     public void Mails_are_marked_as_automatic_so_auto_replies_stay_away()
     {
         var mime = MailMessageFactory.Create(Options, Message);

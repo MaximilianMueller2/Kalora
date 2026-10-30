@@ -1,6 +1,7 @@
 using FluentValidation;
 using Kalora.Application.Auth;
 using Kalora.Application.Availability;
+using Kalora.Application.Calendar;
 using Kalora.Application.Catalog;
 using Kalora.Application.Email;
 using Kalora.Application.PublicBooking;
@@ -31,6 +32,7 @@ public static class DependencyInjection
         services.TryAddSingleton<IValidateOptions<MailOptions>, MailOptionsValidator>();
         services.AddSingleton<IManageTokens, ManageTokens>();
         services.AddSingleton<IEmailRenderer, EmailRenderer>();
+        services.AddSingleton<CalendarAttachments>();
         services.AddScoped<IEmailOutboxProcessor, EmailOutboxProcessor>();
 
         services.AddScoped<TenantContext>();
@@ -61,6 +63,7 @@ public static class DependencyInjection
         services.AddSingleton<IValidator<CreateAppointmentRequest>, CreateAppointmentRequestValidator>();
         services.AddScoped<IPublicSalonService, PublicSalonService>();
         services.AddScoped<IBookingService, BookingService>();
+        services.AddScoped<IAppointmentCalendarService, AppointmentCalendarService>();
         services.AddScoped<IAvailabilityService, AvailabilityService>();
         services.AddScoped<IStaffService, StaffManagementService>();
         services.AddScoped<IStaffScheduleService, StaffScheduleService>();

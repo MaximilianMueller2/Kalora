@@ -15,7 +15,13 @@ public static class MailMessageFactory
         mime.Subject = message.Subject;
         mime.Headers.Add("Auto-Submitted", "auto-generated");
         mime.Headers.Add("X-Auto-Response-Suppress", "OOF, AutoReply");
-        mime.Body = new BodyBuilder { TextBody = message.Text, HtmlBody = message.Html }.ToMessageBody();
+        var body = new BodyBuilder { TextBody = message.Text, HtmlBody = message.Html };
+        foreach (var attachment in message.Attachments ?? [])
+        {
+            body.Attachments.Add(attachment.FileName, attachment.Content, ContentType.Parse(attachment.ContentType));
+        }
+
+        mime.Body = body.ToMessageBody();
         return mime;
     }
 }

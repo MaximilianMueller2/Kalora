@@ -505,6 +505,35 @@ describe('DoneStep', () => {
     expect(texts(fixture, '.lead')).toEqual(['booking.done.confirmedText']);
   });
 
+  it('offers the calendar file and the Google and Outlook links once the appointment is confirmed', async () => {
+    const { fixture } = await mount(DoneStep, undefined, (b) =>
+      b.receipt.set({ ...RECEIPT, status: 'Confirmed', respondByUtc: null }),
+    );
+
+    const links = qa<HTMLAnchorElement>(fixture, 'app-calendar-actions a');
+    expect(links.map((a) => plain(a.textContent ?? '').trim())).toEqual([
+      'download booking.done.downloadIcs',
+      'booking.done.googleCalendar',
+      'booking.done.outlookCalendar',
+    ]);
+    expect(links[0].getAttribute('href')).toBe(
+      '/api/public/appointments/secret-token/calendar.ics',
+    );
+    expect(links[0].hasAttribute('download')).toBe(true);
+    expect(links[1].href).toContain('https://calendar.google.com/calendar/render?action=TEMPLATE');
+    expect(links[2].href).toContain('https://outlook.live.com/calendar/0/deeplink/compose');
+    for (const external of links.slice(1)) {
+      expect(external.target).toBe('_blank');
+      expect(external.rel).toBe('noopener noreferrer');
+    }
+  });
+
+  it('does not offer the calendar while the request is still open', async () => {
+    const { fixture } = await mount(DoneStep, undefined, (b) => b.receipt.set(RECEIPT));
+
+    expect(qa(fixture, 'app-calendar-actions')).toHaveLength(0);
+  });
+
   it('starts a new booking at the salon', async () => {
     const { fixture, booking, navigate } = await mount(DoneStep, undefined, (b) => {
       withSlot(b);

@@ -47,6 +47,12 @@ public class Appointment : Entity, ISalonOwned
 
     public string? InternalNote { get; set; }
 
+    /// <summary>
+    /// Version of the calendar entry (iCalendar SEQUENCE): raised whenever the time changes, so calendars that
+    /// already hold the appointment replace it instead of adding a second one.
+    /// </summary>
+    public int CalendarSequence { get; set; }
+
     /// <summary>SHA-256 of the management link token; the token itself is never stored.</summary>
     public string? ManageTokenHash { get; set; }
 

@@ -19,6 +19,7 @@ Erlaubt: MIT, Apache-2.0, BSD-2/3, ISC, PostgreSQL, SIL OFL (Schriften). Regeln 
 | Microsoft.Extensions.DependencyInjection.Abstractions | 10.0.13 | MIT | DI-Registrierung in Application |
 | Microsoft.Extensions.Options | 10.0.13 | MIT | Options-Validierung |
 | Microsoft.Extensions.Logging.Abstractions | 10.0.13 | MIT | Logging im Mail-Prozessor (Application) |
+| Ical.Net | 5.2.3 | MIT | .ics-Dateien in Infrastructure (bringt NodaTime 3.2.2, Apache-2.0, mit: Zeitzonenregeln für VTIMEZONE) |
 | MailKit | 4.18.2 | MIT | SMTP-Versand in Infrastructure (bringt MimeKit 4.18.2, MIT, und BouncyCastle.Cryptography 2.7.0, MIT, mit) |
 | Microsoft.Extensions.Options.ConfigurationExtensions | 10.0.13 | MIT | Options an Konfiguration binden |
 | Microsoft.AspNetCore.Mvc.Testing | 10.0.13 | MIT | Integrationstests (Test) |
@@ -28,7 +29,7 @@ Erlaubt: MIT, Apache-2.0, BSD-2/3, ISC, PostgreSQL, SIL OFL (Schriften). Regeln 
 | xunit | 2.9.3 | Apache-2.0 | Testframework (Test) |
 | xunit.runner.visualstudio | 4.0.1 | Apache-2.0 | Test-Runner (Test) |
 
-Transitive Pakete stammen ausschließlich von Microsoft (MIT), Npgsql (PostgreSQL), Serilog (Apache-2.0), xUnit (Apache-2.0), Testcontainers (MIT), Docker.DotNet (MIT) und Scalar (MIT). Versionen stehen zentral in `backend/Directory.Packages.props`.
+Transitive Pakete stammen ausschließlich von Microsoft (MIT), NodaTime (Apache-2.0), Npgsql (PostgreSQL), Serilog (Apache-2.0), xUnit (Apache-2.0), Testcontainers (MIT), Docker.DotNet (MIT) und Scalar (MIT). Versionen stehen zentral in `backend/Directory.Packages.props`.
 
 ## Werkzeuge und Container-Images
 

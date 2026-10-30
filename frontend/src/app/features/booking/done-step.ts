@@ -13,12 +13,13 @@ import { Router } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { LocaleFormatService } from '../../core/i18n/locale-format.service';
 import { BookingService } from './booking.service';
+import { CalendarActions } from './calendar-actions';
 
 /** The receipt after booking: "request sent" while the salon still has to confirm, "confirmed" with automatic confirmation. */
 @Component({
   selector: 'app-done-step',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatIconModule, TranslocoPipe],
+  imports: [CalendarActions, MatButtonModule, MatIconModule, TranslocoPipe],
   styleUrl: './skeleton.scss',
   styles: `
     :host {
@@ -94,6 +95,9 @@ import { BookingService } from './booking.service';
         <dt>{{ 'booking.summary.when' | transloco }}</dt>
         <dd>{{ when() }}</dd>
       </dl>
+      @if (receipt.status === 'Confirmed' && booking.salon.hasValue()) {
+        <app-calendar-actions [receipt]="receipt" [salon]="booking.salon.value()" />
+      }
       <button mat-stroked-button type="button" (click)="another()">
         {{ 'booking.done.another' | transloco }}
       </button>

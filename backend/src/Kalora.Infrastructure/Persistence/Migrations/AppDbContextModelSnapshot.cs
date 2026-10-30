@@ -145,6 +145,12 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("blocked_start_utc");
 
+                    b.Property<int>("CalendarSequence")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0)
+                        .HasColumnName("calendar_sequence");
+
                     b.Property<DateTimeOffset?>("CancelledAtUtc")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("cancelled_at_utc");

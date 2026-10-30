@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Kalora.Application.Calendar;
 using Kalora.Application.Common;
 using Kalora.Application.Configuration;
 using Kalora.Domain.Messaging;
@@ -17,6 +18,7 @@ internal sealed partial class EmailOutboxProcessor(
     IAppDbContext db,
     IEmailRenderer renderer,
     IEmailSender sender,
+    CalendarAttachments calendar,
     IOptions<MailOptions> options,
     TimeProvider timeProvider,
     ILogger<EmailOutboxProcessor> logger) : IEmailOutboxProcessor
@@ -100,7 +102,9 @@ internal sealed partial class EmailOutboxProcessor(
         }
 
         mail.Subject = rendered.Subject;
-        var outcome = await sender.SendAsync(new EmailMessage(mail.ToEmail, rendered.Subject, rendered.Html, rendered.Text), cancellationToken);
+        var attachment = calendar.Build(mail.Type, mail.Language, mail.ToEmail, mail.PayloadJson);
+        var outcome = await sender.SendAsync(
+            new EmailMessage(mail.ToEmail, rendered.Subject, rendered.Html, rendered.Text, attachment is null ? null : [attachment]), cancellationToken);
         if (outcome.Succeeded)
         {
             mail.BodyHtml = rendered.Html;

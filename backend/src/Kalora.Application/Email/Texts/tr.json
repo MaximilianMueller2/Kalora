@@ -43,7 +43,12 @@
     "manageLink": "Randevunuzu görüntüleyin veya iptal edin:",
     "salonContact": "{salon} ile iletişim:",
     "automatic": "Bu e-posta otomatik olarak gönderildi. Lütfen yanıtlamayın.",
-    "ignore": "Bu işlemi siz yapmadıysanız bu e-postayı yok sayabilirsiniz."
+    "ignore": "Bu işlemi siz yapmadıysanız bu e-postayı yok sayabilirsiniz.",
+    "calendarAdd": "Takvimine ekle:",
+    "googleCalendar": "Google Takvim'e ekle",
+    "outlookCalendar": "Outlook'a ekle",
+    "calendarAttached": "Takvim dosyası (.ics) bu e-postaya ekli; iPhone'da doğrudan Takvim'de açılır.",
+    "calendarReminder": "Hatırlatma: {service} – {salon}"
   },
   "mails": {
     "auth.confirm_email": {

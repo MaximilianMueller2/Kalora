@@ -63,7 +63,11 @@
     "requestedText": "Salon onayladığında e-posta alacaksınız.",
     "confirmedTitle": "Randevu onaylandı",
     "confirmedText": "Size e-postayla bir onay gönderdik.",
-    "another": "Başka randevu al"
+    "another": "Başka randevu al",
+    "addToCalendar": "Takvimine ekle",
+    "downloadIcs": "Takvim dosyası (.ics)",
+    "googleCalendar": "Google Takvim'e ekle",
+    "outlookCalendar": "Outlook'a ekle"
   },
   "notFound": {
     "title": "Salon bulunamadı",

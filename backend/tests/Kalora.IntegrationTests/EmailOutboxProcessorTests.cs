@@ -1,9 +1,11 @@
 using System.Text.Json;
+using Kalora.Application.Calendar;
 using Kalora.Application.Common;
 using Kalora.Application.Configuration;
 using Kalora.Application.Email;
 using Kalora.Domain.Messaging;
 using Kalora.Domain.Salons;
+using Kalora.Infrastructure.Calendar;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
@@ -45,7 +47,7 @@ public class EmailOutboxProcessorTests(PostgresFixture postgres)
         {
             var db = TestDb.CreateContext(ConnectionString, Clock);
             var options = Options.Create(new MailOptions { FromAddress = "noreply@kalora.test", Worker = { BatchSize = BatchSize } });
-            return new EmailOutboxProcessor(db, new EmailRenderer(), Sender, options, Clock, NullLogger<EmailOutboxProcessor>.Instance);
+            return new EmailOutboxProcessor(db, new EmailRenderer(), Sender, new CalendarAttachments(new IcalNetCalendarFileService(), options), options, Clock, NullLogger<EmailOutboxProcessor>.Instance);
         }
 
         public async Task<Salon> AddSalonAsync(string name = "Haarwerk")
@@ -292,6 +294,91 @@ public class EmailOutboxProcessorTests(PostgresFixture postgres)
         var stored = await setup.ReloadAsync(stuck);
         Assert.Equal(EmailStatus.Sent, stored.Status);
         Assert.Equal(2, stored.Attempts);
+    }
+
+    private static string AppointmentPayload(Guid appointmentId, int sequence = 0) => JsonSerializer.Serialize(new
+    {
+        AppointmentId = appointmentId,
+        CalendarSequence = sequence,
+        StampUtc = Start,
+        SalonName = "Haarwerk",
+        SalonAddress = "Hauptstraße 1, 10115 Berlin",
+        ServiceName = "Färben",
+        StaffName = "Anna",
+        StartUtc = Start.AddDays(1),
+        EndUtc = Start.AddDays(1).AddHours(1),
+        TimeZone = "Europe/Berlin",
+        CustomerName = "Kim Kundin",
+        ManageUrl = "https://kalora.app/haarwerk/appointment/T",
+        BookingUrl = "https://kalora.app/haarwerk",
+    });
+
+    [Fact]
+    public async Task A_confirmation_carries_the_appointment_as_a_calendar_file()
+    {
+        var setup = await NewSetupAsync();
+        var appointmentId = Guid.NewGuid();
+        await setup.QueueAsync(await setup.AddSalonAsync(), payload: AppointmentPayload(appointmentId, sequence: 3));
+
+        await setup.Processor().ProcessDueAsync();
+
+        var attachment = Assert.Single(Assert.Single(setup.Sender.Sent).Attachments!);
+        Assert.Equal("appointment.ics", attachment.FileName);
+        Assert.Equal("text/calendar; method=PUBLISH; charset=utf-8", attachment.ContentType);
+        var ics = System.Text.Encoding.UTF8.GetString(attachment.Content);
+        Assert.Contains($"UID:{appointmentId}@kalora", ics);
+        Assert.Contains("SEQUENCE:3", ics);
+        Assert.Contains("METHOD:PUBLISH", ics);
+        Assert.Contains("DTSTART;TZID=Europe/Berlin:20261104T100000", ics);
+        Assert.Contains("ORGANIZER;CN=Haarwerk:mailto:noreply@kalora.test", ics);
+        Assert.DoesNotContain("ATTENDEE", ics);
+    }
+
+    [Theory]
+    [InlineData(EmailTypes.BookingCancelledByCustomer)]
+    [InlineData(EmailTypes.BookingCancelledBySalon)]
+    public async Task A_cancellation_carries_the_withdrawal_with_a_higher_sequence(string type)
+    {
+        var setup = await NewSetupAsync();
+        var appointmentId = Guid.NewGuid();
+        await setup.QueueAsync(await setup.AddSalonAsync(), type: type, payload: AppointmentPayload(appointmentId, sequence: 3));
+
+        await setup.Processor().ProcessDueAsync();
+
+        var attachment = Assert.Single(Assert.Single(setup.Sender.Sent).Attachments!);
+        Assert.Equal("text/calendar; method=CANCEL; charset=utf-8", attachment.ContentType);
+        var ics = System.Text.Encoding.UTF8.GetString(attachment.Content);
+        Assert.Contains($"UID:{appointmentId}@kalora", ics);
+        Assert.Contains("METHOD:CANCEL", ics);
+        Assert.Contains("SEQUENCE:4", ics);
+        Assert.Contains("ATTENDEE;CN=Kim Kundin:mailto:kim@example.com", ics);
+    }
+
+    [Theory]
+    [InlineData(EmailTypes.BookingRequestReceived)]
+    [InlineData(EmailTypes.BookingDeclined)]
+    [InlineData(EmailTypes.BookingExpired)]
+    [InlineData(EmailTypes.BookingReminder)]
+    public async Task Other_mails_have_no_attachment(string type)
+    {
+        var setup = await NewSetupAsync();
+        await setup.QueueAsync(await setup.AddSalonAsync(), type: type, payload: AppointmentPayload(Guid.NewGuid()));
+
+        await setup.Processor().ProcessDueAsync();
+
+        Assert.Null(Assert.Single(setup.Sender.Sent).Attachments);
+    }
+
+    [Fact]
+    public async Task A_confirmation_without_an_appointment_in_its_data_is_still_sent_without_a_file()
+    {
+        var setup = await NewSetupAsync();
+        await setup.QueueAsync(await setup.AddSalonAsync()); // the default payload has no AppointmentId
+
+        var result = await setup.Processor().ProcessDueAsync();
+
+        Assert.Equal(1, result.Sent);
+        Assert.Null(Assert.Single(setup.Sender.Sent).Attachments);
     }
 
     [Fact]

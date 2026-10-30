@@ -21,6 +21,7 @@ internal sealed class AppointmentConfiguration : IEntityTypeConfiguration<Appoin
         builder.Property(a => a.CustomerNote).HasMaxLength(2000);
         builder.Property(a => a.InternalNote).HasMaxLength(2000);
         builder.Property(a => a.ManageTokenHash).HasMaxLength(64);
+        builder.Property(a => a.CalendarSequence).HasDefaultValue(0);
 
         // Shadow column kept out of the domain model: the range the exclusion constraint operates on.
         builder.Property<NpgsqlRange<DateTime>>("BlockedRange")

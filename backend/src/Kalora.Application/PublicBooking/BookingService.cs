@@ -162,8 +162,11 @@ internal sealed class BookingService(
 
         outbox.Enqueue(salon.Id, customer.Email!, confirmed ? EmailTypes.BookingConfirmed : EmailTypes.BookingRequestReceived, appointment.Language, new
         {
+            AppointmentId = appointment.Id,
+            appointment.CalendarSequence,
+            StampUtc = timeProvider.GetUtcNow(),
             SalonName = salon.Name,
-            SalonAddress = Address(salon),
+            SalonAddress = SalonAddressText.Format(salon),
             SalonPhone = salon.Phone,
             appointment.ServiceName,
             StaffName = staffName,
@@ -203,12 +206,6 @@ internal sealed class BookingService(
                 RequestUrl = AppLinks.Request(baseUrl, appointment.Id),
             });
         }
-    }
-
-    private static string Address(Salon salon)
-    {
-        var city = string.Join(' ', new[] { salon.PostalCode, salon.City }.Where(part => !string.IsNullOrWhiteSpace(part)));
-        return string.Join(", ", new[] { salon.Street, city }.Where(part => !string.IsNullOrWhiteSpace(part)));
     }
 
     private static Result<BookingReceipt> LookAlikeReceipt(CreateAppointmentRequest request) =>

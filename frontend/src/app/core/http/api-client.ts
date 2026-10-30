@@ -54,6 +54,6 @@ export class ApiClient {
   }
 }
 
-function apiUrl(path: string): string {
+export function apiUrl(path: string): string {
   return `${API_PREFIX}${path.startsWith('/') ? path : `/${path}`}`;
 }

@@ -249,6 +249,16 @@ Jede Mail wird zuerst als Zeile in `email_outbox` gespeichert (mit `Type`, `Lang
 - **Datenschutz:** Fehlertexte des Servers werden von E-Mail-Adressen befreit und auf 500 Zeichen gekürzt, Logs nennen nur Mail-ID, Typ und Versuche.
 - **Konfiguration:** `Mail:FromAddress` (Pflicht), `Mail:FromName`, `Mail:Smtp:{Host,Port,Security,User,Password,TimeoutSeconds}`, `Mail:Worker:{Enabled,PollSeconds,BatchSize}` sowie `App:ManageTokenSecret` (mindestens 32 Zeichen, Geheimnis!). Ohne SMTP-Host startet die API nicht, solange der Dienst aktiv ist.
 
+## Kalender-Export
+
+Termine lassen sich als iCalendar-Datei (.ics) in iPhone, Android, Outlook & Co. übernehmen.
+
+- **Datei** (`ICalendarFileService`, Implementierung `IcalNetCalendarFileService` in Infrastructure mit Ical.Net): ein `VEVENT` mit **stabiler UID** `{appointmentId}@kalora`, Zeit in der **Zeitzone des Salons** samt `VTIMEZONE` (Regeln aus NodaTimes mitgelieferter tz-Datenbank, unabhängig vom Betriebssystem; unbekannte Zone ⇒ UTC), Ort = Salonadresse, Beschreibung mit Leistung, Person und Verwaltungslink (Sprache der Buchung), `ORGANIZER` = Absenderadresse der Mails, Erinnerung 2 Stunden vorher (`VALARM`). Bei gleichen Daten entsteht byte-gleich dieselbe Datei (`DTSTAMP` = letzte Änderung).
+- **Verschiebung und Absage:** `Appointment.CalendarSequence` (iCalendar `SEQUENCE`) wird bei jeder Zeitänderung erhöht; das Verschieben selbst folgt mit der Terminverwaltung. Eine Absage ist `METHOD:CANCEL`, `STATUS:CANCELLED`, dieselbe UID und `SEQUENCE + 1` (ohne Erinnerung, mit `ATTENDEE`), damit sie jeden gespeicherten Stand überholt.
+- **Mails:** `booking.confirmed` hängt `appointment.ics` an (`text/calendar; method=PUBLISH`, öffnet sich auf dem iPhone direkt), die beiden Absage-Mails hängen die Absage (`method=CANCEL`) an. Die Datei entsteht beim Versand aus der Nutzlast (`AppointmentId`, `CalendarSequence`, `StampUtc` und die Termindaten); fehlt die `AppointmentId`, geht die Mail ohne Datei raus. Die Bestätigung enthält außerdem vorbefüllte Links „Zu Google Kalender hinzufügen“ und „Zu Outlook hinzufügen“ (reine Textlinks, der eine Haupt-Button bleibt der einzige).
+- **Öffentlicher Endpunkt** `GET /api/public/appointments/{token}/calendar.ics` (ohne Login, Rate-Limit „Lesen“, `Cache-Control: no-store`, Dateiname `appointment.ics`): Der Token ist die einzige Berechtigung. Gesucht wird über seinen Hash in allen Salons (`AppointmentCalendarService`, in der Architektur-Testliste). Unbekannter Token und gesperrter oder gekündigter Salon ⇒ `404 appointment.not_found`; offene, abgelehnte und abgelaufene Anfragen ⇒ `409 appointment.calendar_unavailable`; bestätigt (auch erschienen / nicht erschienen) ⇒ `PUBLISH`; storniert ⇒ `CANCEL`.
+- **Frontend:** Die Erfolgsseite der Buchung zeigt bei bestätigtem Termin „Kalenderdatei (.ics)“ (Link auf den Endpunkt), „Zu Google Kalender hinzufügen“ und „Zu Outlook hinzufügen“.
+
 ## Offene Abschnitte
 
-Statusautomat, Erinnerungs- und Ablauf-Hintergrunddienste.
+Statusautomat, Erinnerungs- und Ablauf-Hintergrunddienste, Verwaltungsseite hinter dem Token.

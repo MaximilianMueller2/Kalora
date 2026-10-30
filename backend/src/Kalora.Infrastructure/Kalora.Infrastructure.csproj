@@ -8,6 +8,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Ical.Net" />
     <PackageReference Include="MailKit" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
@@ -15,5 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Kalora.UnitTests" />
+    <InternalsVisibleTo Include="Kalora.IntegrationTests" />
   </ItemGroup>
 </Project>
