@@ -1,0 +1,79 @@
+<section class="card" [attr.aria-label]="'dashboard.today.title' | transloco">
+  <h2>{{ 'dashboard.today.title' | transloco }}</h2>
+
+  @if (people().length === 0) {
+    <p class="empty">{{ 'dashboard.today.nobody' | transloco }}</p>
+  } @else {
+    <div class="timeline">
+      @for (row of rows(); track row.person.staffId) {
+        <div class="row" [style.--staff]="row.person.color">
+          <div class="who">
+            <span class="dot" aria-hidden="true"></span>
+            {{ row.person.displayName }}
+          </div>
+          <div class="track" aria-hidden="true">
+            @for (place of row.working; track place.left) {
+              <div class="work" [style.left.%]="place.left" [style.width.%]="place.width"></div>
+            }
+            @for (item of row.gaps; track item.gap.startUtc) {
+              <div
+                class="gap"
+                [style.left.%]="item.place.left"
+                [style.width.%]="item.place.width"
+                [attr.title]="gapText(item.gap.startUtc, item.gap.endUtc)"
+              ></div>
+            }
+            @for (item of row.appointments; track item.appointment.id) {
+              <div
+                class="slot"
+                [class.request]="item.appointment.status === 'Requested'"
+                [class.finished]="
+                  item.appointment.status === 'Completed' || item.appointment.status === 'NoShow'
+                "
+                [style.left.%]="item.place.left"
+                [style.width.%]="item.place.width"
+                [attr.title]="item.appointment.customerName + ' · ' + item.appointment.serviceName"
+              ></div>
+            }
+            @if (nowLeft(); as left) {
+              <div class="now" [style.left.%]="left"></div>
+            }
+          </div>
+          @if (row.free) {
+            <span class="off">{{ 'dashboard.today.off' | transloco }}</span>
+          }
+        </div>
+      }
+      <div class="marks" aria-hidden="true">
+        @for (mark of marks(); track mark.label) {
+          <span [style.left.%]="mark.left">{{ mark.label }}</span>
+        }
+      </div>
+    </div>
+
+    <ul class="legend" aria-hidden="true">
+      <li><span class="swatch gap"></span>{{ 'dashboard.today.gap' | transloco }}</li>
+      <li><span class="swatch request"></span>{{ 'dashboard.today.request' | transloco }}</li>
+    </ul>
+
+    <h3>{{ 'dashboard.today.next' | transloco }}</h3>
+    @if (upcoming().length === 0) {
+      <p class="empty">{{ 'dashboard.today.none' | transloco }}</p>
+    } @else {
+      <ul class="next">
+        @for (item of upcoming(); track item.id) {
+          <li [style.--staff]="item.person.color" [class.running]="item.running">
+            <span class="time">{{ item.time }}</span>
+            <span class="text">
+              <strong>{{ item.customerName }}</strong>
+              <span>{{ item.serviceName }} · {{ item.person.displayName }}</span>
+            </span>
+            @if (item.status === 'Requested') {
+              <span class="chip">{{ 'dashboard.today.request' | transloco }}</span>
+            }
+          </li>
+        }
+      </ul>
+    }
+  }
+</section>

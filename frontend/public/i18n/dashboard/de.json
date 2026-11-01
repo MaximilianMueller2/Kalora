@@ -1,4 +1,48 @@
 {
   "title": "Dashboard",
-  "placeholder": "Hier siehst du bald die Termine von heute, offene Anfragen und Kennzahlen."
+  "greeting": "Hallo {{name}}, das ist dein Tag.",
+  "loadFailed": "Das Dashboard konnte nicht geladen werden.",
+  "today": {
+    "title": "Heute",
+    "nobody": "Noch niemand im Kalender. Lege im Bereich Team eine Person an.",
+    "off": "Heute frei",
+    "gap": "Frei",
+    "request": "Anfrage",
+    "next": "Als Nächstes",
+    "none": "Heute stehen keine Termine mehr an."
+  },
+  "requests": {
+    "title": "Offene Anfragen",
+    "none": "Keine offenen Anfragen. Neue erscheinen hier.",
+    "confirmed": "Termin angenommen",
+    "declined": "Anfrage abgelehnt",
+    "all": "Alle Anfragen",
+    "more": "{{count}} weitere Anfragen"
+  },
+  "week": {
+    "title": "Diese Woche",
+    "appointments": "Termine",
+    "utilization": "Auslastung",
+    "utilizationDetail": "{{booked}} gebucht von {{available}}",
+    "noShows": "Nicht erschienen",
+    "revenue": "Umsatz",
+    "estimate": "Schätzung",
+    "from": "ab",
+    "revenueHint": "Aus den Listenpreisen bestätigter und erledigter Termine, nicht aus Zahlungen."
+  },
+  "share": {
+    "title": "Buchungslink teilen",
+    "lead": "Dein Link, dein QR-Code und ein fertiger Text für Instagram.",
+    "link": "Buchungslink",
+    "copy": "Kopieren",
+    "linkCopied": "Link kopiert",
+    "textCopied": "Text kopiert",
+    "copyFailed": "Kopieren war nicht möglich. Markiere den Text und kopiere ihn von Hand.",
+    "qrAlt": "QR-Code zum Buchungslink",
+    "png": "QR-Code als Bild (PNG)",
+    "pdf": "Aushang als PDF",
+    "instagram": "Text für Instagram",
+    "copyText": "Text kopieren",
+    "text": "Ab sofort kannst du bei {{salon}} ganz einfach online einen Termin buchen. Such dir Leistung und Uhrzeit aus, ganz ohne Anruf und ohne Konto: {{url}}"
+  }
 }

@@ -1,4 +1,48 @@
 {
   "title": "Dashboard",
-  "placeholder": "Soon you will see today’s appointments, open requests and key figures here."
+  "greeting": "Hello {{name}}, this is your day.",
+  "loadFailed": "The dashboard could not be loaded.",
+  "today": {
+    "title": "Today",
+    "nobody": "Nobody in the calendar yet. Add a person under Team.",
+    "off": "Off today",
+    "gap": "Free",
+    "request": "Request",
+    "next": "Up next",
+    "none": "No more appointments today."
+  },
+  "requests": {
+    "title": "Open requests",
+    "none": "No open requests. New ones appear here.",
+    "confirmed": "Appointment accepted",
+    "declined": "Request declined",
+    "all": "All requests",
+    "more": "{{count}} more requests"
+  },
+  "week": {
+    "title": "This week",
+    "appointments": "Appointments",
+    "utilization": "Utilization",
+    "utilizationDetail": "{{booked}} booked of {{available}}",
+    "noShows": "No-shows",
+    "revenue": "Revenue",
+    "estimate": "Estimate",
+    "from": "from",
+    "revenueHint": "From the list prices of confirmed and finished appointments, not from payments."
+  },
+  "share": {
+    "title": "Share booking link",
+    "lead": "Your link, your QR code and a ready-made text for Instagram.",
+    "link": "Booking link",
+    "copy": "Copy",
+    "linkCopied": "Link copied",
+    "textCopied": "Text copied",
+    "copyFailed": "Copying was not possible. Select the text and copy it by hand.",
+    "qrAlt": "QR code for the booking link",
+    "png": "QR code as image (PNG)",
+    "pdf": "Poster as PDF",
+    "instagram": "Text for Instagram",
+    "copyText": "Copy text",
+    "text": "You can now book an appointment at {{salon}} online. Pick a service and a time, no call and no account needed: {{url}}"
+  }
 }

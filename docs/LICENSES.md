@@ -20,6 +20,7 @@ Erlaubt: MIT, Apache-2.0, BSD-2/3, ISC, PostgreSQL, SIL OFL (Schriften). Regeln 
 | Microsoft.Extensions.Options | 10.0.13 | MIT | Options-Validierung |
 | Microsoft.Extensions.Logging.Abstractions | 10.0.13 | MIT | Logging im Mail-Prozessor (Application) |
 | Ical.Net | 5.2.3 | MIT | .ics-Dateien in Infrastructure (bringt NodaTime 3.2.2, Apache-2.0, mit: Zeitzonenregeln für VTIMEZONE) |
+| QRCoder | 1.8.1 | MIT | QR-Codes (PNG und Vektor-Matrix für den PDF-Aushang) in Infrastructure; die Windows-Grafikabhängigkeit System.Drawing.Common (MIT) wird nicht benutzt, nur die Byte-Renderer |
 | MailKit | 4.18.2 | MIT | SMTP-Versand in Infrastructure (bringt MimeKit 4.18.2, MIT, und BouncyCastle.Cryptography 2.7.0, MIT, mit) |
 | Microsoft.Extensions.Options.ConfigurationExtensions | 10.0.13 | MIT | Options an Konfiguration binden |
 | Microsoft.AspNetCore.Mvc.Testing | 10.0.13 | MIT | Integrationstests (Test) |

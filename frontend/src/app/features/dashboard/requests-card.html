@@ -1,0 +1,49 @@
+<section class="card" [attr.aria-label]="'dashboard.requests.title' | transloco">
+  <header>
+    <h2>{{ 'dashboard.requests.title' | transloco }}</h2>
+    @if (count() > 0) {
+      <span class="count">{{ count() }}</span>
+    }
+  </header>
+
+  @if (items().length === 0) {
+    <p class="empty">{{ 'dashboard.requests.none' | transloco }}</p>
+  } @else {
+    <ul>
+      @for (row of rows(); track row.request.id) {
+        <li [style.--staff]="row.request.staff.color">
+          <div class="what">
+            <strong>{{ row.request.customer.name }}</strong>
+            <span>{{ row.request.serviceName }} · {{ row.request.staff.displayName }}</span>
+            <span class="when">{{ row.when }}</span>
+          </div>
+          <div class="actions">
+            <button
+              mat-flat-button
+              type="button"
+              [disabled]="busy() === row.request.id"
+              (click)="confirm(row.request)"
+            >
+              {{ 'requests.confirm' | transloco }}
+            </button>
+            <button
+              mat-stroked-button
+              type="button"
+              [disabled]="busy() === row.request.id"
+              (click)="decline(row.request)"
+            >
+              {{ 'requests.declineAction' | transloco }}
+            </button>
+          </div>
+        </li>
+      }
+    </ul>
+    <a class="all" mat-button routerLink="/app/requests">
+      {{
+        more() > 0
+          ? ('dashboard.requests.more' | transloco: { count: more() })
+          : ('dashboard.requests.all' | transloco)
+      }}
+    </a>
+  }
+</section>

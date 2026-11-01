@@ -1,9 +1,11 @@
 using Kalora.Application.Calendar;
 using Kalora.Application.Common;
+using Kalora.Application.Dashboard;
 using Kalora.Application.Email;
 using Kalora.Infrastructure.Calendar;
 using Kalora.Infrastructure.Mail;
 using Kalora.Infrastructure.Persistence;
+using Kalora.Infrastructure.Qr;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +32,7 @@ public static class DependencyInjection
         services.AddSingleton<ISlotConflictDetector, SlotConflictDetector>();
         services.AddSingleton<IEmailSender, MailKitEmailSender>();
         services.AddSingleton<ICalendarFileService, IcalNetCalendarFileService>();
+        services.AddSingleton<IQrCodeService, QrCodeService>();
 
         return services;
     }

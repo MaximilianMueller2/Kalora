@@ -1,0 +1,36 @@
+<header class="head">
+  <h1>{{ 'dashboard.title' | transloco }}</h1>
+  @if (greeting(); as name) {
+    <p>{{ 'dashboard.greeting' | transloco: { name: name } }}</p>
+  }
+</header>
+
+@if (loading()) {
+  <div class="grid" aria-busy="true" aria-hidden="true">
+    @for (placeholder of [1, 2, 3]; track placeholder) {
+      <div class="skeleton"></div>
+    }
+  </div>
+} @else if (failed()) {
+  <p class="alert" role="alert">{{ 'dashboard.loadFailed' | transloco }}</p>
+} @else if (dashboard(); as dashboard) {
+  <div class="grid">
+    <app-today-card
+      class="wide"
+      [people]="dashboard.today.people"
+      [date]="dashboard.today.date"
+      [zone]="dashboard.today.timeZone"
+      [now]="now()"
+    />
+    <app-requests-card
+      [count]="dashboard.requests.count"
+      [items]="dashboard.requests.items"
+      [zone]="dashboard.today.timeZone"
+      (answered)="reload()"
+    />
+    <app-week-card [week]="dashboard.week" />
+    @if (dashboard.bookingLink; as link) {
+      <app-booking-link-card class="wide" [url]="link.url" [salonName]="salonName()" />
+    }
+  </div>
+}

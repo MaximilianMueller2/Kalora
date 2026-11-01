@@ -9,11 +9,12 @@ const areaRoute = (
   load: () => Promise<Type<unknown>>,
   scope: string,
   guard?: Route['canActivate'],
+  ...moreScopes: string[]
 ): Route => ({
   path,
   title: `nav.${scope}`,
   loadComponent: load,
-  providers: [provideTranslocoScope(scope)],
+  providers: [provideTranslocoScope(scope, ...moreScopes)],
   ...(guard ? { canActivate: guard } : {}),
 });
 
@@ -39,6 +40,9 @@ export const routes: Routes = [
         'dashboard',
         () => import('./features/dashboard/dashboard-page').then((m) => m.DashboardPage),
         'dashboard',
+        undefined,
+        // The requests on the dashboard use the texts of the inbox.
+        'requests',
       ),
       areaRoute(
         'calendar',

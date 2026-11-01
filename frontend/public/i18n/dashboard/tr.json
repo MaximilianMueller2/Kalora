@@ -1,4 +1,48 @@
 {
-  "title": "Gösterge paneli",
-  "placeholder": "Yakında burada bugünün randevularını, bekleyen talepleri ve özet bilgileri göreceksin."
+  "title": "Panel",
+  "greeting": "Merhaba {{name}}, bu senin günün.",
+  "loadFailed": "Panel yüklenemedi.",
+  "today": {
+    "title": "Bugün",
+    "nobody": "Takvimde henüz kimse yok. Ekip bölümünden bir kişi ekleyin.",
+    "off": "Bugün izinli",
+    "gap": "Boş",
+    "request": "Talep",
+    "next": "Sıradaki",
+    "none": "Bugün başka randevu yok."
+  },
+  "requests": {
+    "title": "Açık talepler",
+    "none": "Açık talep yok. Yeniler burada görünür.",
+    "confirmed": "Randevu kabul edildi",
+    "declined": "Talep reddedildi",
+    "all": "Tüm talepler",
+    "more": "{{count}} talep daha"
+  },
+  "week": {
+    "title": "Bu hafta",
+    "appointments": "Randevular",
+    "utilization": "Doluluk",
+    "utilizationDetail": "{{available}} içinden {{booked}} dolu",
+    "noShows": "Gelmeyenler",
+    "revenue": "Ciro",
+    "estimate": "Tahmin",
+    "from": "başlayan",
+    "revenueHint": "Onaylanmış ve tamamlanmış randevuların liste fiyatlarından, ödemelerden değil."
+  },
+  "share": {
+    "title": "Rezervasyon bağlantısını paylaş",
+    "lead": "Bağlantınız, QR kodunuz ve Instagram için hazır bir metin.",
+    "link": "Rezervasyon bağlantısı",
+    "copy": "Kopyala",
+    "linkCopied": "Bağlantı kopyalandı",
+    "textCopied": "Metin kopyalandı",
+    "copyFailed": "Kopyalanamadı. Metni seçip elle kopyalayın.",
+    "qrAlt": "Rezervasyon bağlantısı için QR kodu",
+    "png": "QR kodu resim olarak (PNG)",
+    "pdf": "Afiş PDF olarak",
+    "instagram": "Instagram metni",
+    "copyText": "Metni kopyala",
+    "text": "Artık {{salon}} için çevrimiçi randevu alabilirsiniz. Hizmeti ve saati seçin, arama ve hesap gerekmez: {{url}}"
+  }
 }

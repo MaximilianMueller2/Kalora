@@ -4,6 +4,7 @@ using Kalora.Application.Auth;
 using Kalora.Application.Availability;
 using Kalora.Application.Calendar;
 using Kalora.Application.Catalog;
+using Kalora.Application.Dashboard;
 using Kalora.Application.Email;
 using Kalora.Application.PublicBooking;
 using Kalora.Application.Staff;
@@ -80,6 +81,8 @@ public static class DependencyInjection
         services.AddSingleton<IValidator<MoveAppointmentRequest>, MoveAppointmentRequestValidator>();
         services.AddSingleton<IValidator<CreateBlockRequest>, CreateBlockRequestValidator>();
         services.AddScoped<IAppointmentScheduler, AppointmentScheduler>();
+        services.AddScoped<IDashboardService, DashboardService>();
+        services.AddScoped<IBookingLinkService, BookingLinkService>();
         services.AddSingleton<IValidator<ReasonRequest>, ReasonRequestValidator>();
         services.AddScoped<IAvailabilityService, AvailabilityService>();
         services.AddScoped<IStaffService, StaffManagementService>();

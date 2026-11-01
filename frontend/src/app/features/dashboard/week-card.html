@@ -1,0 +1,51 @@
+<section class="card" [attr.aria-label]="'dashboard.week.title' | transloco">
+  <header>
+    <h2>{{ 'dashboard.week.title' | transloco }}</h2>
+    <span class="range">{{ range() }}</span>
+  </header>
+  <dl>
+    <div class="tile">
+      <dt>{{ 'dashboard.week.appointments' | transloco }}</dt>
+      <dd>{{ week().appointments }}</dd>
+    </div>
+    <div class="tile">
+      <dt>{{ 'dashboard.week.utilization' | transloco }}</dt>
+      <dd>
+        {{ week().utilizationPercent }} %
+        <span
+          class="bar"
+          role="progressbar"
+          [attr.aria-valuenow]="week().utilizationPercent"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          [attr.aria-label]="'dashboard.week.utilization' | transloco"
+        >
+          <span [style.width.%]="week().utilizationPercent"></span>
+        </span>
+      </dd>
+      <dd class="detail">
+        {{
+          'dashboard.week.utilizationDetail'
+            | transloco: { booked: booked(), available: available() }
+        }}
+      </dd>
+    </div>
+    <div class="tile">
+      <dt>{{ 'dashboard.week.noShows' | transloco }}</dt>
+      <dd>{{ week().noShows }}</dd>
+    </div>
+    <div class="tile estimate">
+      <dt>
+        {{ 'dashboard.week.revenue' | transloco }}
+        <span class="chip">{{ 'dashboard.week.estimate' | transloco }}</span>
+      </dt>
+      <dd>
+        @if (week().includesFromPrices) {
+          <span class="from">{{ 'dashboard.week.from' | transloco }}</span>
+        }
+        {{ revenue() }}
+      </dd>
+      <dd class="detail">{{ 'dashboard.week.revenueHint' | transloco }}</dd>
+    </div>
+  </dl>
+</section>

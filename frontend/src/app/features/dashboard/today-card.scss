@@ -1,0 +1,223 @@
+:host {
+  display: block;
+}
+
+.card {
+  padding: 16px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: var(--mat-sys-corner-large);
+  background: var(--mat-sys-surface-container-low);
+}
+
+h2 {
+  margin: 0 0 12px;
+  font: var(--mat-sys-title-large);
+}
+
+h3 {
+  margin: 20px 0 8px;
+  font: var(--mat-sys-title-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.empty {
+  margin: 0;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.timeline {
+  display: grid;
+  gap: 8px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(64px, 96px) 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.who {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  font: var(--mat-sys-label-large);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--staff);
+}
+
+.track {
+  position: relative;
+  height: 32px;
+  border-radius: var(--mat-sys-corner-small);
+  background: color-mix(in srgb, var(--mat-sys-on-surface) 9%, transparent);
+  overflow: hidden;
+}
+
+// Inside the timeline only: the legend has swatches with the same names.
+.track .work,
+.track .gap,
+.track .slot {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+.track .work {
+  background: var(--mat-sys-surface);
+}
+
+.track .gap {
+  background: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--mat-sys-primary) 28%, transparent) 0 5px,
+    color-mix(in srgb, var(--mat-sys-primary) 10%, transparent) 5px 10px
+  );
+}
+
+.track .slot {
+  top: 3px;
+  bottom: 3px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--staff) 55%, var(--mat-sys-surface));
+  border-inline-start: 3px solid var(--staff);
+
+  &.request {
+    background: var(--mat-sys-surface);
+    border: 2px dashed var(--staff);
+  }
+
+  &.finished {
+    opacity: 0.55;
+  }
+}
+
+.now {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--mat-sys-error);
+}
+
+.off {
+  grid-column: 2;
+  margin-top: -6px;
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-label-small);
+}
+
+.marks {
+  position: relative;
+  height: 16px;
+  margin-inline-start: 104px;
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-label-small);
+
+  span {
+    position: absolute;
+    transform: translateX(-50%);
+
+    &:first-child {
+      transform: none;
+    }
+
+    &:last-child {
+      transform: translateX(-100%);
+    }
+  }
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-label-small);
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.swatch {
+  display: inline-block;
+  width: 18px;
+  height: 12px;
+  border-radius: 3px;
+
+  &.gap {
+    background: repeating-linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--mat-sys-primary) 40%, transparent) 0 4px,
+      transparent 4px 8px
+    );
+  }
+
+  &.request {
+    border: 2px dashed var(--mat-sys-primary);
+  }
+}
+
+.next {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: var(--mat-sys-corner-medium);
+    border-inline-start: 4px solid var(--staff);
+    background: var(--mat-sys-surface-container);
+
+    &.running {
+      background: color-mix(in srgb, var(--staff) 18%, var(--mat-sys-surface-container));
+    }
+  }
+
+  .time {
+    min-width: 3.2em;
+    font: var(--mat-sys-title-small);
+  }
+
+  .text {
+    display: grid;
+    flex: 1;
+    min-width: 0;
+
+    span {
+      overflow: hidden;
+      color: var(--mat-sys-on-surface-variant);
+      font: var(--mat-sys-body-small);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .chip {
+    padding: 2px 8px;
+    border-radius: var(--mat-sys-corner-full);
+    background: var(--mat-sys-tertiary-container);
+    color: var(--mat-sys-on-tertiary-container);
+    font: var(--mat-sys-label-small);
+  }
+}

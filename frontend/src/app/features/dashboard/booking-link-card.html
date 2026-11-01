@@ -1,0 +1,47 @@
+<section class="card" [attr.aria-label]="'dashboard.share.title' | transloco">
+  <h2>{{ 'dashboard.share.title' | transloco }}</h2>
+  <p class="lead">{{ 'dashboard.share.lead' | transloco }}</p>
+
+  <div class="link">
+    <input
+      type="text"
+      readonly
+      [value]="url()"
+      [attr.aria-label]="'dashboard.share.link' | transloco"
+      (focus)="selectAll($event)"
+    />
+    <button mat-flat-button type="button" (click)="copyLink()">
+      <mat-icon aria-hidden="true">content_copy</mat-icon>
+      {{ 'dashboard.share.copy' | transloco }}
+    </button>
+  </div>
+
+  <div class="qr">
+    @if (!qrBroken()) {
+      <img
+        [src]="qrPng"
+        width="160"
+        height="160"
+        [alt]="'dashboard.share.qrAlt' | transloco"
+        (error)="qrBroken.set(true)"
+      />
+    }
+    <div class="downloads">
+      <a mat-stroked-button [href]="qrPng" [download]="'qr.png'">
+        <mat-icon aria-hidden="true">image</mat-icon>
+        {{ 'dashboard.share.png' | transloco }}
+      </a>
+      <a mat-stroked-button [href]="posterPdf" target="_blank" rel="noopener">
+        <mat-icon aria-hidden="true">picture_as_pdf</mat-icon>
+        {{ 'dashboard.share.pdf' | transloco }}
+      </a>
+    </div>
+  </div>
+
+  <h3>{{ 'dashboard.share.instagram' | transloco }}</h3>
+  <blockquote>{{ instagramText() }}</blockquote>
+  <button mat-stroked-button type="button" (click)="copyText()">
+    <mat-icon aria-hidden="true">content_copy</mat-icon>
+    {{ 'dashboard.share.copyText' | transloco }}
+  </button>
+</section>
