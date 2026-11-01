@@ -152,7 +152,8 @@
     "customer": {
       "not_found": "This customer does not exist (any more).",
       "duplicate": "This e-mail address already belongs to another customer."
-    }
+    },
+    "appointment.cancellation_deadline_passed": "Cancelling online is no longer possible. Please call the salon."
   },
   "title": {
     "login": "Sign in",

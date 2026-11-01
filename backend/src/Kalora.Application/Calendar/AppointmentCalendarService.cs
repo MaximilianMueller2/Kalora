@@ -1,3 +1,4 @@
+using Kalora.Application.Appointments;
 using Kalora.Application.Auth;
 using Kalora.Application.Common;
 using Kalora.Application.Configuration;
@@ -17,30 +18,20 @@ namespace Kalora.Application.Calendar;
 /// </summary>
 internal sealed class AppointmentCalendarService(
     IAppDbContext db,
+    ManageTokenLookup lookup,
     ICalendarFileService files,
     IOptions<AppOptions> appOptions,
     IOptions<MailOptions> mailOptions) : IAppointmentCalendarService
 {
-    private const int MaxTokenLength = 200;
-
     public async Task<Result<CalendarFile>> GetFileAsync(string token, CancellationToken cancellationToken = default)
     {
-        if (string.IsNullOrWhiteSpace(token) || token.Length > MaxTokenLength)
+        var found = await lookup.FindAsync(token, cancellationToken);
+        if (!found.IsSuccess)
         {
-            return Error.NotFound("appointment.not_found");
+            return found.Error;
         }
 
-        var hash = TokenHasher.Hash(token);
-        var appointment = await db.AllTenants<Appointment>().AsNoTracking().FirstOrDefaultAsync(a => a.ManageTokenHash == hash, cancellationToken);
-        var salon = appointment is null
-            ? null
-            : await db.AllSalons().AsNoTracking().FirstOrDefaultAsync(
-                s => s.Id == appointment.SalonId && s.Status != SalonStatus.Suspended && s.Status != SalonStatus.Cancelled, cancellationToken);
-        if (appointment is null || salon is null)
-        {
-            return Error.NotFound("appointment.not_found");
-        }
-
+        var (appointment, salon) = (found.Value.Appointment, found.Value.Salon);
         var method = appointment.Status switch
         {
             AppointmentStatus.Confirmed or AppointmentStatus.Completed or AppointmentStatus.NoShow => CalendarMethod.Publish,
@@ -65,7 +56,7 @@ internal sealed class AppointmentCalendarService(
             SalonAddressText.Format(salon),
             appointment.ServiceName,
             staffName,
-            AppLinks.ManageAppointment(appOptions.Value.PublicBaseUrl, salon.Slug, token),
+            AppLinks.ManageAppointment(appOptions.Value.PublicBaseUrl, token),
             appointment.Language,
             customer?.Name);
 

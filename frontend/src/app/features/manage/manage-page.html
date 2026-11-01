@@ -1,0 +1,72 @@
+@if (loading()) {
+  <div class="card skeleton" aria-busy="true" aria-hidden="true"></div>
+} @else if (notFound()) {
+  <section class="card center">
+    <mat-icon aria-hidden="true">link_off</mat-icon>
+    <h1>{{ 'manage.notFound.title' | transloco }}</h1>
+    <p>{{ 'manage.notFound.text' | transloco }}</p>
+  </section>
+} @else if (failed()) {
+  <p class="alert" role="alert">{{ 'manage.loadFailed' | transloco }}</p>
+} @else if (appointment(); as a) {
+  <section class="card">
+    <p class="salon">{{ a.salonName }}</p>
+    <h1>{{ a.serviceName }}</h1>
+    <span class="status" [attr.data-status]="a.status">{{
+      'manage.status.' + a.status | transloco
+    }}</span>
+    <p class="status-text">{{ 'manage.statusText.' + a.status | transloco }}</p>
+
+    <dl>
+      <dt>{{ 'manage.when' | transloco }}</dt>
+      <dd>{{ when() }}</dd>
+      @if (a.salonAddress) {
+        <dt>{{ 'manage.where' | transloco }}</dt>
+        <dd>{{ a.salonAddress }}</dd>
+      }
+    </dl>
+
+    @if (error(); as message) {
+      <p class="alert" role="alert">{{ message }}</p>
+    }
+
+    @if (a.canAddToCalendar && calendarEvent(); as event) {
+      <app-calendar-actions [token]="token()" [event]="event" />
+    }
+
+    @if (isOpen()) {
+      @if (a.canCancel) {
+        <div class="cancel">
+          <button
+            mat-stroked-button
+            type="button"
+            class="danger"
+            [disabled]="busy()"
+            (click)="cancel()"
+          >
+            {{ 'manage.cancel.action' | transloco }}
+          </button>
+          <p class="hint">{{ 'manage.cancel.until' | transloco: { time: cancelUntil() } }}</p>
+        </div>
+      } @else {
+        <div class="notice" role="note">
+          @if (a.salonPhone) {
+            <p>{{ 'manage.cancel.tooLate' | transloco }}</p>
+            <a mat-flat-button [href]="'tel:' + a.salonPhone">
+              <mat-icon aria-hidden="true">call</mat-icon>
+              {{ a.salonPhone }}
+            </a>
+          } @else {
+            <p>{{ 'manage.cancel.tooLateNoPhone' | transloco }}</p>
+          }
+        </div>
+      }
+    }
+
+    @if (a.canRebook) {
+      <a mat-flat-button class="rebook" [routerLink]="['/', a.salonSlug]">{{
+        'manage.rebook' | transloco
+      }}</a>
+    }
+  </section>
+}

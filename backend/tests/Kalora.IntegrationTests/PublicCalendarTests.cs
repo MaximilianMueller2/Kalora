@@ -84,7 +84,7 @@ public class PublicCalendarTests(PostgresFixture postgres)
         Assert.Contains("LOCATION:Hauptstraße 1\\, 10115 Berlin", lines);
         Assert.Contains("TRIGGER:-PT2H", lines);
         Assert.Contains(lines, l => l.StartsWith("SUMMARY:Haarschnitt – Haarwerk Müller", StringComparison.Ordinal));
-        Assert.Contains(lines, l => l.StartsWith("DESCRIPTION:", StringComparison.Ordinal) && l.Contains($"/{world.Slug}/appointment/{receipt.ManageToken}", StringComparison.Ordinal));
+        Assert.Contains(lines, l => l.StartsWith("DESCRIPTION:", StringComparison.Ordinal) && l.Contains($"/m/{receipt.ManageToken}", StringComparison.Ordinal));
     }
 
     [Fact]

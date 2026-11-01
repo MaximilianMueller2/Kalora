@@ -67,7 +67,8 @@
     "addToCalendar": "Takvimine ekle",
     "downloadIcs": "Takvim dosyası (.ics)",
     "googleCalendar": "Google Takvim'e ekle",
-    "outlookCalendar": "Outlook'a ekle"
+    "outlookCalendar": "Outlook'a ekle",
+    "manage": "Randevuyu yönet"
   },
   "notFound": {
     "title": "Salon bulunamadı",

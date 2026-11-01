@@ -136,7 +136,7 @@ public class AppointmentsTests(PostgresFixture postgres)
             var payload = JsonDocument.Parse(mail.PayloadJson!).RootElement;
             Assert.Equal(request.Id, payload.GetProperty("AppointmentId").GetGuid());
             Assert.Equal("Anna", payload.GetProperty("StaffName").GetString());
-            Assert.Contains("/appointment/", payload.GetProperty("ManageUrl").GetString());
+            Assert.Contains("/m/", payload.GetProperty("ManageUrl").GetString());
             var audit = await db.AuditLogs.SingleAsync(a => a.Action == "appointment.confirmed");
             Assert.Equal((world.OwnerUserId, nameof(Appointment), request.Id), (audit.ActorUserId, audit.EntityType, audit.EntityId));
             Assert.Equal("""{"from":"Requested","to":"Confirmed","hasReason":false}""", audit.Details);

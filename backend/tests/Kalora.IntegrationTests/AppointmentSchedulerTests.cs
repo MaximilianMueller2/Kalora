@@ -226,7 +226,7 @@ public class AppointmentSchedulerTests(PostgresFixture postgres)
             var payload = JsonDocument.Parse(mail.PayloadJson!).RootElement;
             Assert.Equal(soon.Id, payload.GetProperty("AppointmentId").GetGuid());
             Assert.Equal("Anna", payload.GetProperty("StaffName").GetString());
-            Assert.Contains("/appointment/", payload.GetProperty("ManageUrl").GetString());
+            Assert.Contains("/m/", payload.GetProperty("ManageUrl").GetString());
             return 0;
         });
     }

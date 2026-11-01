@@ -9,17 +9,18 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { LocaleFormatService } from '../../core/i18n/locale-format.service';
 import { BookingService } from './booking.service';
 import { CalendarActions } from './calendar-actions';
+import { CalendarEvent, addressLine } from './calendar-links';
 
 /** The receipt after booking: "request sent" while the salon still has to confirm, "confirmed" with automatic confirmation. */
 @Component({
   selector: 'app-done-step',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CalendarActions, MatButtonModule, MatIconModule, TranslocoPipe],
+  imports: [CalendarActions, MatButtonModule, MatIconModule, RouterLink, TranslocoPipe],
   styleUrl: './skeleton.scss',
   styles: `
     :host {
@@ -96,8 +97,11 @@ import { CalendarActions } from './calendar-actions';
         <dd>{{ when() }}</dd>
       </dl>
       @if (receipt.status === 'Confirmed' && booking.salon.hasValue()) {
-        <app-calendar-actions [receipt]="receipt" [salon]="booking.salon.value()" />
+        <app-calendar-actions [token]="receipt.manageToken" [event]="calendarEvent()" />
       }
+      <a class="manage" mat-button [routerLink]="['/m', receipt.manageToken]">
+        {{ 'booking.done.manage' | transloco }}
+      </a>
       <button mat-stroked-button type="button" (click)="another()">
         {{ 'booking.done.another' | transloco }}
       </button>
@@ -109,6 +113,18 @@ export class DoneStep {
   private readonly format = inject(LocaleFormatService);
   private readonly router = inject(Router);
   private readonly title = viewChild<ElementRef<HTMLElement>>('title');
+
+  protected readonly calendarEvent = computed<CalendarEvent>(() => {
+    const receipt = this.booking.receipt();
+    const salon = this.booking.salon.hasValue() ? this.booking.salon.value() : null;
+    return {
+      title: `${receipt?.serviceName ?? ''} – ${salon?.name ?? ''}`,
+      startUtc: receipt?.startUtc ?? '',
+      endUtc: receipt?.endUtc ?? '',
+      location: salon ? addressLine(salon.street, salon.postalCode, salon.city) : '',
+      details: [receipt?.serviceName, receipt?.staffName].filter((part) => !!part).join('\n'),
+    };
+  });
 
   protected readonly when = computed(() => {
     const receipt = this.booking.receipt();

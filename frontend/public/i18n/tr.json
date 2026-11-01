@@ -152,7 +152,8 @@
     "customer": {
       "not_found": "Bu müşteri yok (artık).",
       "duplicate": "Bu e-posta adresi zaten başka bir müşteriye ait."
-    }
+    },
+    "appointment.cancellation_deadline_passed": "Çevrimiçi iptal artık mümkün değil. Lütfen salonu arayın."
   },
   "title": {
     "login": "Giriş yap",

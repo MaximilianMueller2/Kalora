@@ -1,5 +1,6 @@
 using System.Text;
 using Kalora.Api.Http;
+using Kalora.Application.Appointments;
 using Kalora.Application.Calendar;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +11,26 @@ namespace Kalora.Api.Controllers;
 /// <summary>What a customer can do with the management token of an appointment, without an account. The token is the only credential.</summary>
 [Route("api/public/appointments/{token}")]
 [AllowAnonymous]
-public sealed class PublicAppointmentsController(IAppointmentCalendarService calendar) : ApiControllerBase
+[EnableRateLimiting(PublicRateLimits.Manage)]
+public sealed class PublicAppointmentsController(IManageBookingService manage, IAppointmentCalendarService calendar) : ApiControllerBase
 {
     private const string CalendarContentType = "text/calendar; charset=utf-8";
 
+    [HttpGet]
+    public async Task<IActionResult> Get(string token, CancellationToken cancellationToken)
+    {
+        // The answer is about one person's appointment; no cache may keep it.
+        Response.Headers.CacheControl = "no-store";
+        return ToActionResult(await manage.GetAsync(token, cancellationToken));
+    }
+
+    /// <summary>Anonymous and without ambient credentials, so no antiforgery token is needed (like booking and accepting an invitation).</summary>
+    [HttpPost("cancel")]
+    [IgnoreAntiforgeryToken]
+    public async Task<IActionResult> Cancel(string token, CancellationToken cancellationToken) =>
+        ToActionResult(await manage.CancelAsync(token, cancellationToken));
+
     [HttpGet("calendar.ics")]
-    [EnableRateLimiting(PublicRateLimits.Read)]
     public async Task<IActionResult> Calendar(string token, CancellationToken cancellationToken)
     {
         var result = await calendar.GetFileAsync(token, cancellationToken);

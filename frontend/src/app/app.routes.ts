@@ -132,6 +132,20 @@ export const routes: Routes = [
       },
     ],
   },
+  // A customer's own appointment: kalora.app/m/<token> (the link in their mails). "m" is a reserved slug.
+  {
+    path: 'm',
+    loadComponent: () =>
+      import('./core/layout/public-layout/public-layout').then((m) => m.PublicLayout),
+    providers: [provideTranslocoScope('manage', 'booking')],
+    children: [
+      {
+        path: ':token',
+        title: 'manage.title',
+        loadComponent: () => import('./features/manage/manage-page').then((m) => m.ManagePage),
+      },
+    ],
+  },
   // Public booking page of a salon: kalora.app/<salon-slug>. Static routes above win; reserved slugs
   // (admin, app, auth, api, m, ...) are blocked in the backend (SlugGenerator).
   {

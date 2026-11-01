@@ -67,7 +67,8 @@
     "addToCalendar": "Add to your calendar",
     "downloadIcs": "Calendar file (.ics)",
     "googleCalendar": "Add to Google Calendar",
-    "outlookCalendar": "Add to Outlook"
+    "outlookCalendar": "Add to Outlook",
+    "manage": "Manage appointment"
   },
   "notFound": {
     "title": "Salon not found",

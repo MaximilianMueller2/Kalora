@@ -1,0 +1,40 @@
+{
+  "title": "Randevunuz",
+  "loadFailed": "Randevunuz yüklenemedi. Lütfen daha sonra tekrar deneyin.",
+  "notFound": {
+    "title": "Bağlantı artık geçerli değil",
+    "text": "Bu randevu yok ya da bağlantının süresi doldu. Bağlantı randevudan 30 gün sonrasına kadar çalışır."
+  },
+  "when": "Ne zaman",
+  "where": "Nerede",
+  "status": {
+    "Requested": "Talep",
+    "Confirmed": "Onaylandı",
+    "Declined": "Reddedildi",
+    "Expired": "Süresi doldu",
+    "Cancelled": "İptal edildi",
+    "Completed": "Tamamlandı",
+    "NoShow": "Gelinmedi"
+  },
+  "statusText": {
+    "Requested": "Salon talebinize henüz yanıt vermedi. E-posta alacaksınız.",
+    "Confirmed": "Randevunuz onaylandı. Sizi bekliyoruz!",
+    "Declined": "Salon maalesef bu randevuyu sunamıyor.",
+    "Expired": "Salon zamanında yanıt vermedi. Randevu oluşmadı.",
+    "Cancelled": "Bu randevu iptal edildi.",
+    "Completed": "Bu randevu gerçekleşti.",
+    "NoShow": "Bu randevuya gelinmedi."
+  },
+  "cancel": {
+    "action": "Randevuyu iptal et",
+    "until": "{{time}} tarihine kadar çevrimiçi iptal edebilirsiniz.",
+    "tooLate": "Çevrimiçi iptal artık mümkün değil. Lütfen salonu arayın:",
+    "title": "Randevu iptal edilsin mi?",
+    "text": "Salon bilgilendirilir ve zaman yeniden boşalır. Bu geri alınamaz.",
+    "keep": "Vazgeç",
+    "confirm": "Evet, iptal et",
+    "tooLateNoPhone": "Çevrimiçi iptal artık mümkün değil. Lütfen doğrudan salonla iletişime geçin."
+  },
+  "cancelled": "Randevu iptal edildi. Size bir e-posta gönderdik.",
+  "rebook": "Yeni randevu talep et"
+}

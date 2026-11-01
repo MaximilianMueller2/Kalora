@@ -18,11 +18,10 @@ internal sealed class BookingService(
     IAppDbContext db,
     IAvailabilityService availability,
     ISlotConflictDetector conflicts,
-    IEmailOutbox outbox,
     IValidator<CreateAppointmentRequest> validator,
-    IOptions<AppOptions> appOptions,
     IManageTokens manageTokens,
     AppointmentMails mails,
+    SalonMails salonMails,
     TimeProvider timeProvider) : IBookingService
 {
     public const int MaxOpenRequestsPerEmail = 3;
@@ -158,37 +157,10 @@ internal sealed class BookingService(
 
     private async Task QueueEmailsAsync(Salon salon, Appointment appointment, string staffName, Customer customer, CancellationToken cancellationToken)
     {
-        var baseUrl = appOptions.Value.PublicBaseUrl;
         var confirmed = appointment.Status == AppointmentStatus.Confirmed;
         mails.QueueForCustomer(confirmed ? EmailTypes.BookingConfirmed : EmailTypes.BookingRequestReceived, salon, appointment, staffName, customer);
 
-        // The owners and managers, and the person the appointment is with if they have a login.
-        var staffUserId = await db.StaffMembers.Where(s => s.Id == appointment.StaffId).Select(s => s.UserId).FirstAsync(cancellationToken);
-        var recipients = await (
-            from member in db.SalonMembers
-            join user in db.Users on member.UserId equals user.Id
-            where member.Role == SalonRole.Owner || member.Role == SalonRole.Manager || member.UserId == staffUserId
-            select user.Email).Distinct().ToListAsync(cancellationToken);
-        foreach (var recipient in recipients.Where(email => !string.IsNullOrEmpty(email)))
-        {
-            outbox.Enqueue(salon.Id, recipient!, EmailTypes.BookingNewForSalon, salon.DefaultLanguage, new
-            {
-                SalonName = salon.Name,
-                appointment.ServiceName,
-                StaffName = staffName,
-                appointment.StartUtc,
-                appointment.EndUtc,
-                salon.TimeZone,
-                Status = appointment.Status.ToString(),
-                CustomerName = customer.Name,
-                CustomerEmail = customer.Email,
-                CustomerPhone = customer.Phone,
-                appointment.CustomerNote,
-                RespondByUtc = appointment.ExpiresAtUtc,
-                AppointmentId = appointment.Id,
-                RequestUrl = AppLinks.Request(baseUrl, appointment.Id),
-            });
-        }
+        await salonMails.QueueAsync(EmailTypes.BookingNewForSalon, salon, appointment, staffName, customer, cancellationToken);
     }
 
     private static Result<BookingReceipt> LookAlikeReceipt(CreateAppointmentRequest request) =>

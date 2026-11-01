@@ -152,7 +152,8 @@
     "customer": {
       "not_found": "Diesen Kunden gibt es nicht (mehr).",
       "duplicate": "Diese E-Mail-Adresse gehört schon zu einem anderen Kunden."
-    }
+    },
+    "appointment.cancellation_deadline_passed": "Online absagen ist nicht mehr möglich. Bitte ruf den Salon an."
   },
   "title": {
     "login": "Anmelden",

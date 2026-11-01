@@ -69,6 +69,9 @@ public static class DependencyInjection
         services.AddScoped<IPublicSalonService, PublicSalonService>();
         services.AddScoped<AppointmentMails>();
         services.AddScoped<AppointmentScope>();
+        services.AddScoped<SalonMails>();
+        services.AddScoped<ManageTokenLookup>();
+        services.AddScoped<IManageBookingService, ManageBookingService>();
         services.AddScoped<IBookingService, BookingService>();
         services.AddScoped<IAppointmentCalendarService, AppointmentCalendarService>();
         services.AddScoped<IAppointmentService, AppointmentService>();

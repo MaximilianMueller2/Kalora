@@ -528,6 +528,12 @@ describe('DoneStep', () => {
     }
   });
 
+  it("links to the customer's own page for the appointment", async () => {
+    const { fixture } = await mount(DoneStep, undefined, (b) => b.receipt.set(RECEIPT));
+
+    expect(q<HTMLAnchorElement>(fixture, 'a.manage').getAttribute('href')).toBe('/m/secret-token');
+  });
+
   it('does not offer the calendar while the request is still open', async () => {
     const { fixture } = await mount(DoneStep, undefined, (b) => b.receipt.set(RECEIPT));
 

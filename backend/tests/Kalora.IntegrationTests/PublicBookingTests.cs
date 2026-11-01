@@ -244,7 +244,7 @@ public class PublicBookingTests(PostgresFixture postgres)
             Assert.Equal([EmailTypes.BookingNewForSalon, EmailTypes.BookingRequestReceived], mails.Select(m => m.Type));
             var toCustomer = mails.Single(m => m.Type == EmailTypes.BookingRequestReceived);
             Assert.Equal(("kim@example.com", "en"), (toCustomer.ToEmail, toCustomer.Language));
-            Assert.Contains($"/{world.Slug}/appointment/{receipt.ManageToken}", toCustomer.PayloadJson);
+            Assert.Contains($"/m/{receipt.ManageToken}", toCustomer.PayloadJson);
             var toSalon = mails.Single(m => m.Type == EmailTypes.BookingNewForSalon);
             Assert.Equal(("maria@example.com", "de"), (toSalon.ToEmail, toSalon.Language));
             Assert.Contains("170 1234567", toSalon.PayloadJson);
@@ -271,7 +271,7 @@ public class PublicBookingTests(PostgresFixture postgres)
             Assert.Contains("Hauptstraße 1", toCustomer.GetProperty("SalonAddress").GetString());
             Assert.Equal("+49 30 123456", toCustomer.GetProperty("SalonPhone").GetString());
             Assert.Equal("Europe/Berlin", toCustomer.GetProperty("TimeZone").GetString());
-            Assert.EndsWith($"/{world.Slug}/appointment/{receipt.ManageToken}", toCustomer.GetProperty("ManageUrl").GetString());
+            Assert.EndsWith($"/m/{receipt.ManageToken}", toCustomer.GetProperty("ManageUrl").GetString());
             Assert.EndsWith($"/{world.Slug}", toCustomer.GetProperty("BookingUrl").GetString());
 
             var toSalon = JsonDocument.Parse((await db.EmailOutbox.SingleAsync(m => m.Type == EmailTypes.BookingNewForSalon)).PayloadJson!).RootElement;

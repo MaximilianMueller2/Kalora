@@ -7,6 +7,11 @@ export interface CalendarEvent {
   details: string;
 }
 
+/** "Street, 10115 Berlin" on one line; parts that are empty are left out. */
+export function addressLine(street: string, postalCode: string, city: string): string {
+  return [street, `${postalCode} ${city}`.trim()].filter((part) => part.length > 0).join(', ');
+}
+
 const GOOGLE = 'https://calendar.google.com/calendar/render';
 const OUTLOOK = 'https://outlook.live.com/calendar/0/deeplink/compose';
 

@@ -1,0 +1,40 @@
+{
+  "title": "Your appointment",
+  "loadFailed": "Your appointment could not be loaded. Please try again later.",
+  "notFound": {
+    "title": "Link no longer valid",
+    "text": "This appointment does not exist, or the link has expired. It works until 30 days after the appointment."
+  },
+  "when": "When",
+  "where": "Where",
+  "status": {
+    "Requested": "Request",
+    "Confirmed": "Confirmed",
+    "Declined": "Declined",
+    "Expired": "Expired",
+    "Cancelled": "Cancelled",
+    "Completed": "Done",
+    "NoShow": "Missed"
+  },
+  "statusText": {
+    "Requested": "The salon has not answered your request yet. You will get an e-mail.",
+    "Confirmed": "Your appointment is confirmed. We look forward to seeing you!",
+    "Declined": "Unfortunately the salon cannot offer this appointment.",
+    "Expired": "The salon did not answer in time. The appointment did not happen.",
+    "Cancelled": "This appointment is cancelled.",
+    "Completed": "This appointment took place.",
+    "NoShow": "This appointment was missed."
+  },
+  "cancel": {
+    "action": "Cancel appointment",
+    "until": "You can cancel online until {{time}}.",
+    "tooLate": "Cancelling online is no longer possible. Please call the salon:",
+    "title": "Cancel appointment?",
+    "text": "The salon will be told and the time becomes free again. This cannot be undone.",
+    "keep": "Keep it",
+    "confirm": "Yes, cancel",
+    "tooLateNoPhone": "Cancelling online is no longer possible. Please contact the salon directly."
+  },
+  "cancelled": "Appointment cancelled. We sent you an e-mail.",
+  "rebook": "Request a new appointment"
+}

@@ -38,7 +38,7 @@ internal sealed class AppointmentMails(IEmailOutbox outbox, IManageTokens manage
             salon.TimeZone,
             CustomerName = customer.Name,
             RespondByUtc = appointment.ExpiresAtUtc,
-            ManageUrl = AppLinks.ManageAppointment(baseUrl, salon.Slug, manageTokens.Create(appointment.Id)),
+            ManageUrl = AppLinks.ManageAppointment(baseUrl, manageTokens.Create(appointment.Id)),
             BookingUrl = AppLinks.Booking(baseUrl, salon.Slug),
             Reason = string.IsNullOrWhiteSpace(reason) ? null : reason.Trim(),
         });

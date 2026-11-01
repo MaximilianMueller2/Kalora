@@ -26,6 +26,12 @@ public sealed class PublicRateLimitOptions
 
     /// <summary>Appointment requests. Ten per ten minutes is plenty for a family booking together.</summary>
     public WindowLimit Booking { get; set; } = new() { PermitLimit = 10, WindowSeconds = 600 };
+
+    /// <summary>
+    /// The pages behind a management token (look, calendar file, cancel). A token has 256 bits, so guessing is hopeless anyway;
+    /// this keeps scripts that try from hammering the lookup.
+    /// </summary>
+    public WindowLimit Manage { get; set; } = new() { PermitLimit = 30, WindowSeconds = 60 };
 }
 
 public static class PublicRateLimits
@@ -33,6 +39,7 @@ public static class PublicRateLimits
     public const string Read = "public-read";
     public const string Availability = "public-availability";
     public const string Booking = "public-booking";
+    public const string Manage = "public-manage";
 
     public static IServiceCollection AddPublicRateLimiting(this IServiceCollection services, IConfiguration configuration)
     {
@@ -44,6 +51,7 @@ public static class PublicRateLimits
             options.AddPolicy(Read, context => Limit(context, o => o.Read));
             options.AddPolicy(Availability, context => Limit(context, o => o.Availability));
             options.AddPolicy(Booking, context => Limit(context, o => o.Booking));
+            options.AddPolicy(Manage, context => Limit(context, o => o.Manage));
         });
         return services;
     }

@@ -1,0 +1,40 @@
+{
+  "title": "Dein Termin",
+  "loadFailed": "Dein Termin konnte nicht geladen werden. Bitte versuche es später noch einmal.",
+  "notFound": {
+    "title": "Link nicht mehr gültig",
+    "text": "Diesen Termin gibt es nicht, oder der Link ist abgelaufen. Er gilt bis 30 Tage nach dem Termin."
+  },
+  "when": "Wann",
+  "where": "Wo",
+  "status": {
+    "Requested": "Anfrage",
+    "Confirmed": "Bestätigt",
+    "Declined": "Abgelehnt",
+    "Expired": "Abgelaufen",
+    "Cancelled": "Abgesagt",
+    "Completed": "Erledigt",
+    "NoShow": "Nicht wahrgenommen"
+  },
+  "statusText": {
+    "Requested": "Der Salon hat deine Anfrage noch nicht beantwortet. Du bekommst eine E-Mail.",
+    "Confirmed": "Dein Termin ist bestätigt. Wir freuen uns auf dich!",
+    "Declined": "Der Salon kann diesen Termin leider nicht anbieten.",
+    "Expired": "Der Salon hat nicht rechtzeitig geantwortet. Der Termin ist nicht zustande gekommen.",
+    "Cancelled": "Dieser Termin ist abgesagt.",
+    "Completed": "Dieser Termin hat stattgefunden.",
+    "NoShow": "Dieser Termin wurde nicht wahrgenommen."
+  },
+  "cancel": {
+    "action": "Termin absagen",
+    "until": "Online absagen kannst du bis {{time}}.",
+    "tooLate": "Online absagen ist nicht mehr möglich. Bitte ruf den Salon an:",
+    "title": "Termin absagen?",
+    "text": "Der Salon wird informiert und die Zeit wird wieder frei. Das kannst du nicht rückgängig machen.",
+    "keep": "Behalten",
+    "confirm": "Ja, absagen",
+    "tooLateNoPhone": "Online absagen ist nicht mehr möglich. Bitte melde dich direkt beim Salon."
+  },
+  "cancelled": "Termin abgesagt. Wir haben dir eine E-Mail geschickt.",
+  "rebook": "Neuen Termin anfragen"
+}
