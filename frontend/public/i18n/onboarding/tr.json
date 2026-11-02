@@ -1,5 +1,67 @@
 {
-  "title": "Hoş geldin, {{name}}!",
-  "placeholder": "“{{salon}}” salonun oluşturuldu. Kurulum (çalışma saatleri, hizmetler, ekip) bir sonraki adımda.",
-  "toDashboard": "Gösterge paneline git"
+  "title": "Salonunuz 5 adımda rezervasyona hazır",
+  "lead": "Hoş geldiniz, {{name}}! Yaklaşık 10 dakika sürer. İstediğiniz zaman bırakabilirsiniz: kaydedilenler kalır.",
+  "later": "Sonra devam et",
+  "progress": "Kurulum",
+  "stepDone": "tamamlandı",
+  "newTab": "(yeni sekmede açılır)",
+  "back": "Geri",
+  "next": "Devam",
+  "skip": "Atla",
+  "toDashboard": "Panele git",
+  "steps": {
+    "profile": "Salon",
+    "hours": "Çalışma saatleri",
+    "services": "Hizmetler",
+    "team": "Ekip",
+    "done": "Bitti"
+  },
+  "profile": {
+    "title": "Salonunuz",
+    "lead": "Müşteriler sizi bulabilsin ve ulaşabilsin diye. Adres randevu sayfanızda görünür.",
+    "industry": "Sektör",
+    "street": "Sokak ve numara",
+    "postalCode": "Posta kodu",
+    "city": "Şehir",
+    "phone": "Telefon numarası"
+  },
+  "hours": {
+    "title": "Ne zaman açıksınız?",
+    "lead": "Müşteriler yalnızca bu saatlerde randevu alabilir.",
+    "suggested": "Bu bir öneridir: Salı–Cumartesi, 09:00–18:00. Çalışma biçiminize göre ayarlayın."
+  },
+  "services": {
+    "title": "Neler sunuyorsunuz?",
+    "lead": "Sektörünüze uygun bir şablonu alıyoruz. Fiyatları hemen düzenleyebilirsiniz.",
+    "empty": "Henüz hizmetiniz yok.",
+    "applyTemplate": "{{industry}} şablonunu kullan",
+    "price": "Fiyat",
+    "more": "Diğer hizmetleri, süreleri ve açıklamaları daha sonra “Hizmetler” bölümünden değiştirebilirsiniz."
+  },
+  "team": {
+    "title": "Sizinle kim çalışıyor?",
+    "lead": "Tek başınıza çalışıyorsanız her şeyi olduğu gibi bırakın. Diğer kişiler çalışma saatlerini salonun saatlerinden alır ve e-postayla davet edilebilir.",
+    "me": "Siz",
+    "person": "Başka bir kişi",
+    "name": "Ad",
+    "email": "Davet için e-posta (isteğe bağlı)",
+    "skills": "Bu hizmetleri yapar",
+    "add": "Başka kişi ekle",
+    "remove": "Kişiyi kaldır",
+    "existing": "Zaten eklenenler",
+    "existingHint": "Çalışma saatlerini ve hizmetleri şuradan değiştirirsiniz:",
+    "inviteFailed": "{{names}} için davet gönderilemedi. “Ekip” bölümünden yeniden gönderebilirsiniz."
+  },
+  "done": {
+    "title": "Salonunuz rezervasyona hazır!",
+    "lead": "Bağlantıyı veya QR kodu paylaşın. Önce rezervasyonu müşterilerinizin gördüğü gibi kendiniz deneyin.",
+    "testBooking": "Test randevusu al",
+    "missingTitle": "Neredeyse bitti",
+    "missingLead": "Müşterilerin randevu alabilmesi için şunlar eksik:"
+  },
+  "checklist": {
+    "title": "Salonunuzu rezervasyona hazır hale getirin",
+    "lead": "{{count}} adım kaldı, sonra müşterileriniz çevrim içi randevu alabilir.",
+    "resume": "Kuruluma devam et"
+  }
 }

@@ -1,0 +1,79 @@
+<header class="head">
+  <div>
+    <h1>{{ 'onboarding.title' | transloco }}</h1>
+    <p>{{ 'onboarding.lead' | transloco: { name: user()?.displayName } }}</p>
+  </div>
+  <a class="later" routerLink="/app/dashboard">{{ 'onboarding.later' | transloco }}</a>
+</header>
+
+<nav class="steps" [attr.aria-label]="'onboarding.progress' | transloco">
+  <ol>
+    @for (screen of screens; track screen; let position = $index) {
+      <li>
+        <button
+          type="button"
+          class="step"
+          [class.current]="current() === screen"
+          [class.done]="isDone(screen)"
+          [attr.aria-current]="current() === screen ? 'step' : null"
+          (click)="open(screen)"
+        >
+          <span class="number" aria-hidden="true">
+            @if (isDone(screen)) {
+              <mat-icon>check</mat-icon>
+            } @else {
+              {{ position + 1 }}
+            }
+          </span>
+          <span class="label">{{ 'onboarding.steps.' + screen | transloco }}</span>
+          @if (isDone(screen)) {
+            <span class="visually-hidden">{{ 'onboarding.stepDone' | transloco }}</span>
+          }
+        </button>
+      </li>
+    }
+  </ol>
+</nav>
+
+@if (status.hasValue() && current(); as screen) {
+  <section class="panel" [attr.aria-label]="'onboarding.steps.' + screen | transloco">
+    @switch (screen) {
+      @case ('profile') {
+        <app-onboarding-profile-step (saved)="next()" />
+      }
+      @case ('hours') {
+        <app-onboarding-hours-step (saved)="next()" />
+      }
+      @case ('services') {
+        <app-onboarding-services-step (saved)="next()" />
+      }
+      @case ('team') {
+        <app-onboarding-team-step (saved)="next()" />
+      }
+      @case ('done') {
+        <app-onboarding-done-step
+          [status]="status.value()"
+          [salonName]="user()?.salon?.name ?? ''"
+          (goTo)="open($event)"
+        />
+      }
+    }
+    @if (screen !== 'profile') {
+      <div class="nav">
+        <button type="button" class="back" (click)="back()">
+          <mat-icon aria-hidden="true">arrow_back</mat-icon>
+          {{ 'onboarding.back' | transloco }}
+        </button>
+        @if (screen !== 'done') {
+          <button type="button" class="skip" (click)="next()">
+            {{ 'onboarding.skip' | transloco }}
+          </button>
+        }
+      </div>
+    }
+  </section>
+} @else if (status.error()) {
+  <p class="alert" role="alert">{{ 'errors.unknown' | transloco }}</p>
+} @else {
+  <div class="skeleton" aria-busy="true" aria-hidden="true"></div>
+}

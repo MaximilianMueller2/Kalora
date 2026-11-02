@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { map, timer } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { OnboardingChecklist } from '../onboarding/onboarding-checklist';
 import { BookingLinkCard } from './booking-link-card';
 import { DashboardService } from './dashboard.service';
 import { RequestsCard } from './requests-card';
@@ -16,7 +17,15 @@ const REFRESH_MS = 60_000;
 @Component({
   selector: 'app-dashboard-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [BookingLinkCard, MatIconModule, RequestsCard, TodayCard, TranslocoPipe, WeekCard],
+  imports: [
+    BookingLinkCard,
+    MatIconModule,
+    OnboardingChecklist,
+    RequestsCard,
+    TodayCard,
+    TranslocoPipe,
+    WeekCard,
+  ],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.scss',
 })

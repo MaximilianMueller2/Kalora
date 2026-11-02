@@ -15,10 +15,14 @@ import { fakeBadge, fakeRequests } from '../requests/requests-fixtures';
 import { RequestsService } from '../requests/requests.service';
 import { DashboardPage } from './dashboard-page';
 import { dashboard, fakeDashboard } from './dashboard-fixtures';
+import { OnboardingService } from '../onboarding/onboarding.service';
+import { fakeOnboarding, status } from '../onboarding/onboarding-fixtures';
 import { Dashboard } from './dashboard.models';
 import { DashboardService } from './dashboard.service';
 
-async function mount(options: { data?: Dashboard; user?: Me; fail?: boolean } = {}) {
+async function mount(
+  options: { data?: Dashboard; user?: Me; fail?: boolean; setup?: ReturnType<typeof status> } = {},
+) {
   localStorage.clear();
   const service = fakeDashboard(options.data);
   if (options.fail) {
@@ -31,6 +35,10 @@ async function mount(options: { data?: Dashboard; user?: Me; fail?: boolean } = 
       provideRouter([]),
       { provide: DashboardService, useValue: service },
       { provide: RequestsService, useValue: requests },
+      {
+        provide: OnboardingService,
+        useValue: fakeOnboarding(options.setup ?? status('profile', 'hours', 'services', 'team')),
+      },
       { provide: OpenRequestsBadge, useValue: fakeBadge() },
       { provide: AuthService, useValue: fakeAuth(options.user ?? OWNER) },
       { provide: Toast, useValue: { show: vi.fn() } },
@@ -99,5 +107,20 @@ describe('DashboardPage', () => {
       'dashboard.loadFailed',
     );
     expect(root(fixture).querySelector('app-today-card')).toBeNull();
+  });
+
+  it('shows the setup checklist above everything while the salon cannot be booked yet', async () => {
+    const { fixture } = await mount({ setup: status('profile') });
+
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('app-onboarding-checklist .card')).not.toBeNull();
+  });
+
+  it('shows no checklist for a salon that is ready', async () => {
+    const { fixture } = await mount();
+
+    expect(
+      (fixture.nativeElement as HTMLElement).querySelector('app-onboarding-checklist .card'),
+    ).toBeNull();
   });
 });

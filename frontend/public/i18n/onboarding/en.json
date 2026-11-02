@@ -1,5 +1,67 @@
 {
-  "title": "Welcome, {{name}}!",
-  "placeholder": "Your salon “{{salon}}” has been created. Setup (opening hours, services, team) follows in the next step.",
-  "toDashboard": "Go to dashboard"
+  "title": "Your salon bookable in 5 steps",
+  "lead": "Welcome, {{name}}! This takes about 10 minutes. You can stop at any time: what is saved stays.",
+  "later": "Continue later",
+  "progress": "Setup",
+  "stepDone": "done",
+  "newTab": "(opens in a new tab)",
+  "back": "Back",
+  "next": "Continue",
+  "skip": "Skip",
+  "toDashboard": "To the dashboard",
+  "steps": {
+    "profile": "Salon",
+    "hours": "Opening hours",
+    "services": "Services",
+    "team": "Team",
+    "done": "Done"
+  },
+  "profile": {
+    "title": "Your salon",
+    "lead": "So customers can find and reach you. The address appears on your booking page.",
+    "industry": "Industry",
+    "street": "Street and number",
+    "postalCode": "Postal code",
+    "city": "City",
+    "phone": "Phone number"
+  },
+  "hours": {
+    "title": "When are you open?",
+    "lead": "Customers can only book within these times.",
+    "suggested": "This is a suggestion: Tuesday to Saturday, 9 am to 6 pm. Adjust it to how you work."
+  },
+  "services": {
+    "title": "What do you offer?",
+    "lead": "We take over a template for your industry. You can adjust the prices right away.",
+    "empty": "You have no services yet.",
+    "applyTemplate": "Use the {{industry}} template",
+    "price": "Price",
+    "more": "You can change more services, durations and descriptions later under “Services”."
+  },
+  "team": {
+    "title": "Who works with you?",
+    "lead": "If you work alone, just leave everything as it is. Other people get the opening hours as their working hours and can be invited by e-mail.",
+    "me": "You",
+    "person": "Another person",
+    "name": "Name",
+    "email": "E-mail to invite (optional)",
+    "skills": "Does these services",
+    "add": "Add another person",
+    "remove": "Remove person",
+    "existing": "Already added",
+    "existingHint": "You change working hours and services under",
+    "inviteFailed": "The invitation to {{names}} could not be sent. You can send it again under “Team”."
+  },
+  "done": {
+    "title": "Your salon is bookable!",
+    "lead": "Share the link or the QR code. Try the booking yourself first, the way your customers see it.",
+    "testBooking": "Make a test booking",
+    "missingTitle": "Almost there",
+    "missingLead": "To let customers book, this is still missing:"
+  },
+  "checklist": {
+    "title": "Make your salon bookable",
+    "lead": "{{count}} steps to go, then your customers can book online.",
+    "resume": "Continue setup"
+  }
 }

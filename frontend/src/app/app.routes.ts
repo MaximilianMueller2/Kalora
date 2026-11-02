@@ -32,17 +32,20 @@ export const routes: Routes = [
       {
         path: 'onboarding',
         title: 'title.onboarding',
+        canActivate: MANAGEMENT,
         loadComponent: () =>
           import('./features/onboarding/onboarding-page').then((m) => m.OnboardingPage),
-        providers: [provideTranslocoScope('onboarding')],
+        // The industry names come from registration, the link card from the dashboard.
+        providers: [provideTranslocoScope('onboarding', 'auth', 'dashboard')],
       },
       areaRoute(
         'dashboard',
         () => import('./features/dashboard/dashboard-page').then((m) => m.DashboardPage),
         'dashboard',
         undefined,
-        // The requests on the dashboard use the texts of the inbox.
+        // The requests on the dashboard use the texts of the inbox, the checklist those of the assistant.
         'requests',
+        'onboarding',
       ),
       areaRoute(
         'calendar',

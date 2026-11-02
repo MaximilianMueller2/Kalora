@@ -9,6 +9,7 @@ using Kalora.Application.Customers;
 using Kalora.Application.Dashboard;
 using Kalora.Application.Email;
 using Kalora.Application.PublicBooking;
+using Kalora.Application.Onboarding;
 using Kalora.Application.Staff;
 using Kalora.Application.Subscriptions;
 using Kalora.Application.Common;
@@ -96,6 +97,7 @@ public static class DependencyInjection
         services.AddSingleton<IValidator<CreateBlockRequest>, CreateBlockRequestValidator>();
         services.AddScoped<IAppointmentScheduler, AppointmentScheduler>();
         services.AddScoped<ISubscriptionGuard, SubscriptionGuard>();
+        services.AddScoped<IOnboardingService, OnboardingService>();
         services.AddScoped<IAdminSalonService, AdminSalonService>();
         services.AddScoped<ITrialReminderService, TrialReminderService>();
         services.AddScoped<IDashboardService, DashboardService>();

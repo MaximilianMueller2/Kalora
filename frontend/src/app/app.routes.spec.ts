@@ -38,10 +38,17 @@ describe('routes', () => {
     }
   });
 
-  it('restricts customers, services, team and settings to owners and managers, but not the staff’s own absences', () => {
+  it('restricts the setup assistant, customers, services, team and settings to owners and managers, but not the staff’s own absences', () => {
     const guarded = area.filter((route) => route.canActivate).map((route) => route.path);
 
-    expect(guarded).toEqual(['customers', 'customers/:id', 'services', 'team', 'settings']);
+    expect(guarded).toEqual([
+      'onboarding',
+      'customers',
+      'customers/:id',
+      'services',
+      'team',
+      'settings',
+    ]);
   });
 
   it('loads the team area with its own routes, titles and text scopes', () => {

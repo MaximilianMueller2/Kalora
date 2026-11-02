@@ -1,5 +1,67 @@
 {
-  "title": "Willkommen, {{name}}!",
-  "placeholder": "Dein Salon „{{salon}}“ ist angelegt. Die Einrichtung (Öffnungszeiten, Leistungen, Team) folgt im nächsten Schritt.",
-  "toDashboard": "Zum Dashboard"
+  "title": "Dein Salon in 5 Schritten buchbar",
+  "lead": "Willkommen, {{name}}! Das dauert etwa 10 Minuten. Du kannst jederzeit aufhören: was gespeichert ist, bleibt.",
+  "later": "Später fortsetzen",
+  "progress": "Einrichtung",
+  "stepDone": "erledigt",
+  "newTab": "(öffnet in neuem Tab)",
+  "back": "Zurück",
+  "next": "Weiter",
+  "skip": "Überspringen",
+  "toDashboard": "Zum Dashboard",
+  "steps": {
+    "profile": "Salon",
+    "hours": "Öffnungszeiten",
+    "services": "Leistungen",
+    "team": "Team",
+    "done": "Fertig"
+  },
+  "profile": {
+    "title": "Dein Salon",
+    "lead": "Damit Kunden dich finden und erreichen. Die Adresse steht auf deiner Buchungsseite.",
+    "industry": "Branche",
+    "street": "Straße und Hausnummer",
+    "postalCode": "PLZ",
+    "city": "Ort",
+    "phone": "Telefonnummer"
+  },
+  "hours": {
+    "title": "Wann hast du geöffnet?",
+    "lead": "Kunden können nur in diesen Zeiten buchen.",
+    "suggested": "Das ist ein Vorschlag: Dienstag bis Samstag, 9 bis 18 Uhr. Passe ihn an, wie du arbeitest."
+  },
+  "services": {
+    "title": "Was bietest du an?",
+    "lead": "Wir übernehmen eine Vorlage für deine Branche. Die Preise kannst du gleich anpassen.",
+    "empty": "Du hast noch keine Leistungen.",
+    "applyTemplate": "Vorlage für {{industry}} übernehmen",
+    "price": "Preis",
+    "more": "Weitere Leistungen, Dauer und Beschreibungen änderst du später unter „Leistungen“."
+  },
+  "team": {
+    "title": "Wer arbeitet bei dir?",
+    "lead": "Arbeitest du allein, lass einfach alles so. Weitere Personen bekommen die Öffnungszeiten als Arbeitszeit und können per E-Mail eingeladen werden.",
+    "me": "Du",
+    "person": "Weitere Person",
+    "name": "Name",
+    "email": "E-Mail zum Einladen (optional)",
+    "skills": "Macht diese Leistungen",
+    "add": "Weitere Person hinzufügen",
+    "remove": "Person entfernen",
+    "existing": "Schon angelegt",
+    "existingHint": "Arbeitszeiten und Leistungen änderst du unter",
+    "inviteFailed": "Die Einladung an {{names}} konnte nicht verschickt werden. Du kannst sie unter „Team“ erneut senden."
+  },
+  "done": {
+    "title": "Dein Salon ist buchbar!",
+    "lead": "Teile den Link oder den QR-Code. Probiere die Buchung vorher selbst aus, wie deine Kunden sie sehen.",
+    "testBooking": "Testbuchung machen",
+    "missingTitle": "Fast geschafft",
+    "missingLead": "Damit Kunden buchen können, fehlt noch:"
+  },
+  "checklist": {
+    "title": "Mach deinen Salon buchbar",
+    "lead": "Noch {{count}} Schritte, dann können deine Kunden online buchen.",
+    "resume": "Einrichtung fortsetzen"
+  }
 }
