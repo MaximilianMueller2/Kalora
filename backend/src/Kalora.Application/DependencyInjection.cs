@@ -1,4 +1,5 @@
 using FluentValidation;
+using Kalora.Application.Admin;
 using Kalora.Application.Appointments;
 using Kalora.Application.Auth;
 using Kalora.Application.Availability;
@@ -9,6 +10,7 @@ using Kalora.Application.Dashboard;
 using Kalora.Application.Email;
 using Kalora.Application.PublicBooking;
 using Kalora.Application.Staff;
+using Kalora.Application.Subscriptions;
 using Kalora.Application.Common;
 using Kalora.Application.Configuration;
 using Kalora.Application.Ping;
@@ -41,6 +43,10 @@ public static class DependencyInjection
             .BindConfiguration(RetentionOptions.SectionName)
             .ValidateOnStart();
         services.TryAddSingleton<IValidateOptions<RetentionOptions>, RetentionOptionsValidator>();
+        services.AddOptions<PlansOptions>()
+            .BindConfiguration(PlansOptions.SectionName)
+            .ValidateOnStart();
+        services.TryAddSingleton<IValidateOptions<PlansOptions>, PlansOptionsValidator>();
         services.AddSingleton<IManageTokens, ManageTokens>();
         services.AddSingleton<IEmailRenderer, EmailRenderer>();
         services.AddSingleton<CalendarAttachments>();
@@ -89,6 +95,9 @@ public static class DependencyInjection
         services.AddSingleton<IValidator<MoveAppointmentRequest>, MoveAppointmentRequestValidator>();
         services.AddSingleton<IValidator<CreateBlockRequest>, CreateBlockRequestValidator>();
         services.AddScoped<IAppointmentScheduler, AppointmentScheduler>();
+        services.AddScoped<ISubscriptionGuard, SubscriptionGuard>();
+        services.AddScoped<IAdminSalonService, AdminSalonService>();
+        services.AddScoped<ITrialReminderService, TrialReminderService>();
         services.AddScoped<IDashboardService, DashboardService>();
         services.AddScoped<IBookingLinkService, BookingLinkService>();
         services.AddSingleton<IValidator<ReasonRequest>, ReasonRequestValidator>();

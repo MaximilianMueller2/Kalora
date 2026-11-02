@@ -17,7 +17,8 @@ public sealed record PublicSalonDto(
     IReadOnlyList<OpeningDay> OpeningHours,
     string? ImprintText,
     string? PrivacyPolicyUrl,
-    string? PrivacyText);
+    string? PrivacyText,
+    bool BookingAvailable);
 
 /// <summary>Buffers and internal flags are not shown to customers.</summary>
 public sealed record PublicServiceDto(Guid Id, string Name, string? Description, int PriceCents, bool PriceIsFrom, string Currency, int DurationMinutes);

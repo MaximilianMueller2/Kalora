@@ -71,3 +71,19 @@ describe('routes', () => {
     expect(eager).toEqual([]);
   });
 });
+
+describe('platform area', () => {
+  const admin = routes.find((route) => route.path === 'admin');
+
+  it('is only for the platform admin and has its own frame, text scope and two pages', () => {
+    expect(admin?.canActivate).toHaveLength(1);
+    expect(admin?.providers).toHaveLength(1);
+    expect(admin?.children?.map((route) => route.path)).toEqual(['', 'salons', 'salons/:id']);
+  });
+
+  it('sits before the :slug route, so “admin” is not read as a salon', () => {
+    const paths = routes.map((route) => route.path);
+
+    expect(paths.indexOf('admin')).toBeLessThan(paths.indexOf(':slug'));
+  });
+});

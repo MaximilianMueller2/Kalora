@@ -85,13 +85,14 @@ internal sealed class EmailRenderer : IEmailRenderer
     }
 
     private static string Brand(string type, Payload payload) =>
-        type is EmailTypes.ConfirmEmail or EmailTypes.ResetPassword ? AccountBrand : payload.Text("SalonName") ?? AccountBrand;
+        type is EmailTypes.ConfirmEmail or EmailTypes.ResetPassword or EmailTypes.TrialEndsSoon or EmailTypes.TrialEndsTomorrow ? AccountBrand : payload.Text("SalonName") ?? AccountBrand;
 
     private static string? ButtonUrl(string type, Payload payload) => type switch
     {
         EmailTypes.ConfirmEmail => payload.Text("ConfirmUrl"),
         EmailTypes.ResetPassword => payload.Text("ResetUrl"),
         EmailTypes.StaffInvitation => payload.Text("InvitationUrl"),
+        EmailTypes.TrialEndsSoon or EmailTypes.TrialEndsTomorrow => payload.Text("AppUrl"),
         EmailTypes.BookingNewForSalon => payload.Text("RequestUrl"),
         EmailTypes.BookingCancellationForSalon => payload.Text("CalendarUrl") ?? payload.Text("RequestUrl"),
         _ when BookAgainTypes.Contains(type) => payload.Text("BookingUrl") ?? payload.Text("ManageUrl"),

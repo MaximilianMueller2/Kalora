@@ -10,6 +10,8 @@ export const SALON_INDUSTRIES: readonly SalonIndustry[] = [
   'Beauty',
 ];
 
+export type SalonAccess = 'Full' | 'TrialExpired' | 'Suspended' | 'Cancelled';
+
 export interface MeSalon {
   id: string;
   name: string;
@@ -17,6 +19,11 @@ export interface MeSalon {
   status: 'Trial' | 'Active' | 'PastDue' | 'Suspended' | 'Cancelled';
   planCode: 'Solo' | 'Team' | 'SalonPlus';
   trialEndsAtUtc: string | null;
+  /**
+   * What the salon may do right now. Anything but `Full` means it can only look at its data
+   * (trial over, suspended, cancelled); the server refuses changes.
+   */
+  access: SalonAccess;
   /** IANA time zone of the salon; times from the API are UTC and shown in this zone. */
   timeZone: string;
 }

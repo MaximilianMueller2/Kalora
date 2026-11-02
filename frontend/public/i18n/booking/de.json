@@ -74,5 +74,10 @@
   "notFound": {
     "title": "Salon nicht gefunden",
     "text": "Bitte prüfe den Link, den du bekommen hast."
+  },
+  "unavailable": {
+    "title": "Online-Buchung derzeit nicht verfügbar",
+    "text": "Bitte ruf den Salon an, um einen Termin zu vereinbaren.",
+    "call": "{{phone}} anrufen"
   }
 }

@@ -10,6 +10,7 @@ namespace Kalora.Api.Controllers;
 
 /// <summary>The salon's customer file with export and deletion. Owners and managers only.</summary>
 [Route("api/customers")]
+[AllowWhenReadOnly]
 [Authorize(Policy = AuthPolicies.SalonManager)]
 public sealed class CustomersController(ICustomerService customers) : ApiControllerBase
 {

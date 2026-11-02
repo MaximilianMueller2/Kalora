@@ -581,6 +581,11 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<string>("AdminNote")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)")
+                        .HasColumnName("admin_note");
+
                     b.Property<bool>("AutoConfirm")
                         .HasColumnType("boolean")
                         .HasColumnName("auto_confirm");
@@ -694,9 +699,17 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnType("character varying(64)")
                         .HasColumnName("time_zone");
 
+                    b.Property<DateTimeOffset?>("TrialDayReminderSentAtUtc")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("trial_day_reminder_sent_at_utc");
+
                     b.Property<DateTimeOffset?>("TrialEndsAtUtc")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("trial_ends_at_utc");
+
+                    b.Property<DateTimeOffset?>("TrialWeekReminderSentAtUtc")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("trial_week_reminder_sent_at_utc");
 
                     b.Property<DateTimeOffset>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone")

@@ -60,6 +60,8 @@ npm run i18n:check      # fehlende Übersetzungen de/en/tr
 npm run build
 ```
 
+Plattform-Admin (Bereich `/admin`): Konto normal registrieren und die Adresse bestätigen, dann in der API-Konfiguration eintragen und die API neu starten, z. B. `dotnet user-secrets set "PlatformAdmin:Emails:0" "du@example.com" --project src/Kalora.Api` (im Betrieb die Umgebungsvariable `PlatformAdmin__Emails__0`). Nach dem Neustart wird das Konto zum Plattform-Admin; neu anmelden. Die Liste vergibt die Rolle nur, sie nimmt sie nie weg.
+
 Ausprobieren: Auf http://localhost:4200 ein Konto registrieren. Die Bestätigungs-, Passwort-Reset- und Einladungs-Mails werden vom Hintergrunddienst über Mailpit zugestellt und sind unter http://localhost:8025 zu sehen (die Links führen auf `/auth/confirm-email`, `/auth/reset-password` bzw. `/auth/invitation/<token>`).
 
 Hinweis: Das Backend setzt `Secure`-Cookies. Chrome und Firefox akzeptieren sie auch auf `http://localhost`, Safari nicht – dort lokal besser Chrome oder Firefox nutzen.

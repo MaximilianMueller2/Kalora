@@ -21,6 +21,7 @@ internal sealed class SalonConfiguration : IEntityTypeConfiguration<Salon>
         builder.Property(s => s.ImprintText).HasMaxLength(4000);
         builder.Property(s => s.PrivacyPolicyUrl).HasMaxLength(500);
         builder.Property(s => s.PrivacyText).HasMaxLength(20000);
+        builder.Property(s => s.AdminNote).HasMaxLength(2000);
         builder.Property(s => s.PlanCode).HasConversion<string>().HasMaxLength(20);
         builder.Property(s => s.Status).HasConversion<string>().HasMaxLength(20);
         builder.HasIndex(s => s.Slug).IsUnique();

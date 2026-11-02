@@ -91,21 +91,63 @@ public class PublicBookingTests(PostgresFixture postgres)
     }
 
     [Fact]
-    public async Task An_unknown_suspended_or_cancelled_salon_is_not_found()
+    public async Task An_unknown_or_cancelled_salon_is_not_found()
     {
         await using var world = await NewWorldAsync();
 
         Assert.Equal("salon.not_found", await CodeAsync(await world.Client.GetAsync("/api/public/salons/gibt-es-nicht")));
-        foreach (var status in new[] { SalonStatus.Suspended, SalonStatus.Cancelled })
-        {
-            await world.Salon.ConfigureSalonAsync(s => s.Status = status);
-            Assert.Equal(HttpStatusCode.NotFound, (await world.Client.GetAsync(world.Url())).StatusCode);
-            Assert.Equal(HttpStatusCode.NotFound, (await world.Client.GetAsync(world.Url("/services"))).StatusCode);
-            Assert.Equal(HttpStatusCode.NotFound, (await world.PostAsync(Booking(world.Cut))).StatusCode);
-        }
+        await world.Salon.ConfigureSalonAsync(s => s.Status = SalonStatus.Cancelled);
+        Assert.Equal(HttpStatusCode.NotFound, (await world.Client.GetAsync(world.Url())).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await world.Client.GetAsync(world.Url("/services"))).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await world.PostAsync(Booking(world.Cut))).StatusCode);
 
         await world.Salon.ConfigureSalonAsync(s => s.Status = SalonStatus.PastDue);
         Assert.Equal(HttpStatusCode.OK, (await world.Client.GetAsync(world.Url())).StatusCode);
+    }
+
+    [Fact]
+    public async Task A_suspended_salon_keeps_its_page_with_the_phone_number_but_takes_no_bookings()
+    {
+        await using var world = await NewWorldAsync();
+        await world.Salon.ConfigureSalonAsync(s =>
+        {
+            s.Status = SalonStatus.Suspended;
+            s.Phone = "+49 30 123456";
+        });
+
+        var profile = await ReadAsync<PublicSalonDto>(await world.Client.GetAsync(world.Url()));
+        Assert.False(profile.BookingAvailable);
+        Assert.Equal("+49 30 123456", profile.Phone);
+        await AssertUnavailableAsync(world);
+    }
+
+    [Fact]
+    public async Task A_salon_whose_trial_is_over_takes_no_bookings_until_the_trial_is_extended()
+    {
+        await using var world = await NewWorldAsync();
+        var now = world.Host.Clock.GetUtcNow();
+        await world.Salon.ConfigureSalonAsync(s => s.TrialEndsAtUtc = now.AddDays(1));
+        Assert.True((await ReadAsync<PublicSalonDto>(await world.Client.GetAsync(world.Url()))).BookingAvailable);
+
+        world.Host.Clock.Advance(TimeSpan.FromDays(1));
+
+        Assert.False((await ReadAsync<PublicSalonDto>(await world.Client.GetAsync(world.Url()))).BookingAvailable);
+        await AssertUnavailableAsync(world);
+
+        await world.Salon.ConfigureSalonAsync(s => s.Status = SalonStatus.Active);
+        Assert.True((await ReadAsync<PublicSalonDto>(await world.Client.GetAsync(world.Url()))).BookingAvailable);
+    }
+
+    private static async Task AssertUnavailableAsync(World world)
+    {
+        foreach (var path in new[] { "/services", $"/staff?serviceId={world.Cut.Id}", $"/availability/days?serviceId={world.Cut.Id}&month=2026-11", $"/availability/slots?serviceId={world.Cut.Id}&date=2026-11-04" })
+        {
+            var response = await world.Client.GetAsync(world.Url(path));
+            Assert.Equal((HttpStatusCode.Conflict, "booking.unavailable"), (response.StatusCode, await CodeAsync(response)));
+        }
+
+        var booking = await world.PostAsync(Booking(world.Cut));
+        Assert.Equal((HttpStatusCode.Conflict, "booking.unavailable"), (booking.StatusCode, await CodeAsync(booking)));
     }
 
     [Fact]

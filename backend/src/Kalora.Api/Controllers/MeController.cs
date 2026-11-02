@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kalora.Api.Controllers;
 
 [Route("api/me")]
+[AllowWhenReadOnly]
 [Authorize]
 public sealed class MeController(IAuthService auth) : ApiControllerBase
 {

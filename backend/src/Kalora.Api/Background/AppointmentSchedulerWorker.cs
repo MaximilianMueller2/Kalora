@@ -1,11 +1,12 @@
 using Kalora.Application.Appointments;
 using Kalora.Application.Configuration;
+using Kalora.Application.Subscriptions;
 using Microsoft.Extensions.Options;
 
 namespace Kalora.Api.Background;
 
 /// <summary>
-/// Runs the appointment scheduler every few minutes (Scheduler:IntervalMinutes). Only one instance should have it enabled,
+/// Runs the appointment scheduler and the trial reminders every few minutes (Scheduler:IntervalMinutes). Only one instance should have it enabled,
 /// see Scheduler:Enabled. A failing run is logged and tried again at the next interval.
 /// </summary>
 internal sealed partial class AppointmentSchedulerWorker(IServiceScopeFactory scopes, IOptions<SchedulerOptions> options, ILogger<AppointmentSchedulerWorker> logger) : BackgroundService
@@ -26,6 +27,8 @@ internal sealed partial class AppointmentSchedulerWorker(IServiceScopeFactory sc
                     result = await scheduler.RunAsync(stoppingToken);
                 }
                 while (result.Expired >= options.Value.BatchSize || result.Reminders >= options.Value.BatchSize); // a full batch: more is waiting
+
+                await scope.ServiceProvider.GetRequiredService<ITrialReminderService>().RunAsync(stoppingToken);
             }
             catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
             {

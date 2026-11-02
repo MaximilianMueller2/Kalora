@@ -178,6 +178,28 @@
       ],
       "button": "Randevuyu yönet",
       "reasonLine": "Salonun notu: {reason}"
+    },
+    "subscription.trial_ends_soon": {
+      "subject": "{salon} deneme süresi yakında bitiyor",
+      "heading": "Deneme süreniz yakında bitiyor",
+      "intro": [
+        "Merhaba {name},",
+        "{salon} için Kalora ücretsiz deneme süresi {expires} tarihinde sona eriyor.",
+        "O zamana kadar her şey her zamanki gibi çalışır. Sonrasında verileriniz saklanır, ancak çevrim içi randevu duraklatılır ve artık değişiklik yapamazsınız.",
+        "Kesintisiz devam etmek için süre dolmadan bizimle iletişime geçin – faturalama şimdilik kişisel olarak yapılıyor, bir ödeme sağlayıcısı yok."
+      ],
+      "button": "Kalora'yı aç"
+    },
+    "subscription.trial_ends_tomorrow": {
+      "subject": "Son gün: {salon} deneme süresi yarın bitiyor",
+      "heading": "Deneme süreniz yarın bitiyor",
+      "intro": [
+        "Merhaba {name},",
+        "{salon} için Kalora ücretsiz deneme süresi {expires} tarihinde sona eriyor.",
+        "Sonrasında çevrim içi randevu duraklatılır ve artık değişiklik yapamazsınız; verileriniz saklanır.",
+        "Kesintisiz devam etmek için şimdi bizimle iletişime geçin – faturalama kişisel olarak yapılıyor."
+      ],
+      "button": "Kalora'yı aç"
     }
   }
 }

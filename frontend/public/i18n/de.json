@@ -22,7 +22,8 @@
     "logout": "Abmelden",
     "absences": "Abwesenheiten",
     "openRequests": "Offene Anfragen: {{count}}",
-    "customers": "Kunden"
+    "customers": "Kunden",
+    "platform": "Plattform"
   },
   "theme": {
     "system": "Darstellung: wie Gerät",
@@ -135,7 +136,8 @@
     },
     "booking": {
       "slot_unavailable": "Dieser Termin wurde gerade vergeben. Bitte wähle eine andere Zeit.",
-      "too_many_open_requests": "Du hast schon drei offene Anfragen bei diesem Salon. Bitte warte, bis der Salon antwortet."
+      "too_many_open_requests": "Du hast schon drei offene Anfragen bei diesem Salon. Bitte warte, bis der Salon antwortet.",
+      "unavailable": "Online-Buchung ist derzeit nicht verfügbar."
     },
     "availability": {
       "range_invalid": "Dieser Zeitraum ist ungültig.",
@@ -160,7 +162,18 @@
     },
     "appointment.cancellation_deadline_passed": "Online absagen ist nicht mehr möglich. Bitte ruf den Salon an.",
     "customer.has_open_appointments": "Dieser Kunde hat noch offene oder bevorstehende Termine. Sage sie zuerst ab.",
-    "customer.already_anonymized": "Dieser Kunde ist schon gelöscht."
+    "customer.already_anonymized": "Dieser Kunde ist schon gelöscht.",
+    "subscription": {
+      "read_only": "Dieser Salon kann gerade nur lesen. Änderungen sind nicht möglich.",
+      "staff_limit": "Dein Plan erlaubt keine weiteren Mitarbeitenden. Melde dich bei uns, um den Plan zu wechseln."
+    },
+    "admin": {
+      "not_in_trial": "Nur Salons in der Testphase haben eine Testphase.",
+      "not_suspended": "Dieser Salon ist nicht gesperrt.",
+      "trial_days_invalid": "Die Testphase lässt sich um 1 bis 90 Tage verlängern.",
+      "note_too_long": "Die Notiz ist zu lang.",
+      "plan_invalid": "Dieser Plan ist ungültig."
+    }
   },
   "title": {
     "login": "Anmelden",
@@ -169,7 +182,8 @@
     "resetPassword": "Neues Passwort",
     "confirmEmail": "E-Mail bestätigen",
     "invitation": "Einladung annehmen",
-    "onboarding": "Willkommen"
+    "onboarding": "Willkommen",
+    "admin": "Plattform"
   },
   "validation": {
     "required": "Dieses Feld ist erforderlich.",
@@ -199,5 +213,13 @@
       "overlap": "Die Zeiträume überschneiden sich.",
       "too_many_blocks": "Höchstens 4 Zeiträume pro Tag."
     }
+  },
+  "banner": {
+    "limited": {
+      "TrialExpired": "Die Testphase ist vorbei. Du kannst deine Daten ansehen, aber nichts mehr ändern, und die Online-Buchung ist pausiert. Melde dich bei uns, um weiterzumachen.",
+      "Suspended": "Dieser Salon ist gesperrt. Du kannst deine Daten ansehen, aber nichts mehr ändern, und die Online-Buchung ist pausiert.",
+      "Cancelled": "Dieses Abo ist beendet. Du kannst deine Daten ansehen und exportieren, aber nichts mehr ändern."
+    },
+    "trialEnds": "Deine Testphase endet am {{date}}. Melde dich vorher bei uns, damit es nahtlos weitergeht."
   }
 }

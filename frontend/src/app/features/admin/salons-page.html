@@ -1,0 +1,77 @@
+<header class="head">
+  <h1>{{ 'admin.title' | transloco }}</h1>
+  <p>{{ 'admin.lead' | transloco }}</p>
+</header>
+
+<div class="filters">
+  <label class="search">
+    <mat-icon aria-hidden="true">search</mat-icon>
+    <span class="visually-hidden">{{ 'admin.search' | transloco }}</span>
+    <input
+      type="search"
+      autocomplete="off"
+      [placeholder]="'admin.search' | transloco"
+      [value]="typed()"
+      (input)="onInput($event)"
+    />
+  </label>
+  <label class="select">
+    <span class="visually-hidden">{{ 'admin.statusFilter' | transloco }}</span>
+    <select (change)="onStatus($event)">
+      <option value="" [selected]="status() === ''">{{ 'admin.allStatuses' | transloco }}</option>
+      @for (option of statuses; track option) {
+        <option [value]="option" [selected]="status() === option">
+          {{ 'admin.status.' + option | transloco }}
+        </option>
+      }
+    </select>
+  </label>
+</div>
+
+@if (loading()) {
+  <div class="skeleton" aria-busy="true" aria-hidden="true"></div>
+} @else if (failed()) {
+  <p class="alert" role="alert">{{ 'admin.loadFailed' | transloco }}</p>
+} @else if (items().length === 0) {
+  <p class="empty">{{ 'admin.none' | transloco }}</p>
+} @else {
+  <ul class="list">
+    @for (salon of items(); track salon.id) {
+      <li>
+        <a [routerLink]="['/admin/salons', salon.id]">
+          <span class="who">
+            <strong>{{ salon.name }}</strong>
+            <span class="sub">{{ salon.ownerEmail || salon.slug }}</span>
+          </span>
+          <span class="facts">
+            <span class="chip" [attr.data-status]="salon.status">{{
+              'admin.status.' + salon.status | transloco
+            }}</span>
+            @if (salon.access !== 'Full') {
+              <span class="chip limited">{{ 'admin.access.' + salon.access | transloco }}</span>
+            }
+            <span>{{ 'admin.plan.' + salon.planCode | transloco }}</span>
+            <span>{{
+              'admin.team' | transloco: { count: salon.staffCount, limit: salon.staffLimit }
+            }}</span>
+            <span>{{
+              'admin.appointments' | transloco: { count: salon.appointmentsThisMonth }
+            }}</span>
+            @if (salon.status === 'Trial' && salon.trialEndsAtUtc; as ends) {
+              <span>{{ 'admin.trialEnds' | transloco: { date: date(ends) } }}</span>
+            }
+            @if (salon.hasNote) {
+              <mat-icon class="note" [attr.aria-label]="'admin.hasNote' | transloco"
+                >sticky_note_2</mat-icon
+              >
+            }
+          </span>
+          <mat-icon aria-hidden="true">chevron_right</mat-icon>
+        </a>
+      </li>
+    }
+  </ul>
+  @if (hasMore()) {
+    <p class="more" role="note">{{ 'admin.more' | transloco }}</p>
+  }
+}

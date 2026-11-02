@@ -6,6 +6,8 @@ public class ArchitectureTests
     // Files that may bypass tenant isolation. Extend this list consciously (platform admin, registration, scheduler).
     private static readonly string[] TenantBypassAllowedFiles =
     [
+        "Kalora.Application/Admin/AdminSalonService.cs", // the platform admin looks at all salons (counts only, never customers)
+        "Kalora.Application/Subscriptions/TrialReminderService.cs", // the trial reminders are a background job without a tenant
         "Kalora.Application/Auth/AuthService.cs", // password reset: finds the salon of a user who is not signed in
         "Kalora.Application/Auth/InvitationService.cs", // the invitation token identifies the salon
         "Kalora.Application/Auth/MeResponseFactory.cs", // profile of a user right after login, before a tenant exists

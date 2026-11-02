@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kalora.Api.Controllers;
 
 [Route("api/auth")]
+[AllowWhenReadOnly]
 public sealed class AuthController(IRegistrationService registration, IAuthService auth) : ApiControllerBase
 {
     [HttpPost("register")]

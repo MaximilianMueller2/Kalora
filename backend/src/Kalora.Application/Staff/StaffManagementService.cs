@@ -2,6 +2,7 @@ using FluentValidation;
 using Kalora.Application.Catalog;
 using Kalora.Application.Common;
 using Kalora.Application.Identity;
+using Kalora.Application.Subscriptions;
 using Kalora.Domain.Salons;
 using Kalora.Domain.Staff;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ internal sealed class StaffManagementService(
     IAppDbContext db,
     ICurrentUser currentUser,
     TimeProvider timeProvider,
+    ISubscriptionGuard subscription,
     IValidator<CreateStaffRequest> createValidator,
     IValidator<SaveStaffRequest> saveValidator,
     IValidator<StaffSkills> skillsValidator) : IStaffService
@@ -44,6 +46,12 @@ internal sealed class StaffManagementService(
         if (!validation.IsValid)
         {
             return validation.ToError();
+        }
+
+        var allowed = await subscription.EnsureCanAddStaffAsync(cancellationToken: cancellationToken);
+        if (!allowed.IsSuccess)
+        {
+            return allowed.Error;
         }
 
         Guid? userId = null;
@@ -88,6 +96,15 @@ internal sealed class StaffManagementService(
         if (staff is null)
         {
             return Error.NotFound("staff.not_found");
+        }
+
+        if (request.IsActive && !staff.IsActive)
+        {
+            var allowed = await subscription.EnsureCanAddStaffAsync(cancellationToken: cancellationToken);
+            if (!allowed.IsSuccess)
+            {
+                return allowed.Error;
+            }
         }
 
         staff.DisplayName = request.DisplayName.Trim();

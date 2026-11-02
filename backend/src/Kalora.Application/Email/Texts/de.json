@@ -178,6 +178,28 @@
       ],
       "button": "Termin verwalten",
       "reasonLine": "Hinweis des Salons: {reason}"
+    },
+    "subscription.trial_ends_soon": {
+      "subject": "Die Testphase von {salon} endet bald",
+      "heading": "Deine Testphase endet bald",
+      "intro": [
+        "Hallo {name},",
+        "die kostenlose Testphase von {salon} bei Kalora endet am {expires}.",
+        "Bis dahin kannst du alles wie gewohnt nutzen. Danach bleiben deine Daten erhalten, aber die Online-Buchung ist pausiert und du kannst nichts mehr ändern.",
+        "Damit es nahtlos weitergeht, melde dich vor Ablauf bei uns – die Abrechnung läuft aktuell persönlich, einen Zahlungsanbieter gibt es nicht."
+      ],
+      "button": "Kalora öffnen"
+    },
+    "subscription.trial_ends_tomorrow": {
+      "subject": "Letzter Tag: Die Testphase von {salon} endet morgen",
+      "heading": "Deine Testphase endet morgen",
+      "intro": [
+        "Hallo {name},",
+        "die kostenlose Testphase von {salon} bei Kalora endet am {expires}.",
+        "Danach ist die Online-Buchung pausiert und du kannst nichts mehr ändern; deine Daten bleiben erhalten.",
+        "Melde dich jetzt bei uns, damit es nahtlos weitergeht – die Abrechnung läuft persönlich."
+      ],
+      "button": "Kalora öffnen"
     }
   }
 }

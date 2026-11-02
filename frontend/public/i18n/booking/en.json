@@ -74,5 +74,10 @@
   "notFound": {
     "title": "Salon not found",
     "text": "Please check the link you received."
+  },
+  "unavailable": {
+    "title": "Online booking is currently not available",
+    "text": "Please call the salon to make an appointment.",
+    "call": "Call {{phone}}"
   }
 }

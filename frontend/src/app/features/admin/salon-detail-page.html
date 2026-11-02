@@ -1,0 +1,136 @@
+<a class="back" routerLink="/admin">
+  <mat-icon aria-hidden="true">arrow_back</mat-icon>
+  {{ 'admin.back' | transloco }}
+</a>
+
+@if (loading()) {
+  <div class="skeleton" aria-busy="true" aria-hidden="true"></div>
+} @else if (failed()) {
+  <p class="alert" role="alert">{{ 'admin.loadFailed' | transloco }}</p>
+} @else if (salon(); as salon) {
+  <div class="title">
+    <h1>{{ salon.name }}</h1>
+    <span class="chip" [attr.data-status]="salon.status">{{
+      'admin.status.' + salon.status | transloco
+    }}</span>
+    @if (salon.access !== 'Full') {
+      <span class="chip limited">{{ 'admin.access.' + salon.access | transloco }}</span>
+    }
+  </div>
+
+  @if (error(); as message) {
+    <p class="alert" role="alert">{{ message }}</p>
+  }
+
+  <dl class="facts-list">
+    <dt>{{ 'admin.owner' | transloco }}</dt>
+    <dd>
+      {{ salon.ownerName || '–' }}
+      @if (salon.ownerEmail) {
+        · <a [href]="'mailto:' + salon.ownerEmail">{{ salon.ownerEmail }}</a>
+      }
+    </dd>
+    <dt>{{ 'admin.page' | transloco }}</dt>
+    <dd>/{{ salon.slug }}</dd>
+    <dt>{{ 'admin.place' | transloco }}</dt>
+    <dd>{{ salon.city || '–' }}{{ salon.phone ? ' · ' + salon.phone : '' }}</dd>
+    <dt>{{ 'admin.created' | transloco }}</dt>
+    <dd>{{ date(salon.createdAtUtc) }}</dd>
+    <dt>{{ 'admin.teamLabel' | transloco }}</dt>
+    <dd>{{ 'admin.team' | transloco: { count: salon.staffCount, limit: salon.staffLimit } }}</dd>
+    <dt>{{ 'admin.appointmentsLabel' | transloco }}</dt>
+    <dd>{{ 'admin.appointments' | transloco: { count: salon.appointmentsThisMonth } }}</dd>
+    @if (salon.trialEndsAtUtc; as ends) {
+      <dt>{{ 'admin.trialLabel' | transloco }}</dt>
+      <dd>{{ dateTime(ends) }}</dd>
+    }
+  </dl>
+
+  <section class="card" [attr.aria-label]="'admin.planTitle' | transloco">
+    <h2>{{ 'admin.planTitle' | transloco }}</h2>
+    <p>{{ 'admin.planHint' | transloco }}</p>
+    <label class="field">
+      <span class="visually-hidden">{{ 'admin.planTitle' | transloco }}</span>
+      <select class="plan" [disabled]="busy()" (change)="setPlan($event)">
+        @for (plan of plans; track plan) {
+          <option [value]="plan" [selected]="salon.planCode === plan">
+            {{ 'admin.plan.' + plan | transloco }}
+          </option>
+        }
+      </select>
+    </label>
+  </section>
+
+  <section class="card" [attr.aria-label]="'admin.statusTitle' | transloco">
+    <h2>{{ 'admin.statusTitle' | transloco }}</h2>
+    <p>{{ 'admin.statusHint' | transloco }}</p>
+    <div class="row">
+      <label class="field">
+        <span class="visually-hidden">{{ 'admin.statusTitle' | transloco }}</span>
+        <select class="status" [disabled]="busy()" (change)="setStatus($event)">
+          @for (status of statuses; track status) {
+            <option [value]="status" [selected]="salon.status === status">
+              {{ 'admin.status.' + status | transloco }}
+            </option>
+          }
+        </select>
+      </label>
+      <button
+        mat-stroked-button
+        type="button"
+        class="toggle"
+        [class.danger]="!suspended()"
+        [disabled]="busy()"
+        (click)="toggleSuspension()"
+      >
+        <mat-icon aria-hidden="true">{{ suspended() ? 'lock_open' : 'lock' }}</mat-icon>
+        {{ (suspended() ? 'admin.unsuspend' : 'admin.suspend') | transloco }}
+      </button>
+    </div>
+  </section>
+
+  @if (inTrial()) {
+    <section class="card" [attr.aria-label]="'admin.trialTitle' | transloco">
+      <h2>{{ 'admin.trialTitle' | transloco }}</h2>
+      <p>{{ 'admin.trialHint' | transloco }}</p>
+      <div class="row">
+        @for (days of extensions; track days) {
+          <button
+            mat-stroked-button
+            type="button"
+            class="extend"
+            [disabled]="busy()"
+            (click)="extend(days)"
+          >
+            {{ 'admin.extend' | transloco: { days } }}
+          </button>
+        }
+      </div>
+    </section>
+  }
+
+  <section class="card" [attr.aria-label]="'admin.noteTitle' | transloco">
+    <h2>{{ 'admin.noteTitle' | transloco }}</h2>
+    <p>{{ 'admin.noteHint' | transloco }}</p>
+    <label class="field">
+      <span class="visually-hidden">{{ 'admin.noteTitle' | transloco }}</span>
+      <textarea
+        maxlength="2000"
+        [value]="note()"
+        [disabled]="busy()"
+        (input)="onNote($event)"
+      ></textarea>
+    </label>
+    <div class="row">
+      <button
+        mat-flat-button
+        type="button"
+        class="save-note"
+        [disabled]="busy()"
+        (click)="saveNote()"
+      >
+        {{ 'admin.saveNote' | transloco }}
+      </button>
+    </div>
+  </section>
+}

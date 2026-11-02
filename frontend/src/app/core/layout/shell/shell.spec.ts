@@ -40,6 +40,31 @@ const links = (fixture: ComponentFixture<Shell>, selector: string) =>
 describe('Shell', () => {
   beforeEach(() => localStorage.clear());
 
+  it('links the platform area for the platform admin only, on desktop and on the phone', async () => {
+    for (const desktop of [true, false]) {
+      const admin = await setup({ desktop, user: { ...OWNER, isPlatformAdmin: true } });
+      expect(links(admin.fixture, 'a.platform').map((a) => a.getAttribute('href'))).toEqual([
+        '/admin',
+      ]);
+      TestBed.resetTestingModule();
+
+      const owner = await setup({ desktop });
+      expect(links(owner.fixture, 'a.platform')).toHaveLength(0);
+      TestBed.resetTestingModule();
+    }
+  });
+
+  it('shows the subscription banner above the page', async () => {
+    const { fixture } = await setup({
+      desktop: true,
+      user: { ...OWNER, salon: { ...OWNER.salon!, access: 'Suspended' } },
+    });
+
+    const main = fixture.nativeElement.querySelector('main') as HTMLElement;
+    expect(main.firstElementChild?.tagName.toLowerCase()).toBe('app-subscription-banner');
+    expect(main.querySelector('.banner.limited')).not.toBeNull();
+  });
+
   it('shows the side navigation with all seven areas to an owner on desktop', async () => {
     const { fixture } = await setup({ desktop: true });
 

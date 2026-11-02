@@ -16,6 +16,9 @@ internal static class AppLinks
     public static string ManageAppointment(string baseUrl, string token) =>
         $"{Trim(baseUrl)}/m/{Uri.EscapeDataString(token)}";
 
+    /// <summary>The start page of the salon area.</summary>
+    public static string Dashboard(string baseUrl) => $"{Trim(baseUrl)}/app/dashboard";
+
     /// <summary>The salon's calendar.</summary>
     public static string Calendar(string baseUrl) => $"{Trim(baseUrl)}/app/calendar";
 

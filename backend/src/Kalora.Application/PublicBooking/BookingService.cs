@@ -42,10 +42,15 @@ internal sealed class BookingService(
             return LookAlikeReceipt(request);
         }
 
-        var salon = await db.Salons.Where(s => s.Status != SalonStatus.Suspended && s.Status != SalonStatus.Cancelled).FirstOrDefaultAsync(cancellationToken);
+        var salon = await db.Salons.Where(s => s.Status != SalonStatus.Cancelled).FirstOrDefaultAsync(cancellationToken);
         if (salon is null)
         {
             return Error.NotFound("salon.not_found", "slug");
+        }
+
+        if (salon.AccessAt(timeProvider.GetUtcNow()) != SalonAccess.Full)
+        {
+            return Error.Conflict("booking.unavailable");
         }
 
         for (var attempt = 1; ; attempt++)

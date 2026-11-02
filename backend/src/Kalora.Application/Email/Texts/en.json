@@ -178,6 +178,28 @@
       ],
       "button": "Manage appointment",
       "reasonLine": "Note from the salon: {reason}"
+    },
+    "subscription.trial_ends_soon": {
+      "subject": "The trial of {salon} ends soon",
+      "heading": "Your trial ends soon",
+      "intro": [
+        "Hello {name},",
+        "the free trial of {salon} on Kalora ends on {expires}.",
+        "Until then everything works as usual. Afterwards your data stays safe, but online booking is paused and you can no longer change anything.",
+        "To carry on without a break, get in touch before it ends – billing is handled personally for now, there is no payment provider."
+      ],
+      "button": "Open Kalora"
+    },
+    "subscription.trial_ends_tomorrow": {
+      "subject": "Last day: the trial of {salon} ends tomorrow",
+      "heading": "Your trial ends tomorrow",
+      "intro": [
+        "Hello {name},",
+        "the free trial of {salon} on Kalora ends on {expires}.",
+        "Afterwards online booking is paused and you can no longer change anything; your data stays safe.",
+        "Get in touch now to carry on without a break – billing is handled personally."
+      ],
+      "button": "Open Kalora"
     }
   }
 }

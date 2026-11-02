@@ -22,7 +22,8 @@
     "logout": "Çıkış yap",
     "absences": "İzinler",
     "openRequests": "Açık talepler: {{count}}",
-    "customers": "Müşteriler"
+    "customers": "Müşteriler",
+    "platform": "Platform"
   },
   "theme": {
     "system": "Görünüm: cihaza göre",
@@ -135,7 +136,8 @@
     },
     "booking": {
       "slot_unavailable": "Bu saat az önce alındı. Lütfen başka bir saat seçin.",
-      "too_many_open_requests": "Bu salonda zaten üç açık talebiniz var. Lütfen salon yanıtlayana kadar bekleyin."
+      "too_many_open_requests": "Bu salonda zaten üç açık talebiniz var. Lütfen salon yanıtlayana kadar bekleyin.",
+      "unavailable": "Çevrim içi randevu şu anda kullanılamıyor."
     },
     "availability": {
       "range_invalid": "Bu aralık geçersiz.",
@@ -160,7 +162,18 @@
     },
     "appointment.cancellation_deadline_passed": "Çevrimiçi iptal artık mümkün değil. Lütfen salonu arayın.",
     "customer.has_open_appointments": "Bu müşterinin açık veya yaklaşan randevuları var. Önce onları iptal edin.",
-    "customer.already_anonymized": "Bu müşteri zaten silinmiş."
+    "customer.already_anonymized": "Bu müşteri zaten silinmiş.",
+    "subscription": {
+      "read_only": "Bu salon şu anda yalnızca okuyabilir. Değişiklik yapılamaz.",
+      "staff_limit": "Planınız daha fazla çalışana izin vermiyor. Planı değiştirmek için bizimle iletişime geçin."
+    },
+    "admin": {
+      "not_in_trial": "Yalnızca deneme sürecindeki salonların deneme süresi vardır.",
+      "not_suspended": "Bu salon askıda değil.",
+      "trial_days_invalid": "Deneme süresi 1 ila 90 gün uzatılabilir.",
+      "note_too_long": "Not çok uzun.",
+      "plan_invalid": "Bu plan geçersiz."
+    }
   },
   "title": {
     "login": "Giriş yap",
@@ -169,7 +182,8 @@
     "resetPassword": "Yeni şifre",
     "confirmEmail": "E-postayı doğrula",
     "invitation": "Daveti kabul et",
-    "onboarding": "Hoş geldin"
+    "onboarding": "Hoş geldin",
+    "admin": "Platform"
   },
   "validation": {
     "required": "Bu alan zorunludur.",
@@ -199,5 +213,13 @@
       "overlap": "Zaman aralıkları çakışıyor.",
       "too_many_blocks": "Günde en fazla 4 zaman aralığı."
     }
+  },
+  "banner": {
+    "limited": {
+      "TrialExpired": "Deneme süresi bitti. Verilerinize bakabilirsiniz ama bir şey değiştiremezsiniz, çevrim içi randevu duraklatıldı. Devam etmek için bizimle iletişime geçin.",
+      "Suspended": "Bu salon askıya alındı. Verilerinize bakabilirsiniz ama bir şey değiştiremezsiniz, çevrim içi randevu duraklatıldı.",
+      "Cancelled": "Bu abonelik sona erdi. Verilerinize bakabilir ve dışa aktarabilirsiniz ama bir şey değiştiremezsiniz."
+    },
+    "trialEnds": "Deneme süreniz {{date}} tarihinde bitiyor. Kesintisiz devam etmek için ondan önce bizimle iletişime geçin."
   }
 }

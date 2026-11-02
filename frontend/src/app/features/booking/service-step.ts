@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { LocaleFormatService } from '../../core/i18n/locale-format.service';
@@ -79,11 +79,38 @@ import { StepHeader } from './step-header';
       height: 72px;
       margin-bottom: 8px;
     }
+
+    .unavailable {
+      padding: 20px;
+      border-radius: var(--mat-sys-corner-large);
+      background: var(--mat-sys-surface-container);
+    }
+
+    .unavailable h2 {
+      margin: 0 0 8px;
+      font: var(--mat-sys-title-large);
+    }
+
+    .unavailable p {
+      margin: 0 0 16px;
+    }
   `,
   template: `
-    <app-step-header [step]="1" titleKey="booking.steps.service.title" />
+    @if (unavailablePhone() !== null) {
+      <section class="unavailable" role="status">
+        <h2>{{ 'booking.unavailable.title' | transloco }}</h2>
+        <p>{{ 'booking.unavailable.text' | transloco }}</p>
+        @if (unavailablePhone(); as phone) {
+          <a mat-flat-button class="call" [href]="'tel:' + phoneNumber(phone)">
+            {{ 'booking.unavailable.call' | transloco: { phone } }}
+          </a>
+        }
+      </section>
+    } @else {
+      <app-step-header [step]="1" titleKey="booking.steps.service.title" />
+    }
 
-    @if (booking.categories.hasValue()) {
+    @if (unavailablePhone() === null && booking.categories.hasValue()) {
       @for (category of booking.categories.value(); track category.name) {
         <section>
           <h3>{{ category.name }}</h3>
@@ -120,12 +147,12 @@ import { StepHeader } from './step-header';
       } @empty {
         <p>{{ 'booking.steps.service.empty' | transloco }}</p>
       }
-    } @else if (booking.categories.error()) {
+    } @else if (unavailablePhone() === null && booking.categories.error()) {
       <p class="alert" role="alert">{{ 'errors.unknown' | transloco }}</p>
       <button mat-stroked-button type="button" (click)="booking.categories.reload()">
         {{ 'booking.retry' | transloco }}
       </button>
-    } @else {
+    } @else if (unavailablePhone() === null) {
       <div aria-busy="true" role="status">
         <span class="visually-hidden">{{ 'common.loading' | transloco }}</span>
         @for (n of [1, 2, 3, 4]; track n) {
@@ -139,6 +166,20 @@ export class ServiceStep {
   protected readonly booking = inject(BookingService);
   protected readonly format = inject(LocaleFormatService);
   private readonly router = inject(Router);
+
+  /**
+   * While the salon is suspended or its trial is over: its phone number ('' if it has none), so the page can say how to reach
+   * it. `null` while it takes bookings or is not loaded yet.
+   */
+  protected readonly unavailablePhone = computed(() =>
+    this.booking.salon.hasValue() && !this.booking.salon.value().bookingAvailable
+      ? this.booking.salon.value().phone
+      : null,
+  );
+
+  protected phoneNumber(phone: string): string {
+    return phone.replace(/[^0-9+]/g, '');
+  }
 
   protected choose(service: PublicService): void {
     this.booking.selectService(service);

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kalora.Api.Controllers;
 
 [Route("api/auth/two-factor")]
+[AllowWhenReadOnly]
 [Authorize]
 public sealed class TwoFactorController(ITwoFactorService twoFactor) : ApiControllerBase
 {

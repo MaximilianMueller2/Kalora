@@ -6,12 +6,15 @@ namespace Kalora.Api.Http;
 /// <summary>
 /// Decides which salon a request acts for. Public endpoints name it in the URL (/api/public/salons/{slug}/...);
 /// all other requests take it from the signed-in user's claim. A SalonId from a request body is never used.
-/// Public paths never use claims, so a signed-in salon cannot leak into another salon's public page.
+/// Public paths never use claims, so a signed-in salon cannot leak into another salon's public page. The platform admin's
+/// endpoints (/api/admin) have no tenant either: they work on many salons and name each one explicitly, even though the admin
+/// may own a salon of their own.
 /// </summary>
 internal sealed class TenantResolutionMiddleware(RequestDelegate next)
 {
     private static readonly PathString PublicPrefix = new("/api/public");
     private static readonly PathString PublicSalonPrefix = new("/api/public/salons");
+    private static readonly PathString AdminPrefix = new("/api/admin");
 
     public async Task InvokeAsync(HttpContext context, ITenantContextInitializer tenant, ISalonResolver resolver)
     {
@@ -31,6 +34,7 @@ internal sealed class TenantResolutionMiddleware(RequestDelegate next)
             tenant.Initialize(resolved.Value);
         }
         else if (!path.StartsWithSegments(PublicPrefix)
+            && !path.StartsWithSegments(AdminPrefix)
             && Guid.TryParse(context.User.FindFirst(TenantClaims.SalonId)?.Value, out var salonId))
         {
             tenant.Initialize(salonId);

@@ -74,5 +74,10 @@
   "notFound": {
     "title": "Salon bulunamadı",
     "text": "Lütfen aldığınız bağlantıyı kontrol edin."
+  },
+  "unavailable": {
+    "title": "Çevrim içi randevu şu anda kullanılamıyor",
+    "text": "Randevu almak için lütfen salonu arayın.",
+    "call": "{{phone}} numarasını ara"
   }
 }

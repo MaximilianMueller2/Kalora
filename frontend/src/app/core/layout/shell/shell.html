@@ -32,6 +32,12 @@
             <span>{{ me.salon?.name }}</span>
           </div>
         }
+        @if (user()?.isPlatformAdmin) {
+          <a mat-button class="platform" routerLink="/admin">
+            <mat-icon aria-hidden="true">admin_panel_settings</mat-icon>
+            {{ 'nav.platform' | transloco }}
+          </a>
+        }
         <button mat-button class="logout" type="button" (click)="logout()">
           <mat-icon aria-hidden="true">logout</mat-icon>
           {{ 'nav.logout' | transloco }}
@@ -48,6 +54,16 @@
       <div class="tools">
         <app-language-switcher />
         <app-theme-toggle />
+        @if (user()?.isPlatformAdmin) {
+          <a
+            mat-icon-button
+            class="icon-button platform"
+            routerLink="/admin"
+            [attr.aria-label]="'nav.platform' | transloco"
+          >
+            <mat-icon aria-hidden="true">admin_panel_settings</mat-icon>
+          </a>
+        }
         <button
           mat-icon-button
           class="icon-button"
@@ -62,6 +78,7 @@
   }
 
   <main id="main" tabindex="-1">
+    <app-subscription-banner />
     <router-outlet />
   </main>
 

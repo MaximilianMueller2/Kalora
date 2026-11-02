@@ -8,6 +8,7 @@ import { OpenRequestsBadge } from '../../../features/requests/open-requests-badg
 import { LanguageSwitcher } from '../../../shared/ui/language-switcher';
 import { ThemeToggle } from '../../../shared/ui/theme-toggle';
 import { NAV_ITEMS } from '../nav-items';
+import { SubscriptionBanner } from '../subscription-banner';
 import { injectIsDesktop } from '../viewport';
 
 /** Frame of the salon area: side navigation on desktop, bottom navigation on phones. */
@@ -21,6 +22,7 @@ import { injectIsDesktop } from '../viewport';
     RouterLink,
     RouterLinkActive,
     RouterOutlet,
+    SubscriptionBanner,
     ThemeToggle,
     TranslocoPipe,
   ],

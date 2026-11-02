@@ -54,4 +54,26 @@ public class Salon : Entity
     public DateTimeOffset? TrialEndsAtUtc { get; set; }
 
     public SalonStatus Status { get; set; } = SalonStatus.Trial;
+
+    /// <summary>Internal note of the platform admin (billing agreements, contact history). Never shown to the salon.</summary>
+    public string? AdminNote { get; set; }
+
+    /// <summary>When the "trial ends in a week" mail went out; reset when the trial is extended.</summary>
+    public DateTimeOffset? TrialWeekReminderSentAtUtc { get; set; }
+
+    /// <summary>When the "trial ends tomorrow" mail went out; reset when the trial is extended.</summary>
+    public DateTimeOffset? TrialDayReminderSentAtUtc { get; set; }
+
+    /// <summary>
+    /// What the salon may do right now. Trial and Active run fully; a past-due salon keeps working until the admin acts;
+    /// a salon whose trial is over, that is suspended or cancelled can only look at its data (and use its data-protection rights).
+    /// The trial is not switched off by a job: it simply stops counting once <see cref="TrialEndsAtUtc"/> has passed.
+    /// </summary>
+    public SalonAccess AccessAt(DateTimeOffset now) => Status switch
+    {
+        SalonStatus.Suspended => SalonAccess.Suspended,
+        SalonStatus.Cancelled => SalonAccess.Cancelled,
+        SalonStatus.Trial when TrialEndsAtUtc is { } end && end <= now => SalonAccess.TrialExpired,
+        _ => SalonAccess.Full,
+    };
 }

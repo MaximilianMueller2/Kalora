@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kalora.Application.Auth;
 
-internal sealed class MeResponseFactory(IAppDbContext db)
+internal sealed class MeResponseFactory(IAppDbContext db, TimeProvider timeProvider)
 {
     /// <summary>
     /// Builds the profile of any user, also right after login or registration when no tenant is set yet,
@@ -19,10 +19,8 @@ internal sealed class MeResponseFactory(IAppDbContext db)
         Guid? staffId = null;
         if (membership is not null)
         {
-            salon = await db.AllSalons()
-                .Where(s => s.Id == membership.SalonId)
-                .Select(s => new MeSalon(s.Id, s.Name, s.Slug, s.Status, s.PlanCode, s.TrialEndsAtUtc, s.TimeZone))
-                .FirstAsync(cancellationToken);
+            var found = await db.AllSalons().AsNoTracking().FirstAsync(s => s.Id == membership.SalonId, cancellationToken);
+            salon = new MeSalon(found.Id, found.Name, found.Slug, found.Status, found.PlanCode, found.TrialEndsAtUtc, found.TimeZone, found.AccessAt(timeProvider.GetUtcNow()));
             staffId = await db.AllTenants<Domain.Staff.StaffMember>()
                 .Where(s => s.UserId == user.Id)
                 .Select(s => (Guid?)s.Id)

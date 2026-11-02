@@ -17,6 +17,7 @@ export const OWNER: Me = {
     status: 'Trial',
     planCode: 'Solo',
     trialEndsAtUtc: null,
+    access: 'Full',
     timeZone: 'Europe/Berlin',
   },
   role: 'Owner',

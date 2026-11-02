@@ -106,6 +106,26 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'admin',
+    canActivate: [roleGuard('PlatformAdmin')],
+    loadComponent: () => import('./features/admin/admin-layout').then((m) => m.AdminLayout),
+    providers: [provideTranslocoScope('admin')],
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'salons' },
+      {
+        path: 'salons',
+        title: 'title.admin',
+        loadComponent: () => import('./features/admin/salons-page').then((m) => m.SalonsPage),
+      },
+      {
+        path: 'salons/:id',
+        title: 'title.admin',
+        loadComponent: () =>
+          import('./features/admin/salon-detail-page').then((m) => m.SalonDetailPage),
+      },
+    ],
+  },
+  {
     path: 'auth',
     loadComponent: () => import('./core/layout/auth-layout').then((m) => m.AuthLayout),
     providers: [provideTranslocoScope('auth')],

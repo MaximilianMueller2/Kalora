@@ -22,7 +22,8 @@
     "logout": "Sign out",
     "absences": "Time off",
     "openRequests": "Open requests: {{count}}",
-    "customers": "Customers"
+    "customers": "Customers",
+    "platform": "Platform"
   },
   "theme": {
     "system": "Appearance: match device",
@@ -135,7 +136,8 @@
     },
     "booking": {
       "slot_unavailable": "This time has just been taken. Please choose another time.",
-      "too_many_open_requests": "You already have three open requests with this salon. Please wait until the salon replies."
+      "too_many_open_requests": "You already have three open requests with this salon. Please wait until the salon replies.",
+      "unavailable": "Online booking is currently not available."
     },
     "availability": {
       "range_invalid": "This period is invalid.",
@@ -160,7 +162,18 @@
     },
     "appointment.cancellation_deadline_passed": "Cancelling online is no longer possible. Please call the salon.",
     "customer.has_open_appointments": "This customer still has open or upcoming appointments. Cancel them first.",
-    "customer.already_anonymized": "This customer is already deleted."
+    "customer.already_anonymized": "This customer is already deleted.",
+    "subscription": {
+      "read_only": "This salon can only read at the moment. Changes are not possible.",
+      "staff_limit": "Your plan does not allow more staff members. Get in touch to change the plan."
+    },
+    "admin": {
+      "not_in_trial": "Only salons in the trial have a trial.",
+      "not_suspended": "This salon is not suspended.",
+      "trial_days_invalid": "The trial can be extended by 1 to 90 days.",
+      "note_too_long": "The note is too long.",
+      "plan_invalid": "This plan is invalid."
+    }
   },
   "title": {
     "login": "Sign in",
@@ -169,7 +182,8 @@
     "resetPassword": "New password",
     "confirmEmail": "Confirm email",
     "invitation": "Accept invitation",
-    "onboarding": "Welcome"
+    "onboarding": "Welcome",
+    "admin": "Platform"
   },
   "validation": {
     "required": "This field is required.",
@@ -199,5 +213,13 @@
       "overlap": "The time spans overlap.",
       "too_many_blocks": "At most 4 time spans per day."
     }
+  },
+  "banner": {
+    "limited": {
+      "TrialExpired": "The trial is over. You can look at your data but not change anything, and online booking is paused. Get in touch to carry on.",
+      "Suspended": "This salon is suspended. You can look at your data but not change anything, and online booking is paused.",
+      "Cancelled": "This subscription has ended. You can look at and export your data but not change anything."
+    },
+    "trialEnds": "Your trial ends on {{date}}. Get in touch before then to carry on without a break."
   }
 }

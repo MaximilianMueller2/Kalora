@@ -21,6 +21,8 @@ export interface PublicSalon {
   privacyPolicyUrl: string | null;
   /** The salon's own privacy notice (Markdown). */
   privacyText: string | null;
+  /** False while the salon is suspended or its trial is over: the page then only shows how to reach the salon. */
+  bookingAvailable: boolean;
 }
 
 export interface PublicService {

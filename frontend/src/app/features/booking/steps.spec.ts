@@ -89,6 +89,35 @@ const withSlot = (booking: BookingService) => {
 };
 
 describe('ServiceStep', () => {
+  describe('when the salon takes no bookings', () => {
+    const unavailable = { ...defaultAnswers(), '': { ...SALON, bookingAvailable: false } };
+
+    it('says so and offers to call the salon, instead of the services', async () => {
+      const { fixture, booking } = await mount(ServiceStep, unavailable, () => undefined);
+      await booking.salon.reload();
+      await settle(fixture);
+
+      expect(q(fixture, '.unavailable h2').textContent).toBe('booking.unavailable.title');
+      expect(q(fixture, '.unavailable p').textContent).toBe('booking.unavailable.text');
+      expect(q(fixture, 'a.call').getAttribute('href')).toBe('tel:+4930123456');
+      expect(fixture.nativeElement.querySelector('app-step-header')).toBeNull();
+      expect(fixture.nativeElement.querySelector('.card')).toBeNull();
+    });
+
+    it('has no call button for a salon without a phone number', async () => {
+      const { fixture, booking } = await mount(
+        ServiceStep,
+        { ...defaultAnswers(), '': { ...SALON, phone: '', bookingAvailable: false } },
+        () => undefined,
+      );
+      await booking.salon.reload();
+      await settle(fixture);
+
+      expect(fixture.nativeElement.querySelector('.unavailable')).not.toBeNull();
+      expect(fixture.nativeElement.querySelector('a.call')).toBeNull();
+    });
+  });
+
   it('lists the services by category with duration, price and description', async () => {
     const { fixture } = await mount(ServiceStep);
 

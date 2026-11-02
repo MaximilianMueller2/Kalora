@@ -34,4 +34,10 @@ public static class EmailTypes
 
     /// <summary>To the salon: a customer cancelled.</summary>
     public const string BookingCancellationForSalon = "booking.cancellation_for_salon";
+
+    /// <summary>To the owners: the trial ends in about a week.</summary>
+    public const string TrialEndsSoon = "subscription.trial_ends_soon";
+
+    /// <summary>To the owners: the trial ends within a day.</summary>
+    public const string TrialEndsTomorrow = "subscription.trial_ends_tomorrow";
 }

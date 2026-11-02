@@ -20,7 +20,8 @@ public partial class EmailRendererTests
 
     private static readonly string[] SalonTypes = [EmailTypes.BookingNewForSalon, EmailTypes.BookingCancellationForSalon];
 
-    private static readonly string[] AccountTypes = [EmailTypes.ConfirmEmail, EmailTypes.ResetPassword, EmailTypes.StaffInvitation];
+    private static readonly string[] AccountTypes =
+        [EmailTypes.ConfirmEmail, EmailTypes.ResetPassword, EmailTypes.StaffInvitation, EmailTypes.TrialEndsSoon, EmailTypes.TrialEndsTomorrow];
 
     private static readonly string[] AllTypes = [.. CustomerTypes, .. SalonTypes, .. AccountTypes];
 
@@ -65,6 +66,7 @@ public partial class EmailRendererTests
         ["ConfirmUrl"] = "https://kalora.app/auth/confirm-email?token=1",
         ["ResetUrl"] = "https://kalora.app/auth/reset-password?token=2",
         ["InvitationUrl"] = "https://kalora.app/auth/invitation/3",
+        ["AppUrl"] = "https://kalora.app/app/dashboard",
         ["ExpiresAtUtc"] = "2026-11-10T09:00:00+00:00",
     };
 
@@ -342,6 +344,8 @@ public partial class EmailRendererTests
         Assert.Equal("https://kalora.app/auth/confirm-email?token=1", Button(EmailTypes.ConfirmEmail));
         Assert.Equal("https://kalora.app/auth/reset-password?token=2", Button(EmailTypes.ResetPassword));
         Assert.Equal("https://kalora.app/auth/invitation/3", Button(EmailTypes.StaffInvitation));
+        Assert.Equal("https://kalora.app/app/dashboard", Button(EmailTypes.TrialEndsSoon));
+        Assert.Equal("https://kalora.app/app/dashboard", Button(EmailTypes.TrialEndsTomorrow));
     }
 
     [Fact]
@@ -397,6 +401,19 @@ public partial class EmailRendererTests
 
         Assert.Equal("Haarwerk Müller invites you to Kalora", mail.Subject);
         Assert.Contains("valid until Tuesday, November 10, 2026 at 10:00 AM", mail.Text);
+    }
+
+    [Fact]
+    public void Trial_mails_come_from_Kalora_and_name_the_salon_and_the_end_of_the_trial()
+    {
+        var soon = Render(EmailTypes.TrialEndsSoon, "de");
+        var tomorrow = Render(EmailTypes.TrialEndsTomorrow, "en");
+
+        Assert.Equal("Die Testphase von Haarwerk Müller endet bald", soon.Subject);
+        Assert.Contains("endet am Dienstag, 10. November 2026, 10:00 Uhr", soon.Text);
+        Assert.Contains("<td style=\"padding:24px 28px 8px;font-size:15px;font-weight:bold;color:#6a1bd0;\">Kalora</td>", soon.Html);
+        Assert.Equal("Last day: the trial of Haarwerk Müller ends tomorrow", tomorrow.Subject);
+        Assert.Contains("ends on Tuesday, November 10, 2026 at 10:00 AM", tomorrow.Text);
     }
 
     [Fact]

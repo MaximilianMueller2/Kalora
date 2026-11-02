@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kalora.Application.PublicBooking;
 
-internal sealed partial class PublicSalonService(IAppDbContext db, IAvailabilityService availability) : IPublicSalonService
+internal sealed partial class PublicSalonService(IAppDbContext db, IAvailabilityService availability, TimeProvider timeProvider) : IPublicSalonService
 {
     private static readonly DayOfWeek[] WeekFromMonday =
         [DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday];
@@ -17,7 +17,7 @@ internal sealed partial class PublicSalonService(IAppDbContext db, IAvailability
 
     public async Task<Result<PublicSalonDto>> GetProfileAsync(CancellationToken cancellationToken = default)
     {
-        var salon = await FindBookableSalonAsync(cancellationToken);
+        var salon = await FindVisibleSalonAsync(cancellationToken);
         if (salon is null)
         {
             return Error.NotFound("salon.not_found", "slug");
@@ -31,14 +31,16 @@ internal sealed partial class PublicSalonService(IAppDbContext db, IAvailability
 
         return new PublicSalonDto(
             salon.Name, salon.Slug, salon.Street, salon.PostalCode, salon.City, salon.Phone, salon.TimeZone, salon.DefaultLanguage,
-            ValidationExtensions.SupportedLanguages, days, salon.ImprintText, salon.PrivacyPolicyUrl, salon.PrivacyText);
+            ValidationExtensions.SupportedLanguages, days, salon.ImprintText, salon.PrivacyPolicyUrl, salon.PrivacyText,
+            salon.AccessAt(timeProvider.GetUtcNow()) == SalonAccess.Full);
     }
 
     public async Task<Result<IReadOnlyList<PublicCategoryDto>>> GetServicesAsync(CancellationToken cancellationToken = default)
     {
-        if (await FindBookableSalonAsync(cancellationToken) is null)
+        var open = await EnsureBookableAsync(cancellationToken);
+        if (!open.IsSuccess)
         {
-            return Error.NotFound("salon.not_found", "slug");
+            return open.Error;
         }
 
         var bookableServiceIds = db.StaffServices
@@ -59,9 +61,10 @@ internal sealed partial class PublicSalonService(IAppDbContext db, IAvailability
 
     public async Task<Result<IReadOnlyList<PublicStaffDto>>> GetStaffAsync(Guid serviceId, CancellationToken cancellationToken = default)
     {
-        if (await FindBookableSalonAsync(cancellationToken) is null)
+        var open = await EnsureBookableAsync(cancellationToken);
+        if (!open.IsSuccess)
         {
-            return Error.NotFound("salon.not_found", "slug");
+            return open.Error;
         }
 
         if (!await db.Services.AnyAsync(s => s.Id == serviceId && s.IsActive && s.IsBookableOnline, cancellationToken))
@@ -108,15 +111,30 @@ internal sealed partial class PublicSalonService(IAppDbContext db, IAvailability
 
     private async Task<Result<IReadOnlyList<Domain.Scheduling.DaySlots>>> SlotsAsync(Guid serviceId, Guid? staffId, DateOnly from, DateOnly to, CancellationToken cancellationToken)
     {
-        if (await FindBookableSalonAsync(cancellationToken) is null)
+        var open = await EnsureBookableAsync(cancellationToken);
+        if (!open.IsSuccess)
         {
-            return Error.NotFound("salon.not_found", "slug");
+            return open.Error;
         }
 
         return await availability.GetSlotsAsync(new AvailabilityQuery(serviceId, staffId, from, to, AvailabilityAudience.Customer), cancellationToken);
     }
 
-    /// <summary>A salon that has been suspended or cancelled no longer takes bookings: its page is "not found".</summary>
-    private Task<Salon?> FindBookableSalonAsync(CancellationToken cancellationToken) =>
-        db.Salons.Where(s => s.Status != SalonStatus.Suspended && s.Status != SalonStatus.Cancelled).FirstOrDefaultAsync(cancellationToken);
+    /// <summary>
+    /// A cancelled salon is gone: its page is "not found". A suspended one or one whose trial is over keeps its page, which says that
+    /// online booking is not available at the moment (and shows the phone number); everything else about it is refused.
+    /// </summary>
+    private Task<Salon?> FindVisibleSalonAsync(CancellationToken cancellationToken) =>
+        db.Salons.Where(s => s.Status != SalonStatus.Cancelled).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+
+    private async Task<Result> EnsureBookableAsync(CancellationToken cancellationToken)
+    {
+        var salon = await FindVisibleSalonAsync(cancellationToken);
+        if (salon is null)
+        {
+            return Error.NotFound("salon.not_found", "slug");
+        }
+
+        return salon.AccessAt(timeProvider.GetUtcNow()) == SalonAccess.Full ? Result.Success() : Error.Conflict("booking.unavailable");
+    }
 }
