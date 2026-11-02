@@ -46,6 +46,11 @@ export const BOOKING_ROUTES: Routes = [
             loadComponent: () => import('./done-step').then((m) => m.DoneStep),
           },
           {
+            path: 'privacy',
+            title: 'booking.privacy.link',
+            loadComponent: () => import('./privacy-page').then((m) => m.PrivacyPage),
+          },
+          {
             path: 'imprint',
             title: 'booking.imprint',
             loadComponent: () => import('./imprint-page').then((m) => m.ImprintPage),

@@ -38,6 +38,7 @@ internal sealed class SalonProfileValidator : AbstractValidator<SalonProfile>
         RuleFor(p => p.TimeZone).Must(Rules.IsValidTimeZone).WithErrorCode("settings.timezone_invalid");
         RuleFor(p => p.DefaultLanguage).SupportedLanguage();
         RuleFor(p => p.ImprintText).MaximumLength(4000).WithErrorCode("validation.too_long");
+        RuleFor(p => p.PrivacyText).MaximumLength(20000).WithErrorCode("validation.too_long");
         RuleFor(p => p.PrivacyPolicyUrl)
             .Must(url => string.IsNullOrEmpty(url)
                 || (url.Length <= 500 && Uri.TryCreate(url, UriKind.Absolute, out var uri) && uri.Scheme is "http" or "https"))

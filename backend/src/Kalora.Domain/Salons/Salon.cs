@@ -44,6 +44,11 @@ public class Salon : Entity
 
     public string? PrivacyPolicyUrl { get; set; }
 
+    /// <summary>
+    /// The salon's own privacy notice (Markdown) shown on its booking page; without it the page shows the template with the salon's data.
+    /// </summary>
+    public string? PrivacyText { get; set; }
+
     public PlanCode PlanCode { get; set; } = PlanCode.Solo;
 
     public DateTimeOffset? TrialEndsAtUtc { get; set; }

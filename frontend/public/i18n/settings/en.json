@@ -27,7 +27,11 @@
     "imprint": "Legal notice",
     "imprintHint": "Shown on your booking page.",
     "privacyUrl": "Link to your privacy policy",
-    "privacyHint": "Optional, e.g. https://your-salon.com/privacy"
+    "privacyHint": "Optional, e.g. https://your-salon.com/privacy",
+    "privacyText": "Your own privacy notice",
+    "privacyTextHint": "Shown on your booking page if you give no link above (the link takes precedence). Simple formatting: # heading, - list, **bold**.",
+    "privacyTemplate": "Insert template",
+    "privacyTemplateHint": "Filled in with your details. You must complete the places marked [BITTE PRÜFEN] and have the text checked before you save."
   },
   "hours": {
     "title": "Opening hours",

@@ -39,7 +39,8 @@
     "submit": "Konto erstellen",
     "trialNote": "30 Tage kostenlos testen. Keine Zahlungsdaten nötig.",
     "haveAccount": "Schon registriert?",
-    "login": "Anmelden"
+    "login": "Anmelden",
+    "avvLink": "AVV"
   },
   "forgot": {
     "title": "Passwort vergessen",

@@ -21,6 +21,7 @@ export const TEST_TRANSLATIONS: TestTranslations = {
       dashboard: 'Dashboard',
       calendar: 'Kalender',
       requests: 'Anfragen',
+      customers: 'Kunden',
       services: 'Leistungen',
       team: 'Team',
       settings: 'Einstellungen',

@@ -44,7 +44,8 @@
     "email": "E-Mail",
     "emailHint": "Hierhin schicken wir die Bestätigung.",
     "phone": "Telefon (optional)",
-    "note": "Nachricht an den Salon (optional)"
+    "note": "Nachricht an den Salon (optional)",
+    "noteHint": "Bitte keine Gesundheitsdaten eintragen."
   },
   "summary": {
     "service": "Leistung",

@@ -61,6 +61,21 @@ export const routes: Routes = [
         'requests',
       ),
       areaRoute(
+        'customers',
+        () => import('./features/customers/customers-page').then((m) => m.CustomersPage),
+        'customers',
+        MANAGEMENT,
+        // The history shows the status names of the calendar.
+        'calendar',
+      ),
+      areaRoute(
+        'customers/:id',
+        () => import('./features/customers/customer-detail-page').then((m) => m.CustomerDetailPage),
+        'customers',
+        MANAGEMENT,
+        'calendar',
+      ),
+      areaRoute(
         'services',
         () => import('./features/services/services-page').then((m) => m.ServicesPage),
         'services',
@@ -133,6 +148,21 @@ export const routes: Routes = [
         title: 'title.invitation',
         loadComponent: () =>
           import('./features/auth/pages/invitation-page').then((m) => m.InvitationPage),
+      },
+    ],
+  },
+  // Kalora's own legal pages (imprint, privacy, terms, data processing agreement).
+  {
+    path: 'legal',
+    loadComponent: () =>
+      import('./core/layout/public-layout/public-layout').then((m) => m.PublicLayout),
+    providers: [provideTranslocoScope('legal')],
+    children: [
+      {
+        path: ':page',
+        title: 'legal.title',
+        loadComponent: () =>
+          import('./features/legal/legal-page').then((m) => m.LegalPageComponent),
       },
     ],
   },

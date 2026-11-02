@@ -1,0 +1,54 @@
+:host {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+h2 {
+  margin: 24px 0 12px;
+  font: var(--mat-sys-headline-small);
+}
+
+h3 {
+  margin: 24px 0 8px;
+  font: var(--mat-sys-title-large);
+}
+
+h4 {
+  margin: 16px 0 8px;
+  font: var(--mat-sys-title-medium);
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 12px;
+  line-height: 1.6;
+}
+
+p {
+  white-space: pre-line;
+}
+
+ul,
+ol {
+  padding-inline-start: 24px;
+}
+
+a {
+  color: var(--mat-sys-primary);
+}
+
+hr {
+  margin: 24px 0;
+  border: 0;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+}
+
+// What still has to be filled in or checked: loud enough that nobody publishes it by accident.
+.check {
+  padding: 0 4px;
+  border-radius: 4px;
+  background: var(--mat-sys-tertiary-container);
+  color: var(--mat-sys-on-tertiary-container);
+  font-weight: 600;
+}

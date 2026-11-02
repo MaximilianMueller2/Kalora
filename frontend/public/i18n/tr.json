@@ -5,7 +5,11 @@
     "skipToContent": "İçeriğe geç",
     "poweredBy": "Kalora ile online randevu",
     "loading": "Yükleniyor …",
-    "cancel": "İptal"
+    "cancel": "İptal",
+    "legalLabel": "Yasal",
+    "imprint": "Künye",
+    "privacy": "Gizlilik",
+    "terms": "Koşullar"
   },
   "nav": {
     "label": "Ana gezinme",
@@ -17,7 +21,8 @@
     "settings": "Ayarlar",
     "logout": "Çıkış yap",
     "absences": "İzinler",
-    "openRequests": "Açık talepler: {{count}}"
+    "openRequests": "Açık talepler: {{count}}",
+    "customers": "Müşteriler"
   },
   "theme": {
     "system": "Görünüm: cihaza göre",
@@ -153,7 +158,9 @@
       "not_found": "Bu müşteri yok (artık).",
       "duplicate": "Bu e-posta adresi zaten başka bir müşteriye ait."
     },
-    "appointment.cancellation_deadline_passed": "Çevrimiçi iptal artık mümkün değil. Lütfen salonu arayın."
+    "appointment.cancellation_deadline_passed": "Çevrimiçi iptal artık mümkün değil. Lütfen salonu arayın.",
+    "customer.has_open_appointments": "Bu müşterinin açık veya yaklaşan randevuları var. Önce onları iptal edin.",
+    "customer.already_anonymized": "Bu müşteri zaten silinmiş."
   },
   "title": {
     "login": "Giriş yap",

@@ -44,7 +44,8 @@
     "email": "E-posta",
     "emailHint": "Onayı buraya göndeririz.",
     "phone": "Telefon (isteğe bağlı)",
-    "note": "Salona mesaj (isteğe bağlı)"
+    "note": "Salona mesaj (isteğe bağlı)",
+    "noteHint": "Lütfen sağlık verisi girmeyin."
   },
   "summary": {
     "service": "Hizmet",

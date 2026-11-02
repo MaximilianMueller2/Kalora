@@ -23,6 +23,11 @@ import { ThemeToggle } from '../../shared/ui/theme-toggle';
         <router-outlet />
       </div>
     </main>
+    <footer>
+      <a routerLink="/legal/imprint">{{ 'common.imprint' | transloco }}</a>
+      <a routerLink="/legal/privacy">{{ 'common.privacy' | transloco }}</a>
+      <a routerLink="/legal/terms">{{ 'common.terms' | transloco }}</a>
+    </footer>
   `,
   styles: `
     :host {
@@ -82,6 +87,22 @@ import { ThemeToggle } from '../../shared/ui/theme-toggle';
       border-radius: var(--mat-sys-corner-extra-large);
       background: var(--mat-sys-surface);
       box-shadow: var(--mat-sys-level1);
+    }
+
+    footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px 16px;
+      padding: 12px 16px 20px;
+      font: var(--mat-sys-label-medium);
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 32px;
+        color: var(--mat-sys-on-surface-variant);
+      }
     }
 
     @media (min-width: 600px) {

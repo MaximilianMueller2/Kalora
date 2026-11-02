@@ -1,0 +1,132 @@
+:host {
+  display: block;
+  max-width: 800px;
+}
+
+.head h1 {
+  margin: 0 0 4px;
+  font: var(--mat-sys-headline-medium);
+}
+
+.head p {
+  margin: 0 0 16px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 0 16px;
+  border: 1px solid var(--mat-sys-outline);
+  border-radius: var(--mat-sys-corner-full);
+  background: var(--mat-sys-surface);
+
+  input {
+    flex: 1;
+    min-width: 0;
+    min-height: 48px;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-body-large);
+  }
+
+  &:focus-within {
+    outline: 3px solid var(--mat-sys-primary);
+    outline-offset: 1px;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 56px;
+    padding: 8px 16px;
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: var(--mat-sys-corner-large);
+    background: var(--mat-sys-surface-container-low);
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      background: var(--mat-sys-surface-container);
+    }
+
+    &:focus-visible {
+      outline: 3px solid var(--mat-sys-primary);
+      outline-offset: 2px;
+    }
+  }
+}
+
+.who {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+
+  span {
+    overflow: hidden;
+    color: var(--mat-sys-on-surface-variant);
+    font: var(--mat-sys-body-small);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.meta {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-label-medium);
+
+  @media (min-width: 600px) {
+    display: flex;
+  }
+}
+
+.chip {
+  padding: 2px 8px;
+  border-radius: var(--mat-sys-corner-full);
+  background: var(--mat-sys-tertiary-container);
+  color: var(--mat-sys-on-tertiary-container);
+}
+
+.empty,
+.more {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.skeleton {
+  min-height: 240px;
+  border-radius: var(--mat-sys-corner-large);
+  background: var(--mat-sys-surface-container);
+}
+
+.alert {
+  padding: 16px;
+  border-radius: var(--mat-sys-corner-medium);
+  background: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+}

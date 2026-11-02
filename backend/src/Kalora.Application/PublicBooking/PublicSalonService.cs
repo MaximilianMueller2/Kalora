@@ -31,7 +31,7 @@ internal sealed partial class PublicSalonService(IAppDbContext db, IAvailability
 
         return new PublicSalonDto(
             salon.Name, salon.Slug, salon.Street, salon.PostalCode, salon.City, salon.Phone, salon.TimeZone, salon.DefaultLanguage,
-            ValidationExtensions.SupportedLanguages, days, salon.ImprintText, salon.PrivacyPolicyUrl);
+            ValidationExtensions.SupportedLanguages, days, salon.ImprintText, salon.PrivacyPolicyUrl, salon.PrivacyText);
     }
 
     public async Task<Result<IReadOnlyList<PublicCategoryDto>>> GetServicesAsync(CancellationToken cancellationToken = default)

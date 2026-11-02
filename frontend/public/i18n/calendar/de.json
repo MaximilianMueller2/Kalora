@@ -87,6 +87,7 @@
     "save": "Speichern",
     "changeCustomer": "Ändern",
     "appointmentSaved": "Termin eingetragen",
-    "blockSaved": "Blocker eingetragen"
+    "blockSaved": "Blocker eingetragen",
+    "noteHint": "Bitte keine Gesundheitsdaten eintragen."
   }
 }

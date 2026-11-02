@@ -287,7 +287,7 @@ public class PublicBookingTests(PostgresFixture postgres)
 
         await using var scope = world.Host.Services.CreateAsyncScope();
         Assert.NotNull(scope.ServiceProvider.GetRequiredService<IEmailOutboxProcessor>());
-        Assert.DoesNotContain(world.Host.Services.GetServices<IHostedService>(), service => service.GetType().Name is "EmailOutboxWorker" or "AppointmentSchedulerWorker");
+        Assert.DoesNotContain(world.Host.Services.GetServices<IHostedService>(), service => service.GetType().Name is "EmailOutboxWorker" or "AppointmentSchedulerWorker" or "RetentionWorker");
     }
 
     [Fact]

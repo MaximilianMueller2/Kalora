@@ -1,0 +1,54 @@
+<header class="head">
+  <h1>{{ 'customers.title' | transloco }}</h1>
+  <p>{{ 'customers.lead' | transloco }}</p>
+</header>
+
+<label class="search">
+  <mat-icon aria-hidden="true">search</mat-icon>
+  <span class="visually-hidden">{{ 'customers.search' | transloco }}</span>
+  <input
+    type="search"
+    autocomplete="off"
+    [placeholder]="'customers.search' | transloco"
+    [value]="typed()"
+    (input)="onInput($event)"
+  />
+</label>
+
+@if (loading()) {
+  <div class="skeleton" aria-busy="true" aria-hidden="true"></div>
+} @else if (failed()) {
+  <p class="alert" role="alert">{{ 'customers.loadFailed' | transloco }}</p>
+} @else if (items().length === 0) {
+  <p class="empty">{{ (searching() ? 'customers.noneFound' : 'customers.none') | transloco }}</p>
+} @else {
+  <ul class="list">
+    @for (customer of items(); track customer.id) {
+      <li>
+        <a [routerLink]="['/app/customers', customer.id]">
+          <span class="who">
+            <strong>{{ customer.name }}</strong>
+            <span>{{ customer.email || customer.phone }}</span>
+          </span>
+          <span class="meta">
+            @if (customer.noShows > 0) {
+              <span class="chip">{{
+                'customers.noShows' | transloco: { count: customer.noShows }
+              }}</span>
+            }
+            <span>{{
+              'customers.appointments' | transloco: { count: customer.appointments }
+            }}</span>
+            @if (lastVisit(customer.lastVisitAtUtc); as visit) {
+              <span>{{ 'customers.lastVisit' | transloco: { date: visit } }}</span>
+            }
+          </span>
+          <mat-icon aria-hidden="true">chevron_right</mat-icon>
+        </a>
+      </li>
+    }
+  </ul>
+  @if (hasMore()) {
+    <p class="more" role="note">{{ 'customers.more' | transloco }}</p>
+  }
+}

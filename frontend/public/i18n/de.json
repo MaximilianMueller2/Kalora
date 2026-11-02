@@ -5,7 +5,11 @@
     "skipToContent": "Zum Inhalt springen",
     "poweredBy": "Online-Buchung mit Kalora",
     "loading": "Wird geladen …",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "legalLabel": "Rechtliches",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "terms": "AGB"
   },
   "nav": {
     "label": "Hauptnavigation",
@@ -17,7 +21,8 @@
     "settings": "Einstellungen",
     "logout": "Abmelden",
     "absences": "Abwesenheiten",
-    "openRequests": "Offene Anfragen: {{count}}"
+    "openRequests": "Offene Anfragen: {{count}}",
+    "customers": "Kunden"
   },
   "theme": {
     "system": "Darstellung: wie Gerät",
@@ -153,7 +158,9 @@
       "not_found": "Diesen Kunden gibt es nicht (mehr).",
       "duplicate": "Diese E-Mail-Adresse gehört schon zu einem anderen Kunden."
     },
-    "appointment.cancellation_deadline_passed": "Online absagen ist nicht mehr möglich. Bitte ruf den Salon an."
+    "appointment.cancellation_deadline_passed": "Online absagen ist nicht mehr möglich. Bitte ruf den Salon an.",
+    "customer.has_open_appointments": "Dieser Kunde hat noch offene oder bevorstehende Termine. Sage sie zuerst ab.",
+    "customer.already_anonymized": "Dieser Kunde ist schon gelöscht."
   },
   "title": {
     "login": "Anmelden",

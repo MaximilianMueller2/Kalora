@@ -174,6 +174,20 @@ describe('RegisterPage', () => {
     click(fixture, 'mat-checkbox input');
   };
 
+  it('links the terms, the data processing agreement and the privacy notice before the box is ticked', async () => {
+    const { fixture } = await mount(RegisterPage);
+
+    const links = Array.from<HTMLAnchorElement>(
+      fixture.nativeElement.querySelectorAll('mat-checkbox a'),
+    );
+    expect(links.map((a) => a.getAttribute('href'))).toEqual([
+      '/legal/terms',
+      '/legal/avv',
+      '/legal/privacy',
+    ]);
+    expect(links.every((a) => a.target === '_blank')).toBe(true);
+  });
+
   it('requires all fields, a password of at least ten characters and the terms', async () => {
     const { fixture, auth } = await mount(RegisterPage);
 

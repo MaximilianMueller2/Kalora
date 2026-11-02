@@ -27,7 +27,11 @@
     "imprint": "Impressum",
     "imprintHint": "Erscheint auf deiner Buchungsseite.",
     "privacyUrl": "Link zu deiner Datenschutzerklärung",
-    "privacyHint": "Optional, z. B. https://dein-salon.de/datenschutz"
+    "privacyHint": "Optional, z. B. https://dein-salon.de/datenschutz",
+    "privacyText": "Eigene Datenschutzerklärung",
+    "privacyTextHint": "Erscheint auf deiner Buchungsseite, wenn du oben keinen Link angibst (der Link hat Vorrang). Einfache Formatierung: # Überschrift, - Liste, **fett**.",
+    "privacyTemplate": "Vorlage einfügen",
+    "privacyTemplateHint": "Mit deinen Angaben vorausgefüllt. Stellen mit [BITTE PRÜFEN] musst du ergänzen und den Text prüfen (lassen), bevor du speicherst."
   },
   "hours": {
     "title": "Öffnungszeiten",

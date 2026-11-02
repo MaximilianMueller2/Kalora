@@ -158,6 +158,7 @@ const SLOT_GONE = 'booking.slot_unavailable';
       <mat-form-field appearance="outline">
         <mat-label>{{ 'booking.fields.note' | transloco }}</mat-label>
         <textarea matInput rows="3" [formField]="form.note"></textarea>
+        <mat-hint>{{ 'booking.fields.noteHint' | transloco }}</mat-hint>
         @if (errorText(form.note().errors()); as error) {
           <mat-error>{{ error.key | transloco: error.params }}</mat-error>
         }

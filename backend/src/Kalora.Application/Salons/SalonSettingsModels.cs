@@ -13,7 +13,8 @@ public sealed record SalonProfile(
     string TimeZone,
     string DefaultLanguage,
     string? ImprintText,
-    string? PrivacyPolicyUrl);
+    string? PrivacyPolicyUrl,
+    string? PrivacyText);
 
 public sealed record BookingRules(
     int SlotIntervalMinutes,

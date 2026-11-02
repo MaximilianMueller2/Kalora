@@ -12,6 +12,8 @@ public class ArchitectureTests
         "Kalora.Application/Common/IAppDbContext.cs",
         "Kalora.Application/Email/EmailOutboxProcessor.cs", // the mail sender is a background job without a tenant
         "Kalora.Application/Appointments/AppointmentScheduler.cs", // the scheduler is a background job without a tenant
+        "Kalora.Application/Customers/CustomerAnonymizer.cs", // used by the retention job and by deleting a customer
+        "Kalora.Application/Customers/RetentionService.cs", // the retention job is a background job without a tenant
         "Kalora.Application/Appointments/ManageTokenLookup.cs", // the management token, not a salon, identifies the appointment
         "Kalora.Application/Appointments/ManageBookingService.cs", // customers act without a signed-in salon
         "Kalora.Application/Appointments/SalonMails.cs", // finds the salon's members for a customer's action

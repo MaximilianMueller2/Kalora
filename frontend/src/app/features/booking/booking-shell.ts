@@ -205,6 +205,10 @@ import { PublicSalon } from './booking.models';
           <a [href]="url" target="_blank" rel="noopener noreferrer">{{
             'booking.privacy.link' | transloco
           }}</a>
+        } @else if (salon.privacyText) {
+          <a [routerLink]="'/' + booking.slug() + '/privacy'">{{
+            'booking.privacy.link' | transloco
+          }}</a>
         }
       </footer>
     } @else if (notFound()) {

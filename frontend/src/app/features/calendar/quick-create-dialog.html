@@ -159,6 +159,7 @@
           [ngModel]="note()"
           (ngModelChange)="note.set($event)"
         ></textarea>
+        <span class="hint">{{ 'calendar.create.noteHint' | transloco }}</span>
       </label>
     } @else {
       <label>

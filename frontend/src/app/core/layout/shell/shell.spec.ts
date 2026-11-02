@@ -40,7 +40,7 @@ const links = (fixture: ComponentFixture<Shell>, selector: string) =>
 describe('Shell', () => {
   beforeEach(() => localStorage.clear());
 
-  it('shows the side navigation with all six areas to an owner on desktop', async () => {
+  it('shows the side navigation with all seven areas to an owner on desktop', async () => {
     const { fixture } = await setup({ desktop: true });
 
     const nav = links(fixture, '.rail .nav-link');
@@ -48,6 +48,7 @@ describe('Shell', () => {
       'Dashboard',
       'Kalender',
       'Anfragen',
+      'Kunden',
       'Leistungen',
       'Team',
       'Einstellungen',
@@ -56,6 +57,7 @@ describe('Shell', () => {
       '/app/dashboard',
       '/app/calendar',
       '/app/requests',
+      '/app/customers',
       '/app/services',
       '/app/team',
       '/app/settings',
@@ -77,7 +79,7 @@ describe('Shell', () => {
   it('shows the bottom navigation on phones and no side navigation', async () => {
     const { fixture } = await setup({ desktop: false });
 
-    expect(links(fixture, '.bottom-nav .bottom-link')).toHaveLength(6);
+    expect(links(fixture, '.bottom-nav .bottom-link')).toHaveLength(7);
     expect(fixture.nativeElement.querySelector('.rail')).toBeNull();
     expect(fixture.nativeElement.querySelector('.topbar')).not.toBeNull();
   });

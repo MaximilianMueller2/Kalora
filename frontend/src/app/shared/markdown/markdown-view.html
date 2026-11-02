@@ -1,0 +1,94 @@
+<ng-template #inline let-parts>
+  @for (part of parts; track $index) {
+    @switch (part.kind) {
+      @case ('strong') {
+        <strong>{{ part.text }}</strong>
+      }
+      @case ('em') {
+        <em>{{ part.text }}</em>
+      }
+      @case ('check') {
+        <mark class="check">{{ part.text }}</mark>
+      }
+      @case ('link') {
+        @if (isExternal(part.href)) {
+          <a [href]="part.href" target="_blank" rel="noopener noreferrer">{{ part.text }}</a>
+        } @else {
+          <a [href]="part.href">{{ part.text }}</a>
+        }
+      }
+      @default {
+        {{ part.text }}
+      }
+    }
+  }
+</ng-template>
+
+@for (block of blocks(); track $index) {
+  @switch (block.kind) {
+    @case ('heading') {
+      @switch (block.level) {
+        @case (1) {
+          <h2>
+            <ng-container
+              [ngTemplateOutlet]="inline"
+              [ngTemplateOutletContext]="{ $implicit: block.inline }"
+            />
+          </h2>
+        }
+        @case (2) {
+          <h3>
+            <ng-container
+              [ngTemplateOutlet]="inline"
+              [ngTemplateOutletContext]="{ $implicit: block.inline }"
+            />
+          </h3>
+        }
+        @default {
+          <h4>
+            <ng-container
+              [ngTemplateOutlet]="inline"
+              [ngTemplateOutletContext]="{ $implicit: block.inline }"
+            />
+          </h4>
+        }
+      }
+    }
+    @case ('paragraph') {
+      <p>
+        <ng-container
+          [ngTemplateOutlet]="inline"
+          [ngTemplateOutletContext]="{ $implicit: block.inline }"
+        />
+      </p>
+    }
+    @case ('list') {
+      @if (block.ordered) {
+        <ol>
+          @for (item of block.items; track $index) {
+            <li>
+              <ng-container
+                [ngTemplateOutlet]="inline"
+                [ngTemplateOutletContext]="{ $implicit: item }"
+              />
+            </li>
+          }
+        </ol>
+      } @else {
+        <ul>
+          @for (item of block.items; track $index) {
+            <li>
+              <ng-container
+                [ngTemplateOutlet]="inline"
+                [ngTemplateOutletContext]="{ $implicit: item }"
+              />
+            </li>
+          }
+        </ul>
+      }
+    }
+    @case ('rule') {
+      <hr />
+    }
+  }
+}

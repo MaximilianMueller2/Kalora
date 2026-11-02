@@ -44,7 +44,8 @@
     "email": "E-mail",
     "emailHint": "We send the confirmation here.",
     "phone": "Phone (optional)",
-    "note": "Message to the salon (optional)"
+    "note": "Message to the salon (optional)",
+    "noteHint": "Please do not enter any health data."
   },
   "summary": {
     "service": "Service",

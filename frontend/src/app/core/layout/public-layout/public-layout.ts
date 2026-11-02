@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { LanguageSwitcher } from '../../../shared/ui/language-switcher';
 
@@ -7,7 +7,7 @@ import { LanguageSwitcher } from '../../../shared/ui/language-switcher';
 @Component({
   selector: 'app-public-layout',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [LanguageSwitcher, RouterOutlet, TranslocoPipe],
+  imports: [LanguageSwitcher, RouterLink, RouterOutlet, TranslocoPipe],
   template: `
     <a class="skip-link" href="#main">{{ 'common.skipToContent' | transloco }}</a>
     <header>
@@ -16,7 +16,14 @@ import { LanguageSwitcher } from '../../../shared/ui/language-switcher';
     <main id="main" tabindex="-1">
       <router-outlet />
     </main>
-    <footer>{{ 'common.poweredBy' | transloco }}</footer>
+    <footer>
+      <span>{{ 'common.poweredBy' | transloco }}</span>
+      <nav [attr.aria-label]="'common.legalLabel' | transloco">
+        <a routerLink="/legal/imprint">{{ 'common.imprint' | transloco }}</a>
+        <a routerLink="/legal/privacy">{{ 'common.privacy' | transloco }}</a>
+        <a routerLink="/legal/terms">{{ 'common.terms' | transloco }}</a>
+      </nav>
+    </footer>
   `,
   styles: `
     :host {
@@ -55,10 +62,26 @@ import { LanguageSwitcher } from '../../../shared/ui/language-switcher';
     }
 
     footer {
+      display: grid;
+      gap: 4px;
       padding: 16px;
       text-align: center;
       color: var(--mat-sys-on-surface-variant);
       font: var(--mat-sys-label-medium);
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 4px 16px;
+      }
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 32px;
+        color: inherit;
+      }
     }
   `,
 })

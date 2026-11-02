@@ -23,4 +23,20 @@ public class Customer : Entity, ISalonOwned
     public DateTimeOffset? MarketingConsentAtUtc { get; set; }
 
     public DateTimeOffset? AnonymizedAtUtc { get; set; }
+
+    /// <summary>The name an anonymized customer keeps, so lists and appointments stay readable without a person behind them.</summary>
+    public const string AnonymizedName = "Anonymisiert";
+
+    /// <summary>
+    /// Removes everything that points to a person: name, e-mail, phone and marketing consent. The visit history stays as numbers
+    /// (last visit, no-show count); the appointments themselves are cleaned by the caller.
+    /// </summary>
+    public void Anonymize(DateTimeOffset now)
+    {
+        Name = AnonymizedName;
+        Email = null;
+        Phone = null;
+        MarketingConsentAtUtc = null;
+        AnonymizedAtUtc = now;
+    }
 }

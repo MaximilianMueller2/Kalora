@@ -5,7 +5,11 @@
     "skipToContent": "Skip to content",
     "poweredBy": "Online booking with Kalora",
     "loading": "Loading …",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "legalLabel": "Legal",
+    "imprint": "Imprint",
+    "privacy": "Privacy",
+    "terms": "Terms"
   },
   "nav": {
     "label": "Main navigation",
@@ -17,7 +21,8 @@
     "settings": "Settings",
     "logout": "Sign out",
     "absences": "Time off",
-    "openRequests": "Open requests: {{count}}"
+    "openRequests": "Open requests: {{count}}",
+    "customers": "Customers"
   },
   "theme": {
     "system": "Appearance: match device",
@@ -153,7 +158,9 @@
       "not_found": "This customer does not exist (any more).",
       "duplicate": "This e-mail address already belongs to another customer."
     },
-    "appointment.cancellation_deadline_passed": "Cancelling online is no longer possible. Please call the salon."
+    "appointment.cancellation_deadline_passed": "Cancelling online is no longer possible. Please call the salon.",
+    "customer.has_open_appointments": "This customer still has open or upcoming appointments. Cancel them first.",
+    "customer.already_anonymized": "This customer is already deleted."
   },
   "title": {
     "login": "Sign in",

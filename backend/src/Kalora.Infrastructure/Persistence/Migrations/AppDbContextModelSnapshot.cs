@@ -653,6 +653,11 @@ namespace Kalora.Infrastructure.Persistence.Migrations
                         .HasColumnType("character varying(500)")
                         .HasColumnName("privacy_policy_url");
 
+                    b.Property<string>("PrivacyText")
+                        .HasMaxLength(20000)
+                        .HasColumnType("character varying(20000)")
+                        .HasColumnName("privacy_text");
+
                     b.Property<int>("RequestExpiryHours")
                         .HasColumnType("integer")
                         .HasColumnName("request_expiry_hours");

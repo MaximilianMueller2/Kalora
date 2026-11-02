@@ -4,6 +4,7 @@ using Kalora.Application.Auth;
 using Kalora.Application.Availability;
 using Kalora.Application.Calendar;
 using Kalora.Application.Catalog;
+using Kalora.Application.Customers;
 using Kalora.Application.Dashboard;
 using Kalora.Application.Email;
 using Kalora.Application.PublicBooking;
@@ -36,6 +37,10 @@ public static class DependencyInjection
             .BindConfiguration(SchedulerOptions.SectionName)
             .ValidateOnStart();
         services.TryAddSingleton<IValidateOptions<SchedulerOptions>, SchedulerOptionsValidator>();
+        services.AddOptions<RetentionOptions>()
+            .BindConfiguration(RetentionOptions.SectionName)
+            .ValidateOnStart();
+        services.TryAddSingleton<IValidateOptions<RetentionOptions>, RetentionOptionsValidator>();
         services.AddSingleton<IManageTokens, ManageTokens>();
         services.AddSingleton<IEmailRenderer, EmailRenderer>();
         services.AddSingleton<CalendarAttachments>();
@@ -72,6 +77,9 @@ public static class DependencyInjection
         services.AddScoped<AppointmentScope>();
         services.AddScoped<SalonMails>();
         services.AddScoped<ManageTokenLookup>();
+        services.AddScoped<CustomerAnonymizer>();
+        services.AddScoped<ICustomerService, CustomerService>();
+        services.AddScoped<IRetentionService, RetentionService>();
         services.AddScoped<IManageBookingService, ManageBookingService>();
         services.AddScoped<IBookingService, BookingService>();
         services.AddScoped<IAppointmentCalendarService, AppointmentCalendarService>();

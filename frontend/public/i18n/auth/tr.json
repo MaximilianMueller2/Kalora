@@ -39,7 +39,8 @@
     "submit": "Hesap oluştur",
     "trialNote": "30 gün ücretsiz dene. Ödeme bilgisi gerekmez.",
     "haveAccount": "Zaten kayıtlı mısın?",
-    "login": "Giriş yap"
+    "login": "Giriş yap",
+    "avvLink": "VİS"
   },
   "forgot": {
     "title": "Şifremi unuttum",

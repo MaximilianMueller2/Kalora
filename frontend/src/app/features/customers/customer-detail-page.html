@@ -1,0 +1,96 @@
+<a class="back" routerLink="/app/customers">
+  <mat-icon aria-hidden="true">arrow_back</mat-icon>
+  {{ 'customers.back' | transloco }}
+</a>
+
+@if (loading()) {
+  <div class="skeleton" aria-busy="true" aria-hidden="true"></div>
+} @else if (failed()) {
+  <p class="alert" role="alert">{{ 'customers.loadFailed' | transloco }}</p>
+} @else if (detail(); as customer) {
+  <header class="head">
+    <h1>{{ customer.anonymized ? ('customers.anonymized' | transloco) : customer.name }}</h1>
+    @if (customer.noShows > 0) {
+      <span class="chip">{{ 'customers.noShows' | transloco: { count: customer.noShows } }}</span>
+    }
+  </header>
+
+  @if (error(); as message) {
+    <p class="alert" role="alert">{{ message }}</p>
+  }
+
+  @if (customer.anonymized) {
+    <p class="note" role="note">{{ 'customers.anonymizedNote' | transloco }}</p>
+  } @else {
+    <dl class="facts">
+      <dt>{{ 'customers.email' | transloco }}</dt>
+      <dd>{{ customer.email || '–' }}</dd>
+      <dt>{{ 'customers.phone' | transloco }}</dt>
+      <dd>{{ customer.phone || '–' }}</dd>
+      <dt>{{ 'customers.since' | transloco }}</dt>
+      <dd>{{ date(customer.createdAtUtc) }}</dd>
+      @if (customer.marketingConsentAtUtc; as consent) {
+        <dt>{{ 'customers.consent' | transloco }}</dt>
+        <dd>{{ date(consent) }}</dd>
+      }
+    </dl>
+
+    <section class="rights" [attr.aria-label]="'customers.rights' | transloco">
+      <h2>{{ 'customers.rights' | transloco }}</h2>
+      <div class="actions">
+        <a mat-stroked-button class="export-json" [href]="json()" download>
+          <mat-icon aria-hidden="true">data_object</mat-icon>
+          {{ 'customers.exportJson' | transloco }}
+        </a>
+        <a mat-stroked-button class="export-csv" [href]="csv()" download>
+          <mat-icon aria-hidden="true">table_view</mat-icon>
+          {{ 'customers.exportCsv' | transloco }}
+        </a>
+        <button
+          mat-stroked-button
+          type="button"
+          class="danger delete"
+          [disabled]="busy()"
+          (click)="remove()"
+        >
+          <mat-icon aria-hidden="true">delete</mat-icon>
+          {{ 'customers.delete.action' | transloco }}
+        </button>
+      </div>
+    </section>
+  }
+
+  <h2>{{ 'customers.history' | transloco }}</h2>
+  @if (customer.appointments.length === 0) {
+    <p class="empty">{{ 'customers.noAppointments' | transloco }}</p>
+  } @else {
+    <ul class="history">
+      @for (appointment of customer.appointments; track appointment.id) {
+        <li>
+          <div class="line">
+            <strong>{{ when(appointment.startUtc) }}</strong>
+            <span class="status" [attr.data-status]="appointment.status">{{
+              'calendar.status.' + appointment.status | transloco
+            }}</span>
+          </div>
+          <div class="sub">
+            {{ appointment.serviceName }}
+            @if (appointment.staffName) {
+              · {{ appointment.staffName }}
+            }
+          </div>
+          @if (appointment.customerNote; as note) {
+            <p class="note-line">
+              <span>{{ 'customers.customerNote' | transloco }}:</span> {{ note }}
+            </p>
+          }
+          @if (appointment.internalNote; as note) {
+            <p class="note-line">
+              <span>{{ 'customers.internalNote' | transloco }}:</span> {{ note }}
+            </p>
+          }
+        </li>
+      }
+    </ul>
+  }
+}

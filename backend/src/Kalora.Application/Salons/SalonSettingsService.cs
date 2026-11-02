@@ -33,6 +33,7 @@ internal sealed class SalonSettingsService(
             Phone = profile.Phone?.Trim() ?? string.Empty,
             ImprintText = NullIfBlank(profile.ImprintText),
             PrivacyPolicyUrl = NullIfBlank(profile.PrivacyPolicyUrl),
+            PrivacyText = NullIfBlank(profile.PrivacyText),
         };
 
         var validation = profileValidator.Validate(normalized);
@@ -71,6 +72,7 @@ internal sealed class SalonSettingsService(
         salon.DefaultLanguage = normalized.DefaultLanguage;
         salon.ImprintText = normalized.ImprintText;
         salon.PrivacyPolicyUrl = normalized.PrivacyPolicyUrl;
+        salon.PrivacyText = normalized.PrivacyText;
         await db.SaveChangesAsync(cancellationToken);
         return ToProfile(salon);
     }
@@ -115,7 +117,7 @@ internal sealed class SalonSettingsService(
 
     private static SalonProfile ToProfile(Salon salon) => new(
         salon.Name, salon.Slug, salon.Industry, salon.Street, salon.PostalCode, salon.City, salon.Phone,
-        salon.TimeZone, salon.DefaultLanguage, salon.ImprintText, salon.PrivacyPolicyUrl);
+        salon.TimeZone, salon.DefaultLanguage, salon.ImprintText, salon.PrivacyPolicyUrl, salon.PrivacyText);
 
     private static BookingRules ToRules(Salon salon) => new(
         salon.SlotIntervalMinutes, salon.MinLeadTimeMinutes, salon.BookingHorizonDays,

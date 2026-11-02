@@ -13,6 +13,8 @@ export interface SalonProfile {
   defaultLanguage: string;
   imprintText: string | null;
   privacyPolicyUrl: string | null;
+  /** The salon's own privacy notice (Markdown), shown on its booking page. */
+  privacyText: string | null;
 }
 
 export interface BookingRules {

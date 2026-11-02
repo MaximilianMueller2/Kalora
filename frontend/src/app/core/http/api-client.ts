@@ -43,6 +43,11 @@ export class ApiClient {
     return this.http.get<T>(path);
   }
 
+  /** Loads a static text file of the app itself (e.g. a Markdown page); not an API call. */
+  getAssetText(path: string): Observable<string> {
+    return this.http.get(path, { responseType: 'text' });
+  }
+
   private toHttpOptions(options?: ApiRequestOptions) {
     const params = Object.fromEntries(
       Object.entries(options?.params ?? {}).filter(([, value]) => value !== undefined),

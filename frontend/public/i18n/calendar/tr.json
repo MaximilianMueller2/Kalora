@@ -87,6 +87,7 @@
     "save": "Kaydet",
     "changeCustomer": "Değiştir",
     "appointmentSaved": "Randevu eklendi",
-    "blockSaved": "Engel eklendi"
+    "blockSaved": "Engel eklendi",
+    "noteHint": "Lütfen sağlık verisi girmeyin."
   }
 }

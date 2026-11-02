@@ -27,7 +27,11 @@
     "imprint": "Yasal bilgiler",
     "imprintHint": "Rezervasyon sayfanda gösterilir.",
     "privacyUrl": "Gizlilik politikası bağlantısı",
-    "privacyHint": "İsteğe bağlı, örn. https://salonun.com/gizlilik"
+    "privacyHint": "İsteğe bağlı, örn. https://salonun.com/gizlilik",
+    "privacyText": "Kendi gizlilik bildiriminiz",
+    "privacyTextHint": "Yukarıda bağlantı vermezseniz rezervasyon sayfanızda görünür (bağlantı önceliklidir). Basit biçimlendirme: # başlık, - liste, **kalın**.",
+    "privacyTemplate": "Şablonu ekle",
+    "privacyTemplateHint": "Bilgilerinizle önceden doldurulur. Kaydetmeden önce [BITTE PRÜFEN] ile işaretli yerleri tamamlamalı ve metni kontrol ettirmelisiniz."
   },
   "hours": {
     "title": "Çalışma saatleri",

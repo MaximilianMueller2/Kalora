@@ -1,11 +1,12 @@
-import { Type } from '@angular/core';
+import { Provider, Type } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslocoService } from '@jsverse/transloco';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, of, throwError } from 'rxjs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { OWNER, fakeAuth } from '../../../../testing/auth-fixtures';
 import { click, submit, texts, type } from '../../../../testing/forms';
 import { provideTestI18n } from '../../../../testing/test-i18n';
+import { ApiClient } from '../../../core/http/api-client';
 import { ApiError } from '../../../core/http/api-error';
 import { LanguageService } from '../../../core/i18n/language.service';
 import { Toast } from '../../../core/ui/toast';
@@ -31,6 +32,7 @@ const PROFILE: SalonProfile = {
   defaultLanguage: 'de',
   imprintText: null,
   privacyPolicyUrl: null,
+  privacyText: null,
 };
 
 const RULES: BookingRules = {
@@ -62,7 +64,11 @@ function fakeSettings() {
 
 async function mount<T>(
   component: Type<T>,
-  options: { user?: Me; setup?: (settings: ReturnType<typeof fakeSettings>) => void } = {},
+  options: {
+    user?: Me;
+    setup?: (settings: ReturnType<typeof fakeSettings>) => void;
+    providers?: Provider[];
+  } = {},
 ) {
   localStorage.clear();
   const settings = fakeSettings();
@@ -75,6 +81,7 @@ async function mount<T>(
       { provide: SettingsService, useValue: settings },
       { provide: AuthService, useValue: auth },
       { provide: Toast, useValue: toast },
+      ...(options.providers ?? []),
     ],
   });
   await firstValueFrom(TestBed.inject(TranslocoService).load('de'));
@@ -136,6 +143,7 @@ describe('SalonTab', () => {
       phone: '+49 30 123456',
       imprintText: null,
       privacyPolicyUrl: null,
+      privacyText: null,
     });
     expect(toast.show).toHaveBeenCalledWith('settings.saved');
     // The shell shows the salon name, so the profile is fetched again.
@@ -160,7 +168,7 @@ describe('SalonTab', () => {
       (owner.fixture.nativeElement.querySelector('input[spellcheck=false]') as HTMLInputElement)
         .disabled,
     ).toBe(false);
-    click(owner.fixture, 'button[type=button]');
+    click(owner.fixture, 'button.suggest-slug');
     await owner.fixture.whenStable();
     owner.fixture.detectChanges();
     expect(owner.settings.suggestSlug).toHaveBeenCalledWith('Haarwerk');
@@ -175,7 +183,89 @@ describe('SalonTab', () => {
       (manager.fixture.nativeElement.querySelector('input[spellcheck=false]') as HTMLInputElement)
         .disabled,
     ).toBe(true);
-    expect(manager.fixture.nativeElement.querySelector('button[type=button]')).toBeNull();
+    expect(manager.fixture.nativeElement.querySelector('button.suggest-slug')).toBeNull();
+  });
+
+  describe('privacy template', () => {
+    const TEMPLATE =
+      '# Datenschutz\n\n{{salon}}, {{address}}, Tel. {{phone}}\n\nSpeicherdauer: {{retentionMonths}} Monate';
+
+    function withTemplate(profile: Partial<SalonProfile> = {}) {
+      const api = { getAssetText: vi.fn().mockReturnValue(of(TEMPLATE)) };
+      return {
+        api,
+        options: {
+          providers: [{ provide: ApiClient, useValue: api }],
+          setup: (settings: ReturnType<typeof fakeSettings>) =>
+            settings.getProfile.mockResolvedValue({ ...PROFILE, ...profile }),
+        },
+      };
+    }
+
+    async function settled(fixture: ComponentFixture<unknown>) {
+      await fixture.whenStable();
+      await new Promise((resolve) => setTimeout(resolve));
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+    }
+
+    /** What would be saved, i.e. what the field holds. */
+    async function savedText(
+      fixture: ComponentFixture<unknown>,
+      settings: ReturnType<typeof fakeSettings>,
+    ) {
+      await submit(fixture);
+      return (settings.updateProfile.mock.calls.at(-1)?.[0] as SalonProfile | undefined)
+        ?.privacyText;
+    }
+
+    it('fills in what the salon already told us and marks the rest as still to be checked', async () => {
+      const { api, options } = withTemplate({
+        street: 'Hauptstraße 1',
+        postalCode: '10115',
+        city: 'Berlin',
+      });
+      const { fixture, settings } = await mount(SalonTab, options);
+
+      click(fixture, '.template button');
+      await settled(fixture);
+
+      expect(api.getAssetText).toHaveBeenCalledWith('/legal/salon-privacy.de.md');
+      expect(await savedText(fixture, settings)).toBe(
+        '# Datenschutz\n\nHaarwerk, Hauptstraße 1, 10115 Berlin, Tel. [BITTE PRÜFEN: Telefonnummer]\n\nSpeicherdauer: 24 Monate',
+      );
+      expect(fixture.nativeElement.querySelector('.template')).toBeNull();
+    });
+
+    it('marks a missing address as still to be checked', async () => {
+      const { options } = withTemplate();
+      const { fixture, settings } = await mount(SalonTab, options);
+
+      click(fixture, '.template button');
+      await settled(fixture);
+
+      expect(await savedText(fixture, settings)).toContain('[BITTE PRÜFEN: Anschrift des Salons]');
+    });
+
+    it('is not offered when the salon has written its own text', async () => {
+      const { options } = withTemplate({ privacyText: 'Unser eigener Text' });
+      const { fixture } = await mount(SalonTab, options);
+
+      expect(fixture.nativeElement.querySelector('.template')).toBeNull();
+    });
+
+    it('shows an error and leaves the field empty if the template cannot be loaded', async () => {
+      const { api, options } = withTemplate();
+      api.getAssetText.mockReturnValue(throwError(() => new Error('x')));
+      const { fixture, settings } = await mount(SalonTab, options);
+
+      click(fixture, '.template button');
+      await settled(fixture);
+
+      expect(alert(fixture)).toHaveLength(1);
+      expect(await savedText(fixture, settings)).toBeNull();
+    });
   });
 
   it("offers the salon's own time zone even if it is not in the list", async () => {

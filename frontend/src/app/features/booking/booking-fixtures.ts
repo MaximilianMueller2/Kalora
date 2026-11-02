@@ -37,6 +37,7 @@ export const SALON: PublicSalon = {
   ],
   imprintText: 'Haarwerk Müller\nHauptstraße 1',
   privacyPolicyUrl: 'https://haarwerk.example/datenschutz',
+  privacyText: null,
 };
 
 export const CATEGORIES: PublicCategory[] = [

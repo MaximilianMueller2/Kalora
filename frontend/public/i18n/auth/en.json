@@ -39,7 +39,8 @@
     "submit": "Create account",
     "trialNote": "Try free for 30 days. No payment details needed.",
     "haveAccount": "Already registered?",
-    "login": "Sign in"
+    "login": "Sign in",
+    "avvLink": "DPA"
   },
   "forgot": {
     "title": "Forgot password",

@@ -22,10 +22,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { firstValueFrom } from 'rxjs';
+import { ApiClient } from '../../../core/http/api-client';
 import { ApiError } from '../../../core/http/api-error';
 import { LANGUAGE_NAMES, SUPPORTED_LANGUAGES } from '../../../core/i18n/languages';
 import { Toast } from '../../../core/ui/toast';
 import { fieldErrorText } from '../../../shared/forms/field-error';
+import { fillTemplate } from '../../../shared/markdown/markdown';
 import { injectErrorMessage } from '../../../shared/forms/server-error';
 import { SALON_INDUSTRIES, SalonIndustry } from '../../auth/auth.models';
 import { AuthService } from '../../auth/auth.service';
@@ -47,6 +50,7 @@ interface ProfileModel {
   defaultLanguage: string;
   imprintText: string;
   privacyPolicyUrl: string;
+  privacyText: string;
 }
 
 const EMPTY: ProfileModel = {
@@ -61,19 +65,25 @@ const EMPTY: ProfileModel = {
   defaultLanguage: 'de',
   imprintText: '',
   privacyPolicyUrl: '',
+  privacyText: '',
 };
 
 const toModel = (profile: SalonProfile): ProfileModel => ({
   ...profile,
   imprintText: profile.imprintText ?? '',
   privacyPolicyUrl: profile.privacyPolicyUrl ?? '',
+  privacyText: profile.privacyText ?? '',
 });
 
 const toProfile = (model: ProfileModel): SalonProfile => ({
   ...model,
   imprintText: model.imprintText.trim() || null,
   privacyPolicyUrl: model.privacyPolicyUrl.trim() || null,
+  privacyText: model.privacyText.trim() || null,
 });
+
+/** Longest privacy notice the API accepts. */
+const PRIVACY_TEXT_MAX = 20000;
 
 function isHttpUrl(value: string): boolean {
   try {
@@ -150,7 +160,7 @@ function isHttpUrl(value: string): boolean {
         </mat-form-field>
         @if (isOwner()) {
           <div class="actions">
-            <button mat-stroked-button type="button" (click)="suggestSlug()">
+            <button mat-stroked-button type="button" class="suggest-slug" (click)="suggestSlug()">
               {{ 'settings.salon.suggest' | transloco }}
             </button>
           </div>
@@ -223,6 +233,28 @@ function isHttpUrl(value: string): boolean {
           }
         </mat-form-field>
 
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'settings.salon.privacyText' | transloco }}</mat-label>
+          <textarea matInput rows="12" [formField]="form.privacyText"></textarea>
+          <mat-hint>{{ 'settings.salon.privacyTextHint' | transloco }}</mat-hint>
+          @if (errorText(form.privacyText().errors()); as error) {
+            <mat-error>{{ error.key | transloco: error.params }}</mat-error>
+          }
+        </mat-form-field>
+        @if (!form.privacyText().value().trim()) {
+          <div class="template">
+            <button
+              mat-stroked-button
+              type="button"
+              [disabled]="loadingTemplate()"
+              (click)="insertTemplate()"
+            >
+              {{ 'settings.salon.privacyTemplate' | transloco }}
+            </button>
+            <span>{{ 'settings.salon.privacyTemplateHint' | transloco }}</span>
+          </div>
+        }
+
         <div class="actions">
           <button mat-flat-button type="submit" [disabled]="form().submitting()">
             {{ 'settings.save' | transloco }}
@@ -236,6 +268,8 @@ export class SalonTab {
   private readonly settings = inject(SettingsService);
   private readonly auth = inject(AuthService);
   private readonly toast = inject(Toast);
+  private readonly api = inject(ApiClient);
+  protected readonly loadingTemplate = signal(false);
 
   protected readonly origin = inject(DOCUMENT).location.origin;
   protected readonly industries = SALON_INDUSTRIES;
@@ -274,6 +308,7 @@ export class SalonTab {
         !value() || PHONE_PATTERN.test(value()) ? undefined : { kind: 'phoneInvalid' },
       );
       maxLength(path.imprintText, 4000);
+      maxLength(path.privacyText, PRIVACY_TEXT_MAX);
       validate(path.privacyPolicyUrl, ({ value }) =>
         !value() || isHttpUrl(value()) ? undefined : { kind: 'urlInvalid' },
       );
@@ -296,6 +331,35 @@ export class SalonTab {
       this.model.update((value) => ({ ...value, slug }));
     } catch (error) {
       this.errorCode.set(error instanceof ApiError ? error.code : 'unknown');
+    }
+  }
+
+  /**
+   * Puts the privacy template into the field, with the salon's own data filled in. What only the salon knows stays marked
+   * "[BITTE PRÜFEN]" so it cannot be missed.
+   */
+  protected async insertTemplate(): Promise<void> {
+    this.loadingTemplate.set(true);
+    try {
+      const [template, rules] = await Promise.all([
+        firstValueFrom(this.api.getAssetText('/legal/salon-privacy.de.md')),
+        this.settings.getBookingRules(),
+      ]);
+      const model = this.model();
+      const city = `${model.postalCode} ${model.city}`.trim();
+      const text = fillTemplate(template, {
+        salon: model.name,
+        address:
+          [model.street, city].filter((part) => part.length > 0).join(', ') ||
+          '[BITTE PRÜFEN: Anschrift des Salons]',
+        phone: model.phone || '[BITTE PRÜFEN: Telefonnummer]',
+        retentionMonths: String(rules.retentionMonths),
+      });
+      this.model.update((value) => ({ ...value, privacyText: text }));
+    } catch (error) {
+      this.errorCode.set(error instanceof ApiError ? error.code : 'unknown');
+    } finally {
+      this.loadingTemplate.set(false);
     }
   }
 

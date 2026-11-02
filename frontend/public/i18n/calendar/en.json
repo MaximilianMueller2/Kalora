@@ -87,6 +87,7 @@
     "save": "Save",
     "changeCustomer": "Change",
     "appointmentSaved": "Appointment added",
-    "blockSaved": "Blocker added"
+    "blockSaved": "Blocker added",
+    "noteHint": "Please do not enter any health data."
   }
 }

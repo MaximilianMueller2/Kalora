@@ -31,6 +31,11 @@ if (builder.Configuration.GetValue<bool>("Mail:Worker:Enabled"))
     builder.Services.AddHostedService<EmailOutboxWorker>();
 }
 
+if (builder.Configuration.GetValue<bool>("Retention:Enabled"))
+{
+    builder.Services.AddHostedService<RetentionWorker>();
+}
+
 if (builder.Configuration.GetValue<bool>("Scheduler:Enabled"))
 {
     builder.Services.AddHostedService<AppointmentSchedulerWorker>();

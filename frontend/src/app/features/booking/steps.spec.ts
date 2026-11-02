@@ -28,6 +28,7 @@ import { DoneStep } from './done-step';
 import { ImprintPage } from './imprint-page';
 import { MonthCalendar } from './month-calendar';
 import { PersonStep } from './person-step';
+import { PrivacyPage } from './privacy-page';
 import { ServiceStep } from './service-step';
 import { StepHeader } from './step-header';
 import { TimeStep } from './time-step';
@@ -634,6 +635,62 @@ describe('ImprintPage', () => {
 
     expect(q(fixture, 'p').textContent).toBe('Haarwerk Müller\nHauptstraße 1');
     expect(q(fixture, 'a').getAttribute('href')).toBe('/haarwerk');
+  });
+});
+
+describe('BookingShell privacy link', () => {
+  async function footerLinks(salon: Partial<typeof SALON>) {
+    const context = await prepare({ ...defaultAnswers(), '': { ...SALON, ...salon } });
+    const fixture = TestBed.createComponent(BookingShell);
+    fixture.componentRef.setInput('slug', 'haarwerk');
+    await settle(fixture);
+    return qa<HTMLAnchorElement>(fixture, 'footer a').map((a) => ({
+      href: a.getAttribute('href'),
+      external: a.target === '_blank',
+      context,
+    }));
+  }
+
+  it('links to the salon’s own privacy page if only the text is given', async () => {
+    const links = await footerLinks({ privacyPolicyUrl: null, privacyText: '# Datenschutz' });
+
+    expect(links.map((l) => l.href)).toEqual(['/haarwerk/imprint', '/haarwerk/privacy']);
+    expect(links[1].external).toBe(false);
+  });
+
+  it('prefers the address of the salon’s own website to the text', async () => {
+    const links = await footerLinks({ privacyText: '# Datenschutz' });
+
+    expect(links[1].href).toBe(SALON.privacyPolicyUrl);
+  });
+
+  it('shows no privacy link when the salon gave neither', async () => {
+    const links = await footerLinks({ privacyPolicyUrl: null, privacyText: null });
+
+    expect(links.map((l) => l.href)).toEqual(['/haarwerk/imprint']);
+  });
+});
+
+describe('PrivacyPage', () => {
+  it('shows the privacy text of the salon as formatted text and links back', async () => {
+    const { fixture, booking } = await mount(PrivacyPage, {
+      ...defaultAnswers(),
+      '': { ...SALON, privacyText: '# Datenschutz\n\nWir speichern **wenig**.' },
+    });
+    await booking.salon.reload();
+    await settle(fixture);
+
+    expect(q(fixture, 'app-markdown-view h2').textContent?.trim()).toBe('Datenschutz');
+    expect(q(fixture, 'app-markdown-view strong').textContent).toBe('wenig');
+    expect(q(fixture, 'a.back').getAttribute('href')).toBe('/haarwerk');
+  });
+
+  it('shows no text for a salon that wrote none', async () => {
+    const { fixture, booking } = await mount(PrivacyPage);
+    await booking.salon.reload();
+    await settle(fixture);
+
+    expect(fixture.nativeElement.querySelector('app-markdown-view')).toBeNull();
   });
 });
 

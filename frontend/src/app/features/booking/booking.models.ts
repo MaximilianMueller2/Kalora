@@ -19,6 +19,8 @@ export interface PublicSalon {
   openingHours: OpeningDay[];
   imprintText: string | null;
   privacyPolicyUrl: string | null;
+  /** The salon's own privacy notice (Markdown). */
+  privacyText: string | null;
 }
 
 export interface PublicService {

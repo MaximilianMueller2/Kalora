@@ -100,7 +100,9 @@ export const MIN_PASSWORD_LENGTH = 10;
 
       <mat-checkbox class="terms" [formField]="form.acceptTerms">
         {{ 'auth.register.termsPrefix' | transloco }}
-        <a routerLink="/legal/terms" target="_blank">{{ 'auth.register.termsLink' | transloco }}</a>
+        <a routerLink="/legal/terms" target="_blank">{{ 'auth.register.termsLink' | transloco }}</a
+        >,
+        <a routerLink="/legal/avv" target="_blank">{{ 'auth.register.avvLink' | transloco }}</a>
         {{ 'auth.register.termsAnd' | transloco }}
         <a routerLink="/legal/privacy" target="_blank">{{
           'auth.register.privacyLink' | transloco

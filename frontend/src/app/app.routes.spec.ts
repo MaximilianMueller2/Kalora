@@ -24,6 +24,8 @@ describe('routes', () => {
       'calendar',
       'requests',
       'requests/:id',
+      'customers',
+      'customers/:id',
       'services',
       'absences',
       'settings',
@@ -36,10 +38,10 @@ describe('routes', () => {
     }
   });
 
-  it('restricts services, team and settings to owners and managers, but not the staff’s own absences', () => {
+  it('restricts customers, services, team and settings to owners and managers, but not the staff’s own absences', () => {
     const guarded = area.filter((route) => route.canActivate).map((route) => route.path);
 
-    expect(guarded).toEqual(['services', 'team', 'settings']);
+    expect(guarded).toEqual(['customers', 'customers/:id', 'services', 'team', 'settings']);
   });
 
   it('loads the team area with its own routes, titles and text scopes', () => {
