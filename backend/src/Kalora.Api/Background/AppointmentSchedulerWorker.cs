@@ -1,6 +1,7 @@
 using Kalora.Application.Appointments;
 using Kalora.Application.Configuration;
 using Kalora.Application.Subscriptions;
+using Kalora.Application.Common;
 using Microsoft.Extensions.Options;
 
 namespace Kalora.Api.Background;
@@ -37,7 +38,7 @@ internal sealed partial class AppointmentSchedulerWorker(IServiceScopeFactory sc
             catch (Exception exception)
             {
                 // The database may be restarting; the job must survive that.
-                LogRunFailed(logger, exception);
+                LogRunFailed(logger, PersonalData.ForLog(exception));
             }
         }
         while (await WaitAsync(timer, stoppingToken));

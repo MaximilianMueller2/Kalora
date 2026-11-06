@@ -30,6 +30,7 @@ internal sealed class CalendarService(
     public const int MaxDays = 14;
     private const int MaxSearchHits = 8;
     private const int MinSearchLength = 2;
+    private const int MaxSearchLength = 100;
 
     /// <summary>What a column shows: open and confirmed appointments and the ones that took place.</summary>
     private static readonly AppointmentStatus[] Shown =
@@ -94,8 +95,16 @@ internal sealed class CalendarService(
             return new List<CustomerHitDto>();
         }
 
+        if (term.Length > MaxSearchLength)
+        {
+            return Error.Validation("validation.too_long", "q");
+        }
+
+        // The customer file belongs to owners and managers. Everyone else finds only the people who have an appointment with them,
+        // which is what they need to pick a regular customer for a new appointment.
+        var candidates = scope.SeesAll ? db.Customers : db.Customers.Where(c => scope.Appointments().Any(a => a.CustomerId == c.Id));
         var lower = term.ToLowerInvariant();
-        return await db.Customers
+        return await candidates
             .Where(c => c.AnonymizedAtUtc == null
                 && (c.Name.ToLower().Contains(lower)
                     || (c.Email != null && c.Email.Contains(lower))

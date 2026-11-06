@@ -1,5 +1,6 @@
 using Kalora.Application.Configuration;
 using Kalora.Application.Email;
+using Kalora.Application.Common;
 using Microsoft.Extensions.Options;
 
 namespace Kalora.Api.Background;
@@ -34,7 +35,7 @@ internal sealed partial class EmailOutboxWorker(IServiceScopeFactory scopes, IOp
             catch (Exception exception)
             {
                 // The database may be restarting; the worker must survive that.
-                LogLoopFailed(logger, exception);
+                LogLoopFailed(logger, PersonalData.ForLog(exception));
                 pause = ErrorPause;
             }
 

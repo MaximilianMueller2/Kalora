@@ -76,7 +76,7 @@ internal sealed class AuthService(
     public async Task<Result> ConfirmEmailAsync(ConfirmEmailRequest request)
     {
         var user = await users.FindByIdAsync(request.UserId.ToString());
-        if (user is null || string.IsNullOrWhiteSpace(request.Token))
+        if (user is null || string.IsNullOrWhiteSpace(request.Token) || request.Token.Length > 2000)
         {
             return InvalidToken;
         }

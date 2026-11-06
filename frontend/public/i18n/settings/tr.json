@@ -7,7 +7,8 @@
     "salon": "Salon",
     "hours": "Çalışma saatleri",
     "booking": "Rezervasyon kuralları",
-    "closures": "Kapalı günler"
+    "closures": "Kapalı günler",
+    "security": "Güvenlik"
   },
   "salon": {
     "title": "Salonun",
@@ -67,5 +68,29 @@
     "upcoming": "Yaklaşan kapalı günler",
     "empty": "Kapalı gün girilmemiş.",
     "remove": "{{date}} tarihli kapalı günü kaldır"
+  },
+  "security": {
+    "title": "Güvenlik",
+    "lead": "İkinci bir faktör, biri parolanızı bilse bile hesabınızı güvende tutar. Telefonunuzda bir kimlik doğrulayıcı uygulaması gerekir.",
+    "on": "İki adımlı giriş açık",
+    "off": "İki adımlı giriş kapalı",
+    "start": "İki adımlı girişi kur",
+    "scanTitle": "1. Uygulamayı bağlayın",
+    "scan": "Kodu bir kimlik doğrulayıcı uygulamasıyla (ör. Aegis, Google Authenticator, Microsoft Authenticator) tarayın.",
+    "qrAlt": "Kimlik doğrulayıcı uygulamasını bağlamak için QR kodu",
+    "manual": "Ya da bu anahtarı elle girin:",
+    "code": "2. Uygulamadaki kod",
+    "enable": "Etkinleştir",
+    "codesTitle": "Kurtarma kodlarınız",
+    "codesHint": "Güvenli saklayın, tercihen yazdırın ya da parola yöneticisinde tutun. Telefonunuzu kaybederseniz her kodla bir kez giriş yapabilirsiniz. Yalnızca şimdi gösterilir.",
+    "copy": "Kodları kopyala",
+    "copied": "Kodlar kopyalandı",
+    "copyFailed": "Kopyalama mümkün değil. Kodları seçip elle kopyalayın.",
+    "saved": "Kodları kaydettim",
+    "password": "Parolanız",
+    "passwordHint": "Kapatmak veya yeni kurtarma kodları almak için parolanızla onaylarsınız. Eski kodlar geçersiz olur.",
+    "regenerate": "Yeni kurtarma kodları",
+    "disable": "Kapat",
+    "disabled": "İki adımlı giriş kapatıldı"
   }
 }

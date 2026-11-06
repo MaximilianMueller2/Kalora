@@ -1,3 +1,4 @@
+using Kalora.Application.Common;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +8,7 @@ internal sealed partial class GlobalExceptionHandler(ILogger<GlobalExceptionHand
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
-        LogUnhandled(logger, exception);
+        LogUnhandled(logger, PersonalData.ForLog(exception));
 
         var problem = new ProblemDetails
         {

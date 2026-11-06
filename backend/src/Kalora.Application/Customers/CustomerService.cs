@@ -19,12 +19,18 @@ internal sealed class CustomerService(
 {
     private const int PageSize = 50;
     private const int MinSearchLength = 2;
+    private const int MaxSearchLength = 100;
 
     public async Task<Result<CustomerListDto>> ListAsync(string? search, CancellationToken cancellationToken = default)
     {
         if (!scope.SeesAll)
         {
             return Error.Forbidden();
+        }
+
+        if (search is { Length: > MaxSearchLength })
+        {
+            return Error.Validation("validation.too_long", "q");
         }
 
         var customers = db.Customers.Where(c => c.AnonymizedAtUtc == null);

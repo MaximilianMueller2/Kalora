@@ -358,6 +358,15 @@ Nach der Registrierung führt ein Assistent (`/app/onboarding`, nur Inhaber:in u
 - **Teilweise gespeichertes Team:** Personen werden nacheinander angelegt; schlägt eine fehl (z. B. Plan-Limit), bleiben die schon angelegten bestehen und verschwinden aus dem Formular, ein neuer Versuch legt nur den Rest an. Eine nicht verschickbare Einladung ist kein Abbruch, die Person ist angelegt und wird namentlich genannt.
 - **Checkliste auf dem Dashboard** (`OnboardingChecklist`): nur für Inhaber:in und Manager:in (Mitarbeitende fragen den Status gar nicht erst ab), zeigt offene Schritte als Links in den Assistenten und verschwindet, sobald alles erledigt ist.
 
+## Sicherheit
+
+Die Prüfung (Header, Grenzen, Rollen je Endpunkt, Eingaben, Logs, Abhängigkeiten) und alle Funde mit Status stehen in `docs/SECURITY.md`. Was in der Architektur zu wissen ist:
+
+- **Verboten als Standard:** `FallbackPolicy = RequireAuthenticatedUser`; anonyme Endpunkte sind ausdrücklich `[AllowAnonymous]` und stehen in einem Test.
+- **Pipeline** der API: Forwarded Headers → HSTS (außer Development) → `SecurityHeadersMiddleware` (nosniff, DENY, strenge CSP für JSON, `no-store`) → Fehlerbehandlung → Anfrage-Log mit bereinigtem Pfad → Authentifizierung → Autorisierung → Rate-Limiter (Richtlinien je Endpunkt plus Auffangnetz) → Mandanten-Auflösung → Controller. Die Admin-Pfade laufen ohne Mandanten.
+- **Web-App-Header** setzt der Reverse-Proxy (`deploy/security-headers.caddy`); der Produktions-Build hat kein Inline-Skript, damit `script-src 'self'` gilt.
+- **Logs:** `LogPaths.Redact` (Token im Pfad), `PersonalData.ForLog` (Adressen und Schlüsselwerte in Ausnahmen).
+
 ## Offene Abschnitte
 
 Verfügbarkeitsberechnung im Detail (Mermaid).

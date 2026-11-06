@@ -1,5 +1,6 @@
 using Kalora.Application.Configuration;
 using Kalora.Application.Customers;
+using Kalora.Application.Common;
 using Microsoft.Extensions.Options;
 
 namespace Kalora.Api.Background;
@@ -26,7 +27,7 @@ internal sealed partial class RetentionWorker(IServiceScopeFactory scopes, IOpti
             }
             catch (Exception exception)
             {
-                LogRunFailed(logger, exception);
+                LogRunFailed(logger, PersonalData.ForLog(exception));
             }
         }
         while (await WaitAsync(timer, stoppingToken));

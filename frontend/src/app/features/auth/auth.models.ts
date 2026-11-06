@@ -67,3 +67,16 @@ export interface InvitationPreview {
   role: SalonRole;
   expiresAtUtc: string;
 }
+
+/** Answer of `POST /api/auth/two-factor/setup`: what an authenticator app needs to learn the secret. */
+export interface TwoFactorSetup {
+  /** The secret as text, for typing it into the app by hand. */
+  sharedKey: string;
+  authenticatorUri: string;
+  /** The same secret as a QR code (PNG, Base64). */
+  qrPngBase64: string;
+}
+
+export interface RecoveryCodes {
+  recoveryCodes: string[];
+}

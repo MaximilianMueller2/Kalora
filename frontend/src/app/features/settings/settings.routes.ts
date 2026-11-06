@@ -10,4 +10,8 @@ export const SETTINGS_ROUTES: Routes = [
     path: 'closures',
     loadComponent: () => import('./tabs/closures-tab').then((m) => m.ClosuresTab),
   },
+  {
+    path: 'security',
+    loadComponent: () => import('./tabs/security-tab').then((m) => m.SecurityTab),
+  },
 ];

@@ -23,6 +23,7 @@ internal sealed class AdminSalonService(
     TimeProvider timeProvider) : IAdminSalonService
 {
     private const int PageSize = 100;
+    private const int MaxSearchLength = 100;
     private const int MaxTrialExtensionDays = 90;
     private const int MaxNoteLength = 2000;
 
@@ -35,6 +36,11 @@ internal sealed class AdminSalonService(
         if (!currentUser.IsPlatformAdmin)
         {
             return Error.Forbidden();
+        }
+
+        if (search is { Length: > MaxSearchLength })
+        {
+            return Error.Validation("validation.too_long", "q");
         }
 
         var query = db.AllSalons().AsNoTracking();

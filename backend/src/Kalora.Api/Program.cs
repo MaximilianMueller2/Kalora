@@ -8,8 +8,22 @@ using Kalora.Application;
 using Kalora.Infrastructure;
 using Scalar.AspNetCore;
 using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// No request of this API has a reason to be big (the longest text is a privacy notice of 20,000 characters).
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = 1024 * 1024;
+    // No "Server: Kestrel": it only tells an attacker which software to look up.
+    options.AddServerHeader = false;
+});
+builder.Services.AddHsts(options =>
+{
+    options.MaxAge = TimeSpan.FromDays(365);
+    options.IncludeSubDomains = true;
+});
 
 builder.Services.AddSerilog((_, logger) => logger.ReadFrom.Configuration(builder.Configuration));
 
@@ -67,13 +81,31 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseForwardedHeaders();
+if (!app.Environment.IsDevelopment())
+{
+    // Browsers only honour it over https; the proxy tells the API the original scheme (forwarded headers above).
+    app.UseHsts();
+}
+
+app.UseMiddleware<SecurityHeadersMiddleware>();
 app.UseExceptionHandler();
-app.UseSerilogRequestLogging();
+// The request log must not carry the secrets some paths contain (management and invitation links).
+app.UseSerilogRequestLogging(options =>
+{
+    options.MessageTemplate = "HTTP {RequestMethod} {SafePath} responded {StatusCode} in {Elapsed:0.0000} ms";
+    options.GetMessageTemplateProperties = (context, _, elapsed, statusCode) =>
+    [
+        new LogEventProperty("RequestMethod", new ScalarValue(context.Request.Method)),
+        new LogEventProperty("SafePath", new ScalarValue(LogPaths.Redact(context.Request.Path.Value ?? string.Empty))),
+        new LogEventProperty("StatusCode", new ScalarValue(statusCode)),
+        new LogEventProperty("Elapsed", new ScalarValue(elapsed)),
+    ];
+});
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
-    app.MapScalarApiReference();
+    app.MapOpenApi().AllowAnonymous();
+    app.MapScalarApiReference().AllowAnonymous();
 }
 
 app.UseAuthentication();
@@ -83,7 +115,7 @@ app.UseMiddleware<TenantResolutionMiddleware>();
 
 app.MapControllers();
 app.MapAntiforgeryEndpoint();
-app.MapHealthChecks("/health");
+app.MapHealthChecks("/health").AllowAnonymous();
 
 app.Run();
 

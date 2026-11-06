@@ -1,13 +1,16 @@
 using Kalora.Application.Common;
+using Kalora.Application.Dashboard;
 using Kalora.Application.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace Kalora.Application.Auth;
 
-internal sealed class TwoFactorService(UserManager<AppUser> users, ICurrentUser currentUser, ISessionService session) : ITwoFactorService
+internal sealed class TwoFactorService(UserManager<AppUser> users, ICurrentUser currentUser, ISessionService session, IQrCodeService qr) : ITwoFactorService
 {
     private const string Issuer = "Kalora";
     private const int RecoveryCodeCount = 10;
+    private const int MaxCodeLength = 20;
+    private const int MaxPasswordLength = 128;
 
     public async Task<Result<TwoFactorSetupResponse>> BeginSetupAsync()
     {
@@ -31,7 +34,7 @@ internal sealed class TwoFactorService(UserManager<AppUser> users, ICurrentUser 
 
         var uri = $"otpauth://totp/{Uri.EscapeDataString(Issuer)}:{Uri.EscapeDataString(user.Email ?? string.Empty)}"
             + $"?secret={key}&issuer={Uri.EscapeDataString(Issuer)}&digits=6";
-        return new TwoFactorSetupResponse(key!, uri);
+        return new TwoFactorSetupResponse(key!, uri, Convert.ToBase64String(qr.CreatePng(uri)));
     }
 
     public async Task<Result<RecoveryCodesResponse>> EnableAsync(TwoFactorCodeRequest request)
@@ -43,7 +46,7 @@ internal sealed class TwoFactorService(UserManager<AppUser> users, ICurrentUser 
         }
 
         var code = request.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
-        if (!await users.VerifyTwoFactorTokenAsync(user, TokenOptions.DefaultAuthenticatorProvider, code))
+        if (code.Length > MaxCodeLength || !await users.VerifyTwoFactorTokenAsync(user, TokenOptions.DefaultAuthenticatorProvider, code))
         {
             return Error.Validation("auth.invalid_two_factor_code", "code");
         }
@@ -62,9 +65,10 @@ internal sealed class TwoFactorService(UserManager<AppUser> users, ICurrentUser 
             return Error.Unauthorized();
         }
 
-        if (!await users.CheckPasswordAsync(user, request.Password))
+        var password = await CheckPasswordAsync(user, request.Password);
+        if (!password.IsSuccess)
         {
-            return Error.Validation("auth.invalid_credentials", "password");
+            return password.Error;
         }
 
         await users.SetTwoFactorEnabledAsync(user, false);
@@ -86,13 +90,35 @@ internal sealed class TwoFactorService(UserManager<AppUser> users, ICurrentUser 
             return Error.Conflict("auth.two_factor_not_enabled");
         }
 
-        if (!await users.CheckPasswordAsync(user, request.Password))
+        var password = await CheckPasswordAsync(user, request.Password);
+        if (!password.IsSuccess)
         {
-            return Error.Validation("auth.invalid_credentials", "password");
+            return password.Error;
         }
 
         var codes = await users.GenerateNewTwoFactorRecoveryCodesAsync(user, RecoveryCodeCount);
         return new RecoveryCodesResponse(codes!.ToList());
+    }
+
+    /// <summary>
+    /// Checks the password that confirms a security change. Wrong ones count like wrong passwords at sign-in, so a stolen session cannot
+    /// be used to guess the password: after five the account is locked, here as there.
+    /// </summary>
+    private async Task<Result> CheckPasswordAsync(AppUser user, string password)
+    {
+        if (await users.IsLockedOutAsync(user))
+        {
+            return Error.Unauthorized("auth.locked_out");
+        }
+
+        if (password.Length <= MaxPasswordLength && await users.CheckPasswordAsync(user, password))
+        {
+            await users.ResetAccessFailedCountAsync(user);
+            return Result.Success();
+        }
+
+        await users.AccessFailedAsync(user);
+        return await users.IsLockedOutAsync(user) ? Error.Unauthorized("auth.locked_out") : Error.Validation("auth.invalid_credentials", "password");
     }
 
     private async Task<AppUser?> GetUserAsync() =>

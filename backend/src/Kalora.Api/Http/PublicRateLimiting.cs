@@ -32,6 +32,21 @@ public sealed class PublicRateLimitOptions
     /// this keeps scripts that try from hammering the lookup.
     /// </summary>
     public WindowLimit Manage { get; set; } = new() { PermitLimit = 30, WindowSeconds = 60 };
+
+    /// <summary>
+    /// Sign-in attempts per address. A single account is locked after five wrong passwords anyway (15 minutes); this stops one address from
+    /// trying many accounts. Generous, because a whole salon may sit behind one address.
+    /// </summary>
+    public WindowLimit Login { get; set; } = new() { PermitLimit = 20, WindowSeconds = 60 };
+
+    /// <summary>New accounts per address.</summary>
+    public WindowLimit Register { get; set; } = new() { PermitLimit = 10, WindowSeconds = 3600 };
+
+    /// <summary>E-mail confirmation, "forgot password" and "reset password": each can send a mail or test a token.</summary>
+    public WindowLimit Recovery { get; set; } = new() { PermitLimit = 10, WindowSeconds = 900 };
+
+    /// <summary>Everything else behind the API, per address: a backstop against floods, far above what a person does.</summary>
+    public WindowLimit General { get; set; } = new() { PermitLimit = 600, WindowSeconds = 60 };
 }
 
 public static class PublicRateLimits
@@ -40,6 +55,9 @@ public static class PublicRateLimits
     public const string Availability = "public-availability";
     public const string Booking = "public-booking";
     public const string Manage = "public-manage";
+    public const string Login = "auth-login";
+    public const string Register = "auth-register";
+    public const string Recovery = "auth-recovery";
 
     public static IServiceCollection AddPublicRateLimiting(this IServiceCollection services, IConfiguration configuration)
     {
@@ -52,6 +70,14 @@ public static class PublicRateLimits
             options.AddPolicy(Availability, context => Limit(context, o => o.Availability));
             options.AddPolicy(Booking, context => Limit(context, o => o.Booking));
             options.AddPolicy(Manage, context => Limit(context, o => o.Manage));
+            options.AddPolicy(Login, context => Limit(context, o => o.Login));
+            options.AddPolicy(Register, context => Limit(context, o => o.Register));
+            options.AddPolicy(Recovery, context => Limit(context, o => o.Recovery));
+            // Requests that name no policy of their own count here; health checks do not.
+            options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
+                context.Request.Path.StartsWithSegments("/health")
+                    ? RateLimitPartition.GetNoLimiter("health")
+                    : General(context));
         });
         return services;
     }
@@ -62,6 +88,20 @@ public static class PublicRateLimits
         var limit = select(context.RequestServices.GetRequiredService<IOptions<PublicRateLimitOptions>>().Value);
         return RateLimitPartition.GetFixedWindowLimiter(
             context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = limit.PermitLimit,
+                Window = TimeSpan.FromSeconds(limit.WindowSeconds),
+                QueueLimit = 0,
+                AutoReplenishment = true,
+            });
+    }
+
+    private static RateLimitPartition<string> General(HttpContext context)
+    {
+        var limit = context.RequestServices.GetRequiredService<IOptions<PublicRateLimitOptions>>().Value.General;
+        return RateLimitPartition.GetFixedWindowLimiter(
+            "general:" + (context.Connection.RemoteIpAddress?.ToString() ?? "unknown"),
             _ => new FixedWindowRateLimiterOptions
             {
                 PermitLimit = limit.PermitLimit,

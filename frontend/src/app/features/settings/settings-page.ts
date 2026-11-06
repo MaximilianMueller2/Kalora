@@ -8,9 +8,10 @@ const TABS = [
   { path: 'hours', labelKey: 'settings.tabs.hours' },
   { path: 'booking', labelKey: 'settings.tabs.booking' },
   { path: 'closures', labelKey: 'settings.tabs.closures' },
+  { path: 'security', labelKey: 'settings.tabs.security' },
 ] as const;
 
-/** Frame of the settings area: four tabs, each a route of its own (so they can be linked and reloaded). */
+/** Frame of the settings area: five tabs, each a route of its own (so they can be linked and reloaded). */
 @Component({
   selector: 'app-settings-page',
   changeDetection: ChangeDetectionStrategy.OnPush,

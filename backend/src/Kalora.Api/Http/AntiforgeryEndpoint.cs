@@ -21,5 +21,5 @@ internal static class AntiforgeryEndpoint
                 Path = "/",
             });
             return Results.NoContent();
-        });
+        }).AllowAnonymous();
 }

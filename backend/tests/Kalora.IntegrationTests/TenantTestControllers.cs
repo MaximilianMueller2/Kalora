@@ -1,5 +1,6 @@
 using Kalora.Application.Common;
 using Kalora.Domain.Staff;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,9 @@ public sealed record RenameRequest(string DisplayName);
 public sealed record CreateStaffRequest(string DisplayName, Guid? SalonId);
 
 /// <summary>Stand-in for real CRUD endpoints (they do not exist yet): same access pattern, IDs taken from the URL.</summary>
+// Anonymous on purpose: these tests check what each kind of caller (including none) sees of the data.
 [ApiController]
+[AllowAnonymous]
 [IgnoreAntiforgeryToken]
 [Route("api/test/staff")]
 public sealed class TestStaffController(IAppDbContext db) : ControllerBase
@@ -66,6 +69,7 @@ public sealed class TestStaffController(IAppDbContext db) : ControllerBase
 }
 
 [ApiController]
+[AllowAnonymous]
 [Route("api/public/salons/{slug}/test-staff")]
 public sealed class TestPublicStaffController(IAppDbContext db) : ControllerBase
 {

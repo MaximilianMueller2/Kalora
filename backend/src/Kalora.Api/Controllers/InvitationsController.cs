@@ -3,6 +3,7 @@ using Kalora.Application.Auth;
 using Kalora.Application.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Kalora.Api.Controllers;
 
@@ -17,6 +18,8 @@ public sealed class InvitationsController(IInvitationService invitations) : ApiC
 
 /// <summary>Opened from the e-mail link by someone without an account; the token identifies the invitation.</summary>
 [Route("api/public/invitations/{token}")]
+[AllowAnonymous]
+[EnableRateLimiting(PublicRateLimits.Manage)]
 public sealed class PublicInvitationsController(IInvitationService invitations) : ApiControllerBase
 {
     [HttpGet]

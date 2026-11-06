@@ -2,12 +2,14 @@ using Kalora.Api.Http;
 using Kalora.Application.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Kalora.Api.Controllers;
 
 [Route("api/auth/two-factor")]
 [AllowWhenReadOnly]
 [Authorize]
+[EnableRateLimiting(PublicRateLimits.Login)]
 public sealed class TwoFactorController(ITwoFactorService twoFactor) : ApiControllerBase
 {
     [HttpPost("setup")]

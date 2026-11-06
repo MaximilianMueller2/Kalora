@@ -3,6 +3,7 @@ using Kalora.Domain.Salons;
 using Kalora.Infrastructure.Identity;
 using Kalora.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 
@@ -67,7 +68,10 @@ internal static class AuthenticationSetup
             };
         });
 
+        // Deny by default: an endpoint that names no policy needs a signed-in user. Anonymous ones say so with [AllowAnonymous]
+        // (a test lists them all, see docs/SECURITY.md).
         services.AddAuthorizationBuilder()
+            .SetFallbackPolicy(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build())
             .AddPolicy(AuthPolicies.SalonMember, policy => policy.RequireRole(
                 nameof(SalonRole.Owner), nameof(SalonRole.Manager), nameof(SalonRole.Staff)))
             .AddPolicy(AuthPolicies.SalonManager, policy => policy.RequireRole(nameof(SalonRole.Owner), nameof(SalonRole.Manager)))

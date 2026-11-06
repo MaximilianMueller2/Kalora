@@ -28,7 +28,8 @@ public sealed record MeResponse(
     SalonRole? Role,
     Guid? StaffId);
 
-public sealed record TwoFactorSetupResponse(string SharedKey, string AuthenticatorUri);
+/// <param name="QrPngBase64">The authenticator URI as a QR code (PNG, Base64), so the secret never has to be typed or sent to a third party to draw it.</param>
+public sealed record TwoFactorSetupResponse(string SharedKey, string AuthenticatorUri, string QrPngBase64);
 
 public sealed record TwoFactorCodeRequest(string Code);
 

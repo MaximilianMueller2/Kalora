@@ -23,8 +23,12 @@ internal sealed class LoginRequestValidator : AbstractValidator<LoginRequest>
 {
     public LoginRequestValidator()
     {
-        RuleFor(r => r.Email).NotEmpty().WithErrorCode("validation.required");
-        RuleFor(r => r.Password).NotEmpty().WithErrorCode("validation.required");
+        RuleFor(r => r.Email).NotEmpty().WithErrorCode("validation.required")
+            .MaximumLength(320).WithErrorCode("validation.too_long");
+        RuleFor(r => r.Password).NotEmpty().WithErrorCode("validation.required")
+            .MaximumLength(128).WithErrorCode("validation.too_long");
+        RuleFor(r => r.TwoFactorCode).MaximumLength(20).WithErrorCode("validation.too_long");
+        RuleFor(r => r.RecoveryCode).MaximumLength(40).WithErrorCode("validation.too_long");
     }
 }
 
@@ -38,7 +42,8 @@ internal sealed class ResetPasswordRequestValidator : AbstractValidator<ResetPas
     public ResetPasswordRequestValidator()
     {
         RuleFor(r => r.Email).ValidEmail();
-        RuleFor(r => r.Token).NotEmpty().WithErrorCode("auth.invalid_token");
+        RuleFor(r => r.Token).NotEmpty().WithErrorCode("auth.invalid_token")
+            .MaximumLength(2000).WithErrorCode("auth.invalid_token");
         RuleFor(r => r.NewPassword).ValidPassword();
     }
 }

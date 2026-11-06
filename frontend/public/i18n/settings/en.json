@@ -7,7 +7,8 @@
     "salon": "Salon",
     "hours": "Opening hours",
     "booking": "Booking rules",
-    "closures": "Closed days"
+    "closures": "Closed days",
+    "security": "Security"
   },
   "salon": {
     "title": "Your salon",
@@ -67,5 +68,29 @@
     "upcoming": "Upcoming closed days",
     "empty": "No closed days entered.",
     "remove": "Remove closed day on {{date}}"
+  },
+  "security": {
+    "title": "Security",
+    "lead": "A second factor keeps your account safe even if someone knows your password. You need an authenticator app on your phone.",
+    "on": "Two-factor sign-in is on",
+    "off": "Two-factor sign-in is off",
+    "start": "Set up two-factor sign-in",
+    "scanTitle": "1. Connect the app",
+    "scan": "Scan the code with an authenticator app (e.g. Aegis, Google Authenticator, Microsoft Authenticator).",
+    "qrAlt": "QR code to connect the authenticator app",
+    "manual": "Or type this key in by hand:",
+    "code": "2. Code from the app",
+    "enable": "Turn on",
+    "codesTitle": "Your recovery codes",
+    "codesHint": "Keep them safe, ideally printed or in a password manager. Each code lets you sign in once if you lose your phone. They are only shown now.",
+    "copy": "Copy codes",
+    "copied": "Codes copied",
+    "copyFailed": "Copying is not possible. Select the codes and copy them by hand.",
+    "saved": "I have saved the codes",
+    "password": "Your password",
+    "passwordHint": "To turn it off or get new recovery codes, confirm with your password. The old codes then stop working.",
+    "regenerate": "New recovery codes",
+    "disable": "Turn off",
+    "disabled": "Two-factor sign-in turned off"
   }
 }

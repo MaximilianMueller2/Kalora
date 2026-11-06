@@ -234,6 +234,33 @@ public partial class EmailRendererTests
         Assert.Contains(evil, mail.Text);
     }
 
+    [Theory]
+    [MemberData(nameof(EveryTypeAndLanguage))]
+    public void No_free_text_can_break_out_of_the_html_in_any_mail(string type, string language)
+    {
+        const string attack = "\"><svg onload=alert(1)><b>x</b>";
+        var payload = Payload(attack);
+        foreach (var field in new[]
+        {
+            "CustomerNote", "CustomerPhone", "CustomerEmail", "ServiceName", "StaffName", "SalonName", "SalonAddress", "SalonPhone", "DisplayName", "Reason",
+        })
+        {
+            payload[field] = attack;
+        }
+
+        // A link with a quote in it must not leave its attribute either.
+        foreach (var field in new[] { "ManageUrl", "BookingUrl", "RequestUrl", "ConfirmUrl", "ResetUrl", "InvitationUrl", "AppUrl" })
+        {
+            payload[field] = "https://kalora.app/x\" onclick=\"alert(1)";
+        }
+
+        var mail = Render(type, language, payload);
+
+        Assert.False(mail.Html.Contains("<svg", StringComparison.Ordinal), "html: " + Regex.Match(mail.Html, ".{40}<svg.{40}").Value);
+        Assert.DoesNotContain("<b>x</b>", mail.Html);
+        Assert.DoesNotContain("\" onclick=", mail.Html);
+    }
+
     [Fact]
     public void Salon_names_are_encoded_in_the_header_and_the_title()
     {

@@ -109,4 +109,17 @@ public class TwoFactorTests(PostgresFixture postgres)
         (await session.PostAsync("/api/auth/two-factor/enable", new TwoFactorCodeRequest(Totp.Code(setup.SharedKey)))).EnsureSuccessStatusCode();
         return setup.SharedKey;
     }
+
+    [Fact]
+    public async Task The_setup_also_hands_out_the_secret_as_a_QR_code_so_no_third_party_has_to_draw_it()
+    {
+        await using var host = await AuthTestHost.StartAsync(postgres);
+        var (session, _) = await host.RegisterOwnerAsync("maria@example.com");
+
+        var setup = (await (await session.PostAsync("/api/auth/two-factor/setup")).Content.ReadFromJsonAsync<TwoFactorSetupResponse>())!;
+
+        var png = Convert.FromBase64String(setup.QrPngBase64);
+        Assert.Equal([0x89, 0x50, 0x4E, 0x47], png.Take(4).Select(b => (int)b).ToArray());
+        Assert.Contains(setup.SharedKey, setup.AuthenticatorUri);
+    }
 }

@@ -7,7 +7,8 @@
     "salon": "Salon",
     "hours": "Öffnungszeiten",
     "booking": "Buchungsregeln",
-    "closures": "Schließtage"
+    "closures": "Schließtage",
+    "security": "Sicherheit"
   },
   "salon": {
     "title": "Dein Salon",
@@ -67,5 +68,29 @@
     "upcoming": "Bevorstehende Schließtage",
     "empty": "Keine Schließtage eingetragen.",
     "remove": "Schließtag am {{date}} entfernen"
+  },
+  "security": {
+    "title": "Sicherheit",
+    "lead": "Mit einem zweiten Faktor bleibt dein Konto auch dann sicher, wenn jemand dein Passwort kennt. Du brauchst dafür eine Authenticator-App auf dem Handy.",
+    "on": "Zwei-Faktor-Anmeldung ist aktiv",
+    "off": "Zwei-Faktor-Anmeldung ist nicht aktiv",
+    "start": "Zwei-Faktor-Anmeldung einrichten",
+    "scanTitle": "1. App verbinden",
+    "scan": "Scanne den Code mit einer Authenticator-App (z. B. Aegis, Google Authenticator, Microsoft Authenticator).",
+    "qrAlt": "QR-Code zum Verbinden der Authenticator-App",
+    "manual": "Oder gib diesen Schlüssel von Hand ein:",
+    "code": "2. Code aus der App",
+    "enable": "Aktivieren",
+    "codesTitle": "Deine Wiederherstellungscodes",
+    "codesHint": "Bewahre sie sicher auf, am besten ausgedruckt oder im Passwortmanager. Mit jedem Code kannst du dich einmal anmelden, falls du dein Handy verlierst. Sie werden nur jetzt angezeigt.",
+    "copy": "Codes kopieren",
+    "copied": "Codes kopiert",
+    "copyFailed": "Kopieren nicht möglich. Markiere die Codes und kopiere sie von Hand.",
+    "saved": "Ich habe die Codes gesichert",
+    "password": "Dein Passwort",
+    "passwordHint": "Zum Ausschalten oder für neue Wiederherstellungscodes bestätigst du es mit deinem Passwort. Die alten Codes gelten dann nicht mehr.",
+    "regenerate": "Neue Wiederherstellungscodes",
+    "disable": "Ausschalten",
+    "disabled": "Zwei-Faktor-Anmeldung ausgeschaltet"
   }
 }
